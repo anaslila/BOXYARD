@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BOXYARD - v1.04</title>
+    <title>BOXYARD - v1.05</title>
 
     <!-- Meta / SEO / iOS PWA Integration -->
     <meta name="application-name" content="BOXYARD">
@@ -144,6 +144,10 @@
             border: 1px solid var(--border-color);
         }
 
+        .btn-boxy-excel:hover {
+            background: #0b592e;
+        }
+
         .badge-free {
             background: #2e7d32;
             color: #ffffff;
@@ -152,6 +156,16 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             margin-left: 2px;
+        }
+
+        .badge-edit-mode {
+            background: #e65100;
+            color: #ffffff;
+            font-size: 10px;
+            padding: 3px 8px;
+            font-weight: 700;
+            border: 1px solid #000;
+            text-transform: uppercase;
         }
 
         /* ------------------ HEADER ARCHITECTURE ------------------ */
@@ -450,7 +464,7 @@
             position: relative;
             width: 100%;
             height: 175px;
-            background: #e8e8e8;
+            background: #f0f0f0;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -886,6 +900,7 @@
             object-fit: cover;
             border: 1px solid var(--border-color);
             margin-bottom: 12px;
+            background: #f0f0f0;
         }
 
         .summary-specs-table {
@@ -955,7 +970,7 @@
             position: relative;
             width: 100%;
             height: 380px;
-            background: #000000;
+            background: #f0f0f0;
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
@@ -1007,6 +1022,7 @@
             cursor: pointer;
             opacity: 0.65;
             flex-shrink: 0;
+            background: #f0f0f0;
         }
 
         .gallery-thumb-item.active-thumb {
@@ -1173,7 +1189,7 @@
     <div class="blur-upload-backdrop" id="uploadPipelineOverlay">
         <div class="upload-spinner-box">
             <div class="boxy-rotating-spinner"></div>
-            <div class="upload-status-heading">Uploading Property Listing...</div>
+            <div class="upload-status-heading" id="uploadHeadingText">Uploading Property Listing...</div>
             <div class="upload-status-sub" id="uploadStepSubtext">Validating parameters & writing assets to database...</div>
         </div>
     </div>
@@ -1198,7 +1214,7 @@
 
         <div class="header-actions">
             <!-- Dedicated Post Property Button -->
-            <button class="btn-boxy btn-boxy-primary" onclick="switchTab('post')">
+            <button class="btn-boxy btn-boxy-primary" onclick="initiateNewListing()">
                 <span>+ Post Property</span>
                 <span class="badge-free">FREE</span>
             </button>
@@ -1256,15 +1272,19 @@
             <div id="marketplaceGrid" class="grid"></div>
         </section>
 
-        <!-- ================= SECTION 2: POST YOUR PROPERTY ================= -->
+        <!-- ================= SECTION 2: POST / EDIT PROPERTY ================= -->
         <section id="sec-post">
             <div class="section-header-box">
-                <h2>List Property Free</h2>
-                <span class="meta-pill">Direct Owner Listing</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <h2 id="formHeaderTitle">List Property Free</h2>
+                    <span id="formEditBadge" class="badge-edit-mode" style="display:none;">Editing Mode</span>
+                </div>
+                <span class="meta-pill" id="formHeaderSub">Direct Owner Listing</span>
             </div>
 
             <div class="form-layout-box">
                 <form id="propertyPostForm" onsubmit="handleFormSubmission(event)">
+                    <input type="hidden" id="editingPropertyId" value="">
                     
                     <!-- Required Name of Society / Project -->
                     <div class="form-group">
@@ -1384,12 +1404,12 @@
                         </div>
                     </div>
 
-                    <!-- Images Upload and Tagging System (Max 8 Files) -->
+                    <!-- Images Upload and Tagging System (Max 8 Files, Optional) -->
                     <div class="form-group">
-                        <label>Property Photographs (Max 8 Images)</label>
+                        <label>Property Photographs (Max 8 Images - Optional)</label>
                         <div class="photo-upload-zone" onclick="document.getElementById('photoFileInput').click()">
                             <p style="font-size:11px; font-weight:700; text-transform:uppercase;">Click to Choose Photographs from Device</p>
-                            <p style="font-size:10px; color:#666; margin-top:3px;">Select up to 8 images. You can categorize and pick a cover pic below.</p>
+                            <p style="font-size:10px; color:#666; margin-top:3px;">Select up to 8 images. If skipped, a standard verified placeholder is applied.</p>
                         </div>
                         <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none;" onchange="handleDevicePhotoSelection(event)">
                         
@@ -1412,8 +1432,8 @@
                     </div>
 
                     <div class="form-row-2" style="margin-top:14px;">
-                        <button type="submit" class="btn-boxy btn-boxy-primary" style="padding:12px; font-size:12px;">Publish Property Listing</button>
-                        <button type="button" class="btn-boxy" onclick="switchTab('dashboard')" style="padding:12px; font-size:12px;">Cancel</button>
+                        <button type="submit" id="formSubmitBtn" class="btn-boxy btn-boxy-primary" style="padding:12px; font-size:12px;">Publish Property Listing</button>
+                        <button type="button" class="btn-boxy" onclick="cancelEditingState()" style="padding:12px; font-size:12px;">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -1423,7 +1443,7 @@
         <section id="sec-myprops">
             <div class="section-header-box">
                 <h2>View Listings</h2>
-                <button class="btn-boxy btn-boxy-primary" onclick="switchTab('post')">+ Post Another</button>
+                <button class="btn-boxy btn-boxy-primary" onclick="initiateNewListing()">+ Post Another</button>
             </div>
             <div id="myPropsGrid" class="grid"></div>
         </section>
@@ -1641,7 +1661,7 @@
         <div class="success-summary-card">
             <div class="success-badge-header">
                 <span style="font-size:16px;">✓</span>
-                <span>Listing Uploaded Successfully!</span>
+                <span id="successBadgeTitle">Listing Uploaded Successfully!</span>
             </div>
 
             <img id="successCoverImg" class="summary-cover-preview" src="" alt="Cover Image">
@@ -1711,6 +1731,7 @@
     <script>
         /* ---------------- DATA STORAGE & INITIAL SEED ---------------- */
         const CURRENT_USER_ID = "BY_OWNER_101";
+        const FALLBACK_NO_IMAGE_URL = "https://t4.ftcdn.net/jpg/07/91/22/59/360_F_791225927_caRPPH99D6D1iFonkCRmCGzkJPf36QDw.jpg";
 
         const DEFAULT_PROPERTIES = [
             {
@@ -1837,7 +1858,7 @@
                 this.options = options;
                 this.config = Object.assign({
                     placeholder: "Type to search...",
-                    initialValue: "", // Set empty by default for clean form state
+                    initialValue: "",
                     onChange: () => {}
                 }, config);
                 this.selectedValue = this.config.initialValue;
@@ -1903,8 +1924,8 @@
             }
 
             setValue(val) {
-                this.selectedValue = val;
-                if (this.input) this.input.value = val;
+                this.selectedValue = val || "";
+                if (this.input) this.input.value = val || "";
             }
         }
 
@@ -2190,6 +2211,81 @@
             }
         }
 
+        /* ---------------- EDIT MODE ENGINE ---------------- */
+        function initiateNewListing() {
+            cancelEditingState();
+            switchTab('post');
+        }
+
+        function startEditingProperty(propId) {
+            const p = propertyStore.find(item => item.id === propId);
+            if (!p) return;
+
+            // Set Editing Mode Flags
+            document.getElementById('editingPropertyId').value = p.id;
+            document.getElementById('formHeaderTitle').innerText = "Edit Listing Details";
+            document.getElementById('formEditBadge').style.display = "inline-block";
+            document.getElementById('formEditBadge').innerText = `Editing ID: ${p.id}`;
+            document.getElementById('formHeaderSub').innerText = "Modify parameters and save directly";
+            document.getElementById('formSubmitBtn').innerText = "Save Listing Changes";
+
+            // Pre-fill text inputs
+            document.getElementById('propSociety').value = p.society || "";
+            document.getElementById('propLocality').value = p.locality || "";
+            document.getElementById('propPriceRaw').value = p.price ? Number(p.price).toLocaleString('en-IN') : "";
+            document.getElementById('priceWordDisplay').innerText = convertAmountToIndianWords(p.price);
+            document.getElementById('propCarpetArea').value = p.carpetArea || "";
+            document.getElementById('propSuperArea').value = p.superArea || "";
+            document.getElementById('propFloor').value = p.floor || "";
+            document.getElementById('propRera').value = (p.rera && p.rera !== 'NA') ? p.rera : "";
+            document.getElementById('propDescription').value = p.description || "";
+            updateCharCounter(document.getElementById('propDescription'));
+
+            // Pre-fill Dropdowns
+            formTx.setValue(p.txType || "For Sale");
+            formProp.setValue(p.propType || "Apartment");
+            formBhk.setValue(p.bhk || "2 BHK");
+            formCity.setValue(p.city || "Mumbai");
+            formFacing.setValue(p.facing || "East (Vastu Compliant)");
+            formPossession.setValue(p.possession || "Ready to Move (OC Received)");
+            formParkingCount.setValue(p.parkingCount || "1 Car");
+            formParkingType.setValue(p.parkingType || "Covered Basement");
+
+            // Pre-fill Amenities Checkboxes
+            const allBoxes = document.querySelectorAll('input[name="amenityItem"]');
+            allBoxes.forEach(chk => {
+                chk.checked = (p.amenities && p.amenities.includes(chk.value));
+            });
+
+            // Pre-fill Photos Buffer (Filter out default placeholder if only one was present)
+            if (p.images && p.images.length > 0 && p.images[0].url !== FALLBACK_NO_IMAGE_URL) {
+                uploadedPhotoBuffer = JSON.parse(JSON.stringify(p.images));
+            } else {
+                uploadedPhotoBuffer = [];
+            }
+            renderPhotoTiles();
+
+            switchTab('post');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelEditingState() {
+            document.getElementById('editingPropertyId').value = "";
+            document.getElementById('formHeaderTitle').innerText = "List Property Free";
+            document.getElementById('formEditBadge').style.display = "none";
+            document.getElementById('formHeaderSub').innerText = "Direct Owner Listing";
+            document.getElementById('formSubmitBtn').innerText = "Publish Property Listing";
+
+            document.getElementById('propertyPostForm').reset();
+            document.getElementById('priceWordDisplay').innerText = '';
+            document.getElementById('charCountLabel').className = 'char-counter invalid';
+            document.getElementById('charCountLabel').innerText = '0 / 100 Characters (Min 100 required)';
+            uploadedPhotoBuffer = [];
+            renderPhotoTiles();
+            initSearchableControls(); // Resets dropdowns to clean empty placeholders
+            switchTab('dashboard');
+        }
+
         /* ---------------- FORM SUBMISSION & RANDOM 1-2S BLUR PIPELINE ---------------- */
         function handleFormSubmission(e) {
             e.preventDefault();
@@ -2212,15 +2308,19 @@
                 return;
             }
 
+            // Fallback Image handling if no pictures uploaded
             const imagesToSave = uploadedPhotoBuffer.length > 0 ? uploadedPhotoBuffer : [
-                { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true }
+                { url: FALLBACK_NO_IMAGE_URL, tag: "No Image Available", isCover: true }
             ];
 
             const selectedAmenities = Array.from(document.querySelectorAll('input[name="amenityItem"]:checked')).map(el => el.value);
+            const editingId = document.getElementById('editingPropertyId').value.trim();
+            const isEditing = Boolean(editingId);
 
-            const newId = `BY-IND-${Math.floor(100 + Math.random() * 900)}`;
-            const newProperty = {
-                id: newId,
+            const propertyId = isEditing ? editingId : `BY-IND-${Math.floor(100 + Math.random() * 900)}`;
+
+            const compiledProperty = {
+                id: propertyId,
                 ownerId: CURRENT_USER_ID,
                 society: societyName,
                 title: `${formBhk.getValue() || 'Apartment'} (${societyName})`,
@@ -2241,36 +2341,50 @@
                 amenities: selectedAmenities,
                 images: imagesToSave,
                 description: descText,
-                timestamp: Date.now()
+                timestamp: isEditing ? (propertyStore.find(p => p.id === editingId)?.timestamp || Date.now()) : Date.now()
             };
 
-            // Show blurred upload overlay with random 1000ms - 2000ms duration
+            // Setup blurred upload overlay with random 1000ms - 2000ms duration
             const blurOverlay = document.getElementById('uploadPipelineOverlay');
+            document.getElementById('uploadHeadingText').innerText = isEditing ? "Saving Changes..." : "Uploading Property Listing...";
+            document.getElementById('uploadStepSubtext').innerText = isEditing ? "Syncing updated property specifications..." : "Validating parameters & writing assets to database...";
             blurOverlay.style.display = 'flex';
 
             const randomDelay = Math.floor(1000 + Math.random() * 1000);
 
             setTimeout(() => {
-                propertyStore.unshift(newProperty);
-                localStorage.setItem('by_properties', JSON.stringify(propertyStore));
+                if (isEditing) {
+                    const idx = propertyStore.findIndex(p => p.id === editingId);
+                    if (idx !== -1) propertyStore[idx] = compiledProperty;
+                } else {
+                    propertyStore.unshift(compiledProperty);
+                }
 
+                localStorage.setItem('by_properties', JSON.stringify(propertyStore));
                 blurOverlay.style.display = 'none';
 
-                // Display the upload success summary card
-                displaySuccessSummary(newProperty);
+                // Display success summary
+                displaySuccessSummary(compiledProperty, isEditing);
 
-                // Reset post form and photo buffer
+                // Reset form state
+                document.getElementById('editingPropertyId').value = "";
+                document.getElementById('formHeaderTitle').innerText = "List Property Free";
+                document.getElementById('formEditBadge').style.display = "none";
+                document.getElementById('formHeaderSub').innerText = "Direct Owner Listing";
+                document.getElementById('formSubmitBtn').innerText = "Publish Property Listing";
                 document.getElementById('propertyPostForm').reset();
+                document.getElementById('priceWordDisplay').innerText = '';
                 uploadedPhotoBuffer = [];
                 renderPhotoTiles();
-                initSearchableControls(); // Reinitialize dropdowns to empty state
+                initSearchableControls();
                 renderMarketplaceListings();
                 renderUserOwnedListings();
             }, randomDelay);
         }
 
-        function displaySuccessSummary(prop) {
+        function displaySuccessSummary(prop, wasEdited = false) {
             const cover = prop.images.find(img => img.isCover) || prop.images[0];
+            document.getElementById('successBadgeTitle').innerText = wasEdited ? "Listing Updated Successfully!" : "Listing Uploaded Successfully!";
             document.getElementById('successCoverImg').src = cover.url;
             document.getElementById('successProjectTitle').innerText = `${prop.society} (${prop.bhk})`;
             document.getElementById('successLocalityLine').innerText = `${prop.locality}, ${prop.city} • ${prop.txType}`;
@@ -2317,7 +2431,7 @@
             }
 
             filtered.forEach(p => {
-                const cover = p.images.find(img => img.isCover) || p.images[0] || { url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800', tag: 'Unit' };
+                const cover = p.images.find(img => img.isCover) || p.images[0] || { url: FALLBACK_NO_IMAGE_URL, tag: 'Property' };
                 const ratePerSqFt = p.carpetArea > 0 ? `₹ ${Math.round(p.price / p.carpetArea).toLocaleString('en-IN')}/sq.ft` : '';
 
                 let parkingLabel = '';
@@ -2336,14 +2450,13 @@
                 const card = document.createElement('div');
                 card.className = 'prop-card';
                 card.onclick = (e) => {
-                    // Prevent triggering fullscreen if clicking sub-buttons
                     if (e.target.closest('button')) return;
                     openFullscreenModal(p.id);
                 };
 
                 card.innerHTML = `
                     <div class="card-cover-box">
-                        <img src="${cover.url}" alt="${p.title}">
+                        <img src="${cover.url}" alt="${p.title}" onerror="this.src='${FALLBACK_NO_IMAGE_URL}'">
                         <div class="cover-tag-pill">${cover.tag || 'Residence'}</div>
                         ${p.rera && p.rera !== 'NA' ? '<div class="rera-stamp-pill">✓ RERA</div>' : ''}
                     </div>
@@ -2389,7 +2502,7 @@
             renderMarketplaceListings();
         }
 
-        /* ---------------- VIEW LISTINGS (USER'S OWN PROPERTIES) ---------------- */
+        /* ---------------- VIEW LISTINGS (WITH IN-PLACE EDIT ACTION) ---------------- */
         function renderUserOwnedListings() {
             const grid = document.getElementById('myPropsGrid');
             grid.innerHTML = '';
@@ -2401,7 +2514,7 @@
             }
 
             userProps.forEach(p => {
-                const cover = p.images.find(img => img.isCover) || p.images[0] || { url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800', tag: 'Unit' };
+                const cover = p.images.find(img => img.isCover) || p.images[0] || { url: FALLBACK_NO_IMAGE_URL, tag: 'Property' };
                 const associatedLeads = leadsStore.filter(l => l.propId === p.id).length;
 
                 const card = document.createElement('div');
@@ -2413,7 +2526,7 @@
 
                 card.innerHTML = `
                     <div class="card-cover-box" style="height:140px;">
-                        <img src="${cover.url}" alt="${p.title}">
+                        <img src="${cover.url}" alt="${p.title}" onerror="this.src='${FALLBACK_NO_IMAGE_URL}'">
                         <div class="cover-tag-pill">ID: ${p.id}</div>
                     </div>
                     <div class="card-content">
@@ -2426,8 +2539,9 @@
                                 Total Inquiries: ${associatedLeads} Active
                             </div>
                         </div>
-                        <div class="card-actions-bar">
-                            <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="openFullscreenModal('${p.id}')">View Fullscreen</button>
+                        <div class="card-actions-bar" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px;">
+                            <button class="btn-boxy btn-boxy-primary" onclick="openFullscreenModal('${p.id}')">View</button>
+                            <button class="btn-boxy" style="color:var(--primary);" onclick="startEditingProperty('${p.id}')">Edit</button>
                             <button class="btn-boxy" style="color:#d32f2f;" onclick="deleteProperty('${p.id}')">Delete</button>
                         </div>
                     </div>
@@ -2478,9 +2592,9 @@
                 amTray.innerHTML = '<span style="font-size:11px; color:#777;">Standard Society Amenities Included</span>';
             }
 
-            // Setup Gallery & Thumbnails
+            // Setup Gallery & Thumbnails (with Fallback)
             activeGalleryImages = (p.images && p.images.length > 0) ? p.images : [
-                { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800", tag: "Main Residence" }
+                { url: FALLBACK_NO_IMAGE_URL, tag: "No Image Available" }
             ];
             activeGalleryIndex = 0;
             renderGalleryViewport();
@@ -2500,7 +2614,9 @@
 
         function renderGalleryViewport() {
             const currentImg = activeGalleryImages[activeGalleryIndex];
-            document.getElementById('fsMainImage').src = currentImg.url;
+            const imgElem = document.getElementById('fsMainImage');
+            imgElem.src = currentImg.url;
+            imgElem.onerror = () => { imgElem.src = FALLBACK_NO_IMAGE_URL; };
             document.getElementById('fsImageTagPill').innerText = `${currentImg.tag || 'Interior'} (${activeGalleryIndex + 1}/${activeGalleryImages.length})`;
         }
 
@@ -2511,6 +2627,7 @@
                 const thumb = document.createElement('img');
                 thumb.className = `gallery-thumb-item ${idx === activeGalleryIndex ? 'active-thumb' : ''}`;
                 thumb.src = img.url;
+                thumb.onerror = () => { thumb.src = FALLBACK_NO_IMAGE_URL; };
                 thumb.onclick = () => {
                     activeGalleryIndex = idx;
                     renderGalleryViewport();
