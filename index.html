@@ -3,47 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BOXYARD v1.0 | Indian Real Estate Portal & App</title>
+    <title>BOXYARD - v1.01</title>
     
-    <!-- Favicon & Touch Icon -->
+    <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/png" href="https://i.postimg.cc/Znywz0fP/BY.png">
     <link rel="apple-touch-icon" href="https://i.postimg.cc/Znywz0fP/BY.png">
     
+    <!-- iOS Add to Home Screen Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BOXYARD">
+    <meta name="application-name" content="BOXYARD">
+    <meta name="theme-color" content="#a92c1c">
+
     <!-- PWA Web App Manifest Data URI -->
-    <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22BOXYARD%20v1.0%22%2C%22short_name%22%3A%22BOXYARD%22%2C%22description%22%3A%22Indian%20Real%20Estate%20Portal%20and%20Marketplace%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFFFFF%22%2C%22theme_color%22%3A%22%23a92c1c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.postimg.cc%2FZnywz0fP%2FBY.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+    <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22BOXYARD%22%2C%22short_name%22%3A%22BOXYARD%22%2C%22description%22%3A%22Best%20Property%20Portal%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFFFFF%22%2C%22theme_color%22%3A%22%23a92c1c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.postimg.cc%2FZnywz0fP%2FBY.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
 
     <style>
         /* ==========================================================================
-           STRICT BOXYARD THEME DESIGN TOKENS
-           Font: Century Schoolbook, Georgia, 'Times New Roman', serif
+           BOXYARD v1.01 DESIGN TOKENS
+           Typography: 'Century Schoolbook', Georgia, serif
            Primary Color: #a92c1c
-           Corner Radii: 0px Strictly (Boxy Geometric Everywhere)
+           Boxy Discipline: 0px border-radius strictly everywhere
            ========================================================================== */
         :root {
             --brand-primary: #a92c1c;
             --brand-dark: #6e1c12;
-            --brand-light: #fbeee8;
-            --bg-page: #f6f6f6;
+            --brand-light: #fdf5f2;
+            --bg-page: #f5f5f5;
             --bg-surface: #ffffff;
-            --text-dark: #121212;
+            --text-dark: #111111;
             --text-muted: #555555;
             --text-light: #777777;
             --border-crisp: #000000;
-            --border-light: #d6d6d6;
-            --success-color: #1b6334;
-            --tag-bg: #ececec;
+            --border-light: #d1d1d1;
+            --success-color: #1a6f37;
+            --warning-color: #a92c1c;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            border-radius: 0px !important; /* Strict boxy mandate */
+            border-radius: 0px !important;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: Century Schoolbook, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+            font-family: 'Century Schoolbook', 'New Century Schoolbook', Georgia, 'Times New Roman', serif;
             background-color: var(--bg-page);
             color: var(--text-dark);
             line-height: 1.45;
@@ -51,7 +58,7 @@
             font-size: 15px;
         }
 
-        /* ---------------- APP HEADER ---------------- */
+        /* ---------------- HEADER ---------------- */
         header {
             background-color: #ffffff;
             border-bottom: 3px solid var(--brand-primary);
@@ -79,8 +86,8 @@
         }
 
         .brand-img {
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
             object-fit: contain;
             border: 2px solid var(--border-crisp);
             background: #ffffff;
@@ -88,9 +95,9 @@
         }
 
         .brand-text h1 {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: var(--brand-primary);
             text-transform: uppercase;
             line-height: 1;
@@ -99,15 +106,17 @@
         .brand-text span {
             font-size: 11px;
             color: var(--text-dark);
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
+            display: block;
+            margin-top: 2px;
         }
 
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .identity-badge {
@@ -116,9 +125,9 @@
             gap: 8px;
             background: #ffffff;
             border: 1.5px solid var(--border-crisp);
-            padding: 5px 12px;
+            padding: 6px 12px;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--brand-primary);
         }
 
@@ -129,7 +138,45 @@
             display: inline-block;
         }
 
-        /* ---------------- BOXY NAVIGATION BAR ---------------- */
+        /* Prominent Isolated Post Property Button */
+        .btn-post-property-header {
+            background-color: var(--brand-primary);
+            color: #ffffff;
+            border: 2px solid var(--border-crisp);
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #000000;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .btn-post-property-header:hover {
+            background-color: var(--brand-dark);
+        }
+
+        .btn-post-property-header:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .badge-free {
+            background-color: #ffffff;
+            color: var(--brand-primary);
+            font-size: 10px;
+            padding: 1px 6px;
+            font-weight: 900;
+            border: 1px solid var(--border-crisp);
+            letter-spacing: 0.5px;
+        }
+
+        /* ---------------- NAVIGATION ---------------- */
         nav {
             background-color: #ffffff;
             border-top: 1px solid var(--border-light);
@@ -153,7 +200,7 @@
             border: none;
             border-right: 1px solid var(--border-light);
             color: var(--text-dark);
-            padding: 12px 18px;
+            padding: 12px 20px;
             font-family: inherit;
             font-size: 13px;
             font-weight: 700;
@@ -191,14 +238,13 @@
             color: var(--brand-primary);
         }
 
-        /* ---------------- LAYOUT CONTAINER ---------------- */
+        /* ---------------- CONTAINER & SECTIONS ---------------- */
         .container {
             max-width: 1280px;
             margin: 20px auto;
             padding: 0 16px;
         }
 
-        /* Section View Switcher */
         .app-section {
             display: none;
         }
@@ -213,7 +259,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---------------- BOXY HEADINGS ---------------- */
+        /* Section Headings with White Background & #a92c1c text */
         .section-header-box {
             background: #ffffff;
             border: 2px solid var(--border-crisp);
@@ -225,6 +271,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
+            box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
         }
 
         .section-header-box h2 {
@@ -280,14 +327,13 @@
 
         .btn-boxy-outline:hover {
             background-color: var(--brand-light);
-            color: var(--brand-primary);
         }
 
         .btn-boxy-secondary {
             background-color: #000000;
             color: #ffffff;
             border: 2px solid var(--border-crisp);
-            box-shadow: 3px 3px 0px #777777;
+            box-shadow: 3px 3px 0px #555555;
         }
 
         .btn-boxy-whatsapp {
@@ -303,7 +349,156 @@
             box-shadow: 2px 2px 0px #000000;
         }
 
-        /* ---------------- SEARCH & FILTER PANEL ---------------- */
+        .btn-ai-generate {
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            border: 2px solid var(--border-crisp);
+            padding: 7px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--brand-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-ai-generate:hover {
+            background-color: var(--brand-primary);
+            color: #ffffff;
+        }
+
+        /* ---------------- SEARCHABLE TYPEAHEAD DROPDOWNS ---------------- */
+        .typeahead-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .typeahead-input {
+            width: 100%;
+            padding: 10px 32px 10px 12px;
+            background: #ffffff;
+            border: 1.5px solid var(--border-crisp);
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-dark);
+            outline: none;
+            cursor: text;
+        }
+
+        .typeahead-input:focus {
+            border-color: var(--brand-primary);
+            background-color: #fffefb;
+            box-shadow: 2px 2px 0px var(--brand-primary);
+        }
+
+        .typeahead-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 10px;
+            color: var(--text-dark);
+            font-weight: bold;
+        }
+
+        .typeahead-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 220px;
+            background: #ffffff;
+            border: 1.5px solid var(--border-crisp);
+            border-top: none;
+            overflow-y: auto;
+            z-index: 1050;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+            display: none;
+            animation: slideDownMenu 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform-origin: top;
+        }
+
+        @keyframes slideDownMenu {
+            from {
+                opacity: 0;
+                transform: scaleY(0.6);
+            }
+            to {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+
+        .typeahead-dropdown.show-dropdown {
+            display: block;
+        }
+
+        .typeahead-option {
+            padding: 9px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: 500;
+        }
+
+        .typeahead-option:hover, .typeahead-option.highlighted {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+            font-weight: 700;
+        }
+
+        .typeahead-no-results {
+            padding: 10px 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* ---------------- FORMS & INPUTS ---------------- */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+            color: var(--text-dark);
+        }
+
+        .boxy-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: #ffffff;
+            border: 1.5px solid var(--border-crisp);
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        .boxy-input:focus {
+            border-color: var(--brand-primary);
+            background-color: #fffefb;
+            box-shadow: 2px 2px 0px var(--brand-primary);
+        }
+
+        .currency-helper {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            margin-top: 3px;
+            min-height: 18px;
+        }
+
+        /* Filter Matrix */
         .filter-matrix {
             background: #ffffff;
             border: 2px solid var(--border-crisp);
@@ -329,37 +524,6 @@
             .filter-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .form-group label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-            color: var(--text-dark);
-        }
-
-        .boxy-input, .boxy-select {
-            width: 100%;
-            padding: 10px 12px;
-            background: #ffffff;
-            border: 1.5px solid var(--border-crisp);
-            font-family: inherit;
-            font-size: 14px;
-            color: var(--text-dark);
-            outline: none;
-        }
-
-        .boxy-input:focus, .boxy-select:focus {
-            border-color: var(--brand-primary);
-            background-color: #fffefb;
-            box-shadow: 2px 2px 0px var(--brand-primary);
         }
 
         /* ---------------- PROPERTY GRID & CARDS ---------------- */
@@ -392,7 +556,7 @@
 
         .card-image-box {
             position: relative;
-            height: 210px;
+            height: 220px;
             background: #1a1a1a;
             border-bottom: 2px solid var(--border-crisp);
             overflow: hidden;
@@ -450,6 +614,18 @@
             border: 1px solid #ffffff;
             font-weight: bold;
             text-transform: uppercase;
+        }
+
+        .photo-count-tag {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            font-size: 10px;
+            padding: 3px 8px;
+            border: 1px solid #ffffff;
+            font-weight: bold;
         }
 
         .card-content {
@@ -558,6 +734,112 @@
             padding-top: 12px;
         }
 
+        /* ---------------- ADVANCED PHOTO UPLOAD & ASSET MANAGER ---------------- */
+        .photo-upload-zone {
+            background: #fcfcfc;
+            border: 2px dashed var(--border-crisp);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            position: relative;
+        }
+
+        .photo-upload-zone:hover {
+            background: var(--brand-light);
+        }
+
+        .photo-upload-zone input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .gallery-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .photo-preview-item {
+            background: #ffffff;
+            border: 2px solid var(--border-crisp);
+            box-shadow: 3px 3px 0px #000000;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .photo-preview-img-box {
+            position: relative;
+            height: 160px;
+            background: #111111;
+            overflow: hidden;
+            border-bottom: 1.5px solid var(--border-crisp);
+        }
+
+        .photo-preview-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cover-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            background: var(--brand-primary);
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: 900;
+            padding: 3px 6px;
+            border: 1px solid #000000;
+            letter-spacing: 0.5px;
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .photo-preview-controls {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #ffffff;
+        }
+
+        .btn-set-cover {
+            background: #f5f5f5;
+            border: 1px solid var(--border-crisp);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-set-cover:hover {
+            background: var(--brand-light);
+            color: var(--brand-primary);
+        }
+
+        .btn-remove-photo {
+            background: #000000;
+            color: #ffffff;
+            border: 1px solid #000000;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
         /* ---------------- POST PROPERTY FORM STYLING ---------------- */
         .post-form-matrix {
             background: #ffffff;
@@ -576,10 +858,10 @@
             letter-spacing: 1px;
             border-bottom: 2px solid var(--brand-primary);
             padding-bottom: 4px;
-            margin: 20px 0 14px 0;
+            margin: 22px 0 14px 0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
         }
 
         .form-section-title:first-child {
@@ -590,14 +872,14 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .form-row-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 16px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         @media (max-width: 768px) {
@@ -629,6 +911,58 @@
             accent-color: var(--brand-primary);
             width: 16px;
             height: 16px;
+        }
+
+        /* Description with Character Counter & AI Generator */
+        .description-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .char-counter {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .char-counter.invalid {
+            color: var(--warning-color);
+        }
+
+        .char-counter.valid {
+            color: var(--success-color);
+        }
+
+        /* AI Loading Animation Box */
+        .ai-processing-box {
+            display: none;
+            background: #111111;
+            color: #ffffff;
+            border: 2px solid var(--brand-primary);
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 3px 3px 0px var(--brand-primary);
+        }
+
+        .ai-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid var(--brand-primary);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* ---------------- INQUIRY MODAL (BOXY) ---------------- */
@@ -805,45 +1139,7 @@
             font-weight: 700;
         }
 
-        /* ---------------- MARKET TRENDS & NEWS GRID ---------------- */
-        .trends-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .trend-card {
-            background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            padding: 14px;
-            border-left: 6px solid var(--brand-primary);
-            box-shadow: 3px 3px 0px #000000;
-        }
-
-        .news-card {
-            background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 3px 3px 0px #000000;
-            padding: 14px;
-            margin-bottom: 12px;
-        }
-
-        .news-date {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .news-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--brand-primary);
-            margin: 4px 0 6px 0;
-        }
-
-        /* ---------------- TOAST ALERTS (BOXY) ---------------- */
+        /* ---------------- TOAST NOTIFICATIONS ---------------- */
         #toastContainer {
             position: fixed;
             bottom: 24px;
@@ -874,7 +1170,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* ---------------- FOOTER & UTILITY ---------------- */
         .empty-placeholder {
             background: #ffffff;
             border: 2px dashed var(--border-crisp);
@@ -897,20 +1192,22 @@
     <header>
         <div class="header-top">
             <div class="brand-container" onclick="switchTab('dashboard')">
-                <img src="https://i.postimg.cc/Znywz0fP/BY.png" alt="BOXYARD" class="brand-img" onerror="this.src='https://placehold.co/40x40/a92c1c/ffffff?text=BY'">
+                <img src="https://i.postimg.cc/Znywz0fP/BY.png" alt="BOXYARD" class="brand-img" onerror="this.src='https://placehold.co/42x42/a92c1c/ffffff?text=BY'">
                 <div class="brand-text">
                     <h1>BOXYARD</h1>
-                    <span>INDIAN REALTY SYSTEM v1.0</span>
+                    <span>BEST PROPERTY PORTAL</span>
                 </div>
             </div>
 
             <div class="header-controls">
-                <div class="identity-badge" title="Active Terminal Account">
+                <div class="identity-badge" title="Active Verified Terminal">
                     <span class="dot"></span>
                     <span id="activeUserLabel">USER: BY-IND-8821</span>
                 </div>
-                <button class="btn-boxy btn-boxy-sm" onclick="switchTab('post')">
-                    + Post Property
+                <!-- SEPARATE DEDICATED POST PROPERTY ACTION -->
+                <button class="btn-post-property-header" onclick="switchTab('post')">
+                    <span>+ Post Property</span>
+                    <span class="badge-free">FREE</span>
                 </button>
             </div>
         </div>
@@ -919,10 +1216,7 @@
         <nav>
             <div class="nav-inner">
                 <button class="nav-btn active" id="tab-dashboard" onclick="switchTab('dashboard')">
-                    Marketplace
-                </button>
-                <button class="nav-btn" id="tab-post" onclick="switchTab('post')">
-                    Post Your Property "Zero Brokerage"
+                    Marketplace Dashboard
                 </button>
                 <button class="nav-btn" id="tab-myprops" onclick="switchTab('myprops')">
                     View Your Properties <span class="nav-badge" id="myPropsBadge">0</span>
@@ -931,7 +1225,7 @@
                     Opportunities & Leads <span class="nav-badge" id="leadsBadge">0</span>
                 </button>
                 <button class="nav-btn" id="tab-insights" onclick="switchTab('insights')">
-                    EMI & Market Insights
+                    Calculators & Insights
                 </button>
             </div>
         </nav>
@@ -940,19 +1234,19 @@
     <!-- ================= MAIN CONTAINER ================= -->
     <main class="container">
 
-        <!-- ================= SECTION 1: MARKETPLACE / DASHBOARD ================= -->
+        <!-- ================= SECTION 1: MARKETPLACE DASHBOARD ================= -->
         <section id="sec-dashboard" class="app-section active-section">
             <div class="section-header-box">
                 <div>
                     <h2>Indian Realty Marketplace</h2>
-                    <p>Verified RERA formations, resale properties, zero-brokerage owner flats, and premium commercial plots across India.</p>
+                    <p>Verified RERA formations, zero-brokerage owner properties, and high-yield commercial assets across India.</p>
                 </div>
                 <div>
-                    <span class="identity-badge" id="marketplaceCountBadge">Loading listings...</span>
+                    <span class="identity-badge" id="marketplaceCountBadge">Loading formations...</span>
                 </div>
             </div>
 
-            <!-- SEARCH & FILTER MATRIX -->
+            <!-- SEARCH & FILTER MATRIX WITH UNIVERSAL SEARCHABLE DROPDOWNS -->
             <div class="filter-matrix">
                 <div class="filter-grid">
                     <div class="form-group">
@@ -962,35 +1256,17 @@
 
                     <div class="form-group">
                         <label>Transaction Scope</label>
-                        <select id="filterTxType" class="boxy-select" onchange="applyFilters()">
-                            <option value="ALL">All Transactions</option>
-                            <option value="For Sale">For Sale (Buy)</option>
-                            <option value="For Rent">For Rent (Lease)</option>
-                        </select>
+                        <div class="typeahead-container" id="filterTxTypeContainer"></div>
                     </div>
 
                     <div class="form-group">
                         <label>BHK Layout</label>
-                        <select id="filterBhk" class="boxy-select" onchange="applyFilters()">
-                            <option value="ALL">All Configurations</option>
-                            <option value="1 BHK">1 BHK</option>
-                            <option value="2 BHK">2 BHK</option>
-                            <option value="3 BHK">3 BHK</option>
-                            <option value="4+ BHK">4+ BHK / Penthouse</option>
-                            <option value="Commercial">Commercial / Plot</option>
-                        </select>
+                        <div class="typeahead-container" id="filterBhkContainer"></div>
                     </div>
 
                     <div class="form-group">
                         <label>Max Budget (INR ₹)</label>
-                        <select id="filterMaxPrice" class="boxy-select" onchange="applyFilters()">
-                            <option value="ALL">Any Budget</option>
-                            <option value="5000000">Under ₹50 Lakhs</option>
-                            <option value="10000000">Under ₹1.0 Crore</option>
-                            <option value="25000000">Under ₹2.5 Crores</option>
-                            <option value="50000000">Under ₹5.0 Crores</option>
-                            <option value="100000000">Under ₹10.0 Crores</option>
-                        </select>
+                        <div class="typeahead-container" id="filterBudgetContainer"></div>
                     </div>
 
                     <div class="form-group">
@@ -1008,7 +1284,7 @@
             <div class="section-header-box">
                 <div>
                     <h2>Post Your Property Without Brokerage</h2>
-                    <p>Enter comprehensive Indian technical real estate details to attract verified buyers and direct tenant leads.</p>
+                    <p>Complete all property specifications and add up to 8 categorized photos to receive verified buyer inquiries.</p>
                 </div>
                 <button class="btn-boxy btn-boxy-outline" onclick="loadSampleListingData()">Fill Demo Sample Data</button>
             </div>
@@ -1023,23 +1299,14 @@
                     </div>
                     <div class="form-group">
                         <label>City *</label>
-                        <select id="propCity" class="boxy-select" required>
-                            <option value="Mumbai">Mumbai</option>
-                            <option value="Bangalore">Bangalore / Bengaluru</option>
-                            <option value="Delhi-NCR">Delhi-NCR (Gurugram / Noida)</option>
-                            <option value="Pune">Pune</option>
-                            <option value="Hyderabad">Hyderabad</option>
-                            <option value="Chennai">Chennai</option>
-                            <option value="Kolkata">Kolkata</option>
-                            <option value="Ahmedabad">Ahmedabad</option>
-                        </select>
+                        <div class="typeahead-container" id="propCityContainer"></div>
                     </div>
                 </div>
 
                 <div class="form-row-2">
                     <div class="form-group">
                         <label>Specific Locality / Sector *</label>
-                        <input type="text" id="propLocality" class="boxy-input" placeholder="e.g. Bandra West, Hiranandani Powai, Whitefield" required>
+                        <div class="typeahead-container" id="propLocalityContainer"></div>
                     </div>
                     <div class="form-group">
                         <label>RERA Registration Number (or 'Applied' / 'OC Received')</label>
@@ -1052,34 +1319,17 @@
                 <div class="form-row-3">
                     <div class="form-group">
                         <label>Property Classification *</label>
-                        <select id="propType" class="boxy-select" required>
-                            <option value="Apartment">Apartment / High-rise Flat</option>
-                            <option value="Independent Villa">Independent Villa / Bungalow</option>
-                            <option value="Penthouse">Penthouse</option>
-                            <option value="Commercial Office">Commercial Grade-A Office</option>
-                            <option value="Retail Showroom">Retail Showroom</option>
-                            <option value="Plot / Land">Residential NA Plot</option>
-                        </select>
+                        <div class="typeahead-container" id="propTypeContainer"></div>
                     </div>
 
                     <div class="form-group">
                         <label>BHK Specification *</label>
-                        <select id="propBhk" class="boxy-select" required>
-                            <option value="1 RK">1 RK / Studio</option>
-                            <option value="1 BHK">1 BHK</option>
-                            <option value="2 BHK" selected>2 BHK</option>
-                            <option value="3 BHK">3 BHK</option>
-                            <option value="4+ BHK">4+ BHK / Sky Villa</option>
-                            <option value="Commercial">Commercial / NA</option>
-                        </select>
+                        <div class="typeahead-container" id="propBhkContainer"></div>
                     </div>
 
                     <div class="form-group">
                         <label>Transaction Model *</label>
-                        <select id="propTxType" class="boxy-select" required>
-                            <option value="For Sale">For Sale (Outright Purchase)</option>
-                            <option value="For Rent">For Rent / Lease</option>
-                        </select>
+                        <div class="typeahead-container" id="propTxTypeContainer"></div>
                     </div>
                 </div>
 
@@ -1105,18 +1355,18 @@
                 <div class="form-row-3">
                     <div class="form-group">
                         <label>Total Demand Value (INR ₹) *</label>
-                        <input type="number" id="propPrice" class="boxy-input" placeholder="e.g. 18500000 (1.85 Cr)" required oninput="renderPriceHelper(this.value)">
-                        <small id="priceHelperTag" style="color:var(--brand-primary); font-weight:bold; font-size:11px; margin-top:2px;">₹ 0</small>
+                        <input type="text" id="propPriceFormatted" class="boxy-input" placeholder="e.g. 1,85,00,000" required oninput="handlePriceInputChange(this)">
+                        <div id="priceHelperTag" class="currency-helper">₹ 0</div>
                     </div>
 
                     <div class="form-group">
                         <label>Monthly Maintenance (₹)</label>
-                        <input type="number" id="propMaintenance" class="boxy-input" placeholder="e.g. 6500 / month">
+                        <input type="text" id="propMaintenanceFormatted" class="boxy-input" placeholder="e.g. 6,500" oninput="formatAuxiliaryCurrency(this)">
                     </div>
 
                     <div class="form-group">
                         <label>Security Deposit (If Renting)</label>
-                        <input type="number" id="propDeposit" class="boxy-input" placeholder="e.g. 200000">
+                        <input type="text" id="propDepositFormatted" class="boxy-input" placeholder="e.g. 2,00,000" oninput="formatAuxiliaryCurrency(this)">
                     </div>
                 </div>
 
@@ -1125,33 +1375,17 @@
                 <div class="form-row-3">
                     <div class="form-group">
                         <label>Vastu Entrance Facing</label>
-                        <select id="propFacing" class="boxy-select">
-                            <option value="East Facing">East Facing (Auspicious)</option>
-                            <option value="North-East Facing">North-East Facing (Ishanya)</option>
-                            <option value="North Facing">North Facing</option>
-                            <option value="West Facing">West Facing</option>
-                            <option value="South Facing">South Facing</option>
-                        </select>
+                        <div class="typeahead-container" id="propFacingContainer"></div>
                     </div>
 
                     <div class="form-group">
                         <label>Possession Timeline *</label>
-                        <select id="propPossession" class="boxy-select" required>
-                            <option value="Ready to Move (OC Received)">Ready to Move (OC Received)</option>
-                            <option value="Under Construction (Possession in 2026)">Under Construction (Possession 2026)</option>
-                            <option value="Under Construction (Possession in 2027+)">Under Construction (Possession 2027+)</option>
-                            <option value="New Launch">New Launch Phase 1</option>
-                        </select>
+                        <div class="typeahead-container" id="propPossessionContainer"></div>
                     </div>
 
                     <div class="form-group">
                         <label>Dedicated Car Parking</label>
-                        <select id="propParking" class="boxy-select">
-                            <option value="1 Covered Basement">1 Covered Basement</option>
-                            <option value="2 Covered Stilt/Basement">2 Covered Stilt/Basement</option>
-                            <option value="1 Open Parking">1 Open Parking</option>
-                            <option value="No Dedicated Parking">No Dedicated Parking</option>
-                        </select>
+                        <div class="typeahead-container" id="propParkingContainer"></div>
                     </div>
                 </div>
 
@@ -1169,16 +1403,44 @@
                     </div>
                 </div>
 
-                <!-- 5. IMAGES & DESCRIPTION -->
-                <div class="form-section-title">5. Image Assets & Architectural Overview</div>
-                <div class="form-group">
-                    <label>Primary Showcase Image URL (High Resolution)</label>
-                    <input type="url" id="propImageUrl" class="boxy-input" placeholder="https://images.unsplash.com/... (Defaults provided if empty)">
+                <!-- 5. ADVANCED PHOTO UPLOAD & ASSET MANAGER (MAX 8 PICS) -->
+                <div class="form-section-title">
+                    <span>5. Property Photos (Max 8 Images)</span>
+                    <span id="photoCounterLabel" style="font-size:12px; color:var(--text-dark);">0 / 8 Uploaded</span>
                 </div>
 
-                <div class="form-group" style="margin-top: 12px;">
-                    <label>Executive Description & Road Connectivity *</label>
-                    <textarea id="propDescription" class="boxy-input" rows="4" placeholder="Detail proximity to Metro, Highway, schools, quality of marble flooring, balcony orientation..." required></textarea>
+                <div class="photo-upload-zone" id="photoDropArea">
+                    <input type="file" id="photoFileInput" multiple accept="image/*" onchange="handlePhotoUpload(this.files)">
+                    <div style="font-size: 16px; font-weight: 700; color: var(--brand-primary); margin-bottom: 4px;">
+                        + CLICK OR DROP LOCAL PROPERTY PHOTOS
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted);">
+                        Upload up to 8 crisp photos. Tag room types (Living Room, Kitchen, Master Bedroom, etc.) and designate one as cover picture.
+                    </div>
+                </div>
+
+                <div id="galleryPreviewContainer" class="gallery-preview-grid"></div>
+
+                <!-- 6. AI DESCRIPTION GENERATOR & CHARACTER COUNTER -->
+                <div class="form-section-title" style="margin-top:24px;">
+                    <span>6. Executive Architectural Description</span>
+                    <button type="button" class="btn-ai-generate" onclick="generateAiWriteup()">
+                        ⚡ GENERATE WITH AI
+                    </button>
+                </div>
+
+                <!-- 1-Sec Sleek AI Loading Indicator -->
+                <div class="ai-processing-box" id="aiProcessingState">
+                    <div class="ai-spinner"></div>
+                    <span>AI Architect Synthesizing Property Blueprint & Sales Pitch...</span>
+                </div>
+
+                <div class="form-group">
+                    <div class="description-header">
+                        <label>Detailed Property Write-up *</label>
+                        <div class="char-counter invalid" id="descCharCounter">0 / 2000 chars (Min: 100 required)</div>
+                    </div>
+                    <textarea id="propDescription" class="boxy-input" rows="5" placeholder="Detail proximity to Metro, Highway, schools, flooring quality, balcony views, and lifestyle conveniences..." required oninput="validateDescriptionLength()"></textarea>
                 </div>
 
                 <div style="margin-top: 24px; display: flex; gap: 12px;">
@@ -1194,7 +1456,7 @@
             <div class="section-header-box">
                 <div>
                     <h2>Your Uploaded Real Estate Formations</h2>
-                    <p>Live inventory managed under your verified identity signature. Toggle listing visibility or update sale statuses.</p>
+                    <p>Live inventory managed under your verified identity signature. Toggle listing statuses or delete inventory.</p>
                 </div>
                 <button class="btn-boxy" onclick="switchTab('post')">+ Post Another Property</button>
             </div>
@@ -1202,12 +1464,12 @@
             <div id="myPropertiesContainer" class="properties-grid"></div>
         </section>
 
-        <!-- ================= SECTION 4: OPPORTUNITIES / LEADS ================= -->
+        <!-- ================= SECTION 4: OPPORTUNITIES & LEADS ================= -->
         <section id="sec-leads" class="app-section">
             <div class="section-header-box">
                 <div>
                     <h2>Opportunities & Customer Inquiries</h2>
-                    <p>Verified buyers and prospective tenants who requested direct owner contact for your uploaded properties.</p>
+                    <p>Prospective buyers and tenants who enquired directly on your uploaded properties.</p>
                 </div>
                 <div class="identity-badge" id="leadsSummaryBadge">0 Active Inquiries</div>
             </div>
@@ -1220,7 +1482,7 @@
             <div class="section-header-box">
                 <div>
                     <h2>Financial Calculators & Market Trends</h2>
-                    <p>Accurate Indian home loan EMI projection, stamp duty tax brackets, and live locality benchmarks.</p>
+                    <p>Repo-linked home loan EMI estimations and statutory stamp duty tax slabs across Indian metro hubs.</p>
                 </div>
             </div>
 
@@ -1274,13 +1536,9 @@
                     </div>
                 </div>
 
-                <!-- STAMP DUTY & RERA SUMMARY -->
+                <!-- STAMP DUTY BREAKDOWN -->
                 <div class="calc-box">
                     <div class="form-section-title" style="margin-top:0;">Indian State Stamp Duty & Registration Guide</div>
-                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
-                        Standard statutory charges payable to the state registrar at the time of property conveyance deed execution:
-                    </p>
-
                     <table class="breakdown-table">
                         <tr style="background:#f0f0f0; font-weight:bold;">
                             <td>State / Region</td>
@@ -1295,12 +1553,12 @@
                         <tr>
                             <td>Karnataka (Bengaluru)</td>
                             <td>5.0% + 10% Cess</td>
-                            <td>1.0% of Agreement Value</td>
+                            <td>1.0% of Value</td>
                         </tr>
                         <tr>
-                            <td>Delhi-NCR (Noida/Gurugram)</td>
-                            <td>5% to 7% (Gender dependent)</td>
-                            <td>1.0% to ₹50,000 Cap</td>
+                            <td>Delhi-NCR (Gurugram/Noida)</td>
+                            <td>5% to 7%</td>
+                            <td>1.0% (Capped ₹50,000)</td>
                         </tr>
                         <tr>
                             <td>Telangana (Hyderabad)</td>
@@ -1309,35 +1567,19 @@
                         </tr>
                     </table>
 
-                    <div class="form-section-title">Market Price Trends (Average ₹/Sq.Ft)</div>
-                    <div class="trends-grid">
-                        <div class="trend-card">
-                            <div style="font-size:11px; font-weight:bold; color:var(--text-light);">MUMBAI - WESTERN SUBURBS</div>
-                            <div style="font-size:18px; font-weight:bold; color:var(--brand-primary); margin:2px 0;">₹ 34,500 / sq.ft</div>
-                            <div style="font-size:11px; color:var(--success-color); font-weight:bold;">▲ +8.4% YoY Appreciation</div>
+                    <div class="form-section-title">Verified City Capital Growth Trends</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
+                        <div style="border:1.5px solid var(--border-crisp); padding:10px; background:#fdfdfd;">
+                            <div style="font-size:11px; font-weight:bold; color:var(--text-muted);">MUMBAI SUBURBS</div>
+                            <div style="font-size:18px; font-weight:bold; color:var(--brand-primary);">₹ 34,500/sq.ft</div>
+                            <div style="font-size:11px; color:var(--success-color); font-weight:bold;">▲ +8.4% YoY</div>
                         </div>
-
-                        <div class="trend-card">
-                            <div style="font-size:11px; font-weight:bold; color:var(--text-light);">BENGALURU - WHITEFIELD / ORR</div>
-                            <div style="font-size:18px; font-weight:bold; color:var(--brand-primary); margin:2px 0;">₹ 11,200 / sq.ft</div>
-                            <div style="font-size:11px; color:var(--success-color); font-weight:bold;">▲ +12.1% YoY Appreciation</div>
+                        <div style="border:1.5px solid var(--border-crisp); padding:10px; background:#fdfdfd;">
+                            <div style="font-size:11px; font-weight:bold; color:var(--text-muted);">BENGALURU ORR</div>
+                            <div style="font-size:18px; font-weight:bold; color:var(--brand-primary);">₹ 11,200/sq.ft</div>
+                            <div style="font-size:11px; color:var(--success-color); font-weight:bold;">▲ +12.1% YoY</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- CURATED REAL ESTATE NEWS -->
-            <div style="margin-top: 30px;">
-                <div class="form-section-title">RERA & Real Estate Regulatory Dispatch</div>
-                <div class="news-card">
-                    <div class="news-date">MahaRERA Regulatory Advisory • Active Directive</div>
-                    <div class="news-title">Mandatory Carpet Area Definition in Sale Agreements for All Tier-1 Developers</div>
-                    <p style="font-size:13px; color:var(--text-dark);">All registered developers are strictly legally mandated to sell solely based on net RERA usable carpet area, explicitly prohibiting loading confusion in booking confirmations.</p>
-                </div>
-                <div class="news-card">
-                    <div class="news-date">RBI Monetary Policy Review • Banking Standards</div>
-                    <div class="news-title">Repo-Linked Home Loans Provide Transparent Benchmark for Retail Borrowers</div>
-                    <p style="font-size:13px; color:var(--text-dark);">Floating rate mortgages linked directly to the external repo benchmark ensure immediate rate transmission for Indian homebuyers looking at ready-to-move projects.</p>
                 </div>
             </div>
         </section>
@@ -1364,7 +1606,7 @@
                     </div>
 
                     <div class="form-group" style="margin-bottom:12px;">
-                        <label>Indian Mobile Number (for WhatsApp & SMS) *</label>
+                        <label>Indian Mobile Number (WhatsApp & SMS) *</label>
                         <input type="tel" id="inqBuyerPhone" class="boxy-input" placeholder="+91 98765 43210" required>
                     </div>
 
@@ -1374,13 +1616,13 @@
                     </div>
 
                     <div class="form-group" style="margin-bottom:12px;">
-                        <label>Your Budget / Offer (₹ Lakhs / Crores)</label>
-                        <input type="text" id="inqBuyerOffer" class="boxy-input" placeholder="e.g. ₹ 1.80 Cr or Negotiable">
+                        <label>Proposed Budget / Offer (INR ₹)</label>
+                        <input type="text" id="inqBuyerOffer" class="boxy-input" placeholder="e.g. 1,80,00,000" oninput="formatAuxiliaryCurrency(this)">
                     </div>
 
                     <div class="form-group" style="margin-bottom:16px;">
                         <label>Preferred Site Visit Slot / Question</label>
-                        <textarea id="inqBuyerMessage" class="boxy-input" rows="3" placeholder="Requesting Saturday site visit slot and floor plan PDF copy..."></textarea>
+                        <textarea id="inqBuyerMessage" class="boxy-input" rows="3" placeholder="Requesting Saturday site visit slot and floor plan verification..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-boxy" style="width:100%; padding:12px;">
@@ -1391,30 +1633,30 @@
         </div>
     </div>
 
-    <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+    <!-- ================= TOAST CONTAINER ================= -->
     <div id="toastContainer"></div>
 
-    <!-- ================= JAVASCRIPT APPLICATION CORE ================= -->
+    <!-- ================= APPLICATION JAVASCRIPT ================= -->
     <script>
         /* ==========================================================================
-           BOXYARD v1.0 APP CORE LOGIC & STATE CONTROLLER
+           BOXYARD v1.01 APPLICATION ENGINE
            ========================================================================== */
         const CURRENT_USER_ID = "BY-IND-8821";
-        const STORAGE_KEY_PROPS = "boxyard_properties_store_v1";
-        const STORAGE_KEY_LEADS = "boxyard_leads_store_v1";
+        const STORAGE_KEY_PROPS = "boxyard_properties_store_v101";
+        const STORAGE_KEY_LEADS = "boxyard_leads_store_v101";
 
-        // Initial Sample Indian Real Estate Formations
+        // Preloaded Indian Real Estate Formations
         const DEFAULT_PROPERTIES = [
             {
                 id: "BY-PROP-1001",
-                ownerId: "BY-IND-8821", // User's own listed formation
+                ownerId: "BY-IND-8821",
                 title: "Kalpataru Radiance Towers",
                 locality: "Siddharth Nagar, Goregaon West",
                 city: "Mumbai",
                 propertyType: "Apartment",
                 bhk: "3 BHK",
                 transactionType: "For Sale",
-                price: 32500000, // 3.25 Cr
+                price: 32500000,
                 carpetArea: 1140,
                 superArea: 1650,
                 reraNumber: "P51800000812 (MahaRERA)",
@@ -1423,8 +1665,11 @@
                 facing: "East Facing",
                 parking: "2 Covered Basement",
                 amenities: ["Municipal 24/7 Water", "100% DG Power Backup", "Modern Gymnasium", "Clubhouse & Pool", "3-Tier Gated Security", "Piped PNG Gas Line"],
-                imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
-                description: "Spacious Vastu-compliant 3 BHK high-floor residence with panoramic views of the Aarey greens. 5 minutes from Western Express Highway and Goregaon West Metro.",
+                photos: [
+                    { id: "p1", dataUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80", tag: "Living Room", isCover: true },
+                    { id: "p2", dataUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", tag: "Master Bedroom", isCover: false }
+                ],
+                description: "Spacious Vastu-compliant 3 BHK high-floor residence with panoramic vistas of the Aarey greens. Located within 5 minutes of the Western Express Highway and Goregaon West Metro Station. Features high ceiling spans, double-glazed soundproof glass, and imported marble flooring.",
                 viewsCount: 342,
                 status: "Live on Marketplace",
                 createdDate: "2026-10-14"
@@ -1438,7 +1683,7 @@
                 propertyType: "Apartment",
                 bhk: "2 BHK",
                 transactionType: "For Sale",
-                price: 13500000, // 1.35 Cr
+                price: 13500000,
                 carpetArea: 920,
                 superArea: 1290,
                 reraNumber: "PRM/KA/RERA/1251/446/PR/170915",
@@ -1447,46 +1692,24 @@
                 facing: "North-East Facing",
                 parking: "1 Covered Basement",
                 amenities: ["Municipal 24/7 Water", "100% DG Power Backup", "Modern Gymnasium", "3-Tier Gated Security", "High-speed Passenger Lift"],
-                imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-                description: "Prime township living near tech parks. Full club access, international school inside complex, direct skywalk to commercial hub.",
+                photos: [
+                    { id: "p1", dataUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", tag: "Living Room", isCover: true }
+                ],
+                description: "Prime township living located adjacent to Whitefield Tech Parks. Full club access, international school inside premises, direct skywalk to commercial hub, and uninterrupted municipal Kaveri water connection with 100% DG generator backup.",
                 viewsCount: 681,
                 status: "Live on Marketplace",
                 createdDate: "2026-10-20"
             },
             {
                 id: "BY-PROP-1003",
-                ownerId: "BY-IND-5520",
-                title: "Hiranandani Heritage Gardens",
-                locality: "Central Avenue, Hiranandani Powai",
-                city: "Mumbai",
-                propertyType: "Apartment",
-                bhk: "2 BHK",
-                transactionType: "For Rent",
-                price: 85000, // 85k / month
-                carpetArea: 780,
-                superArea: 1050,
-                reraNumber: "P51800002140 (MahaRERA)",
-                possession: "Ready to Move (OC Received)",
-                floor: "12th of 26 Floors",
-                facing: "North Facing",
-                parking: "1 Open Parking",
-                amenities: ["Municipal 24/7 Water", "Modern Gymnasium", "3-Tier Gated Security", "High-speed Passenger Lift"],
-                imageUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-                description: "Elegantly semi-furnished home inside Hiranandani township. Walking distance to Galleria Shopping Mall, IIT Bombay, and business avenues.",
-                viewsCount: 419,
-                status: "Live on Marketplace",
-                createdDate: "2026-10-25"
-            },
-            {
-                id: "BY-PROP-1004",
-                ownerId: "BY-IND-8821", // Another listing by current user
+                ownerId: "BY-IND-8821",
                 title: "DLF Cyber Heights Executive Suite",
                 locality: "Golf Course Extension Road",
                 city: "Delhi-NCR",
                 propertyType: "Commercial Office",
                 bhk: "Commercial",
                 transactionType: "For Sale",
-                price: 48000000, // 4.80 Cr
+                price: 48000000,
                 carpetArea: 2100,
                 superArea: 3200,
                 reraNumber: "HRERA-PKL-GGM-1092-2021",
@@ -1495,15 +1718,16 @@
                 facing: "East Facing",
                 parking: "3 Covered Basement",
                 amenities: ["100% DG Power Backup", "High-speed Passenger Lift", "3-Tier Gated Security", "EV Charging Bay"],
-                imageUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
-                description: "Grade-A LEED Platinum certified commercial office plate with existing MNC tenant lease running until 2029. High 8.2% rental yield.",
+                photos: [
+                    { id: "p1", dataUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", tag: "Exterior", isCover: true }
+                ],
+                description: "Grade-A LEED Platinum certified commercial office plate with existing Fortune 500 MNC tenant lease running until 2029. High 8.2% gross rental yield with annual escalation clauses. Fully furnished with executive boardroom and cafeteria.",
                 viewsCount: 512,
                 status: "Live on Marketplace",
                 createdDate: "2026-10-28"
             }
         ];
 
-        // Sample Opportunities / Buyer Leads
         const DEFAULT_LEADS = [
             {
                 id: "LEAD-901",
@@ -1513,62 +1737,50 @@
                 buyerName: "Vikramaditya Singhania",
                 buyerPhone: "+91 98201 54321",
                 buyerEmail: "v.singhania@apexfin.in",
-                buyerOffer: "₹ 3.15 Crores (Ready Cheque)",
+                buyerOffer: "3,15,00,000",
                 message: "Interested in the high floor unit. Can we schedule an on-site inspection this coming Sunday at 11:30 AM?",
                 leadStatus: "New Opportunity",
                 timestamp: "2026-10-30 14:22"
-            },
-            {
-                id: "LEAD-902",
-                propertyId: "BY-PROP-1004",
-                propertyTitle: "DLF Cyber Heights (Commercial)",
-                ownerId: "BY-IND-8821",
-                buyerName: "Meenakshi Sundaram",
-                buyerPhone: "+91 97110 99887",
-                buyerEmail: "meenakshi@sundaramholdings.com",
-                buyerOffer: "₹ 4.60 Crores",
-                message: "Please share the tenant lease agreement extract, monthly maintenance bill, and OC documents on WhatsApp.",
-                leadStatus: "In Negotiation",
-                timestamp: "2026-11-01 09:45"
             }
         ];
 
-        // App State Variables
+        // Global Stores
         let propertiesStore = [];
         let leadsStore = [];
+        let currentUploadedPhotos = []; // Local photos for post form
+        let typeaheadInstances = {};
 
-        // Initialization
+        // Room tagging list
+        const ROOM_TAG_OPTIONS = [
+            "Living Room",
+            "Master Bedroom",
+            "Bedroom",
+            "Kitchen",
+            "Washroom",
+            "Balcony",
+            "Exterior",
+            "Floor Plan",
+            "Others"
+        ];
+
+        /* ================= INITIALIZATION ================= */
         window.addEventListener('DOMContentLoaded', () => {
             initializeDatabase();
+            setupSearchableDropdowns();
             calculateEmi();
             updateBadges();
             renderMarketplace();
+            validateDescriptionLength();
         });
 
         function initializeDatabase() {
             const storedProps = localStorage.getItem(STORAGE_KEY_PROPS);
-            if (storedProps) {
-                try {
-                    propertiesStore = JSON.parse(storedProps);
-                } catch (e) {
-                    propertiesStore = DEFAULT_PROPERTIES;
-                }
-            } else {
-                propertiesStore = DEFAULT_PROPERTIES;
-                savePropertiesToStorage();
-            }
+            propertiesStore = storedProps ? JSON.parse(storedProps) : DEFAULT_PROPERTIES;
+            if (!storedProps) savePropertiesToStorage();
 
             const storedLeads = localStorage.getItem(STORAGE_KEY_LEADS);
-            if (storedLeads) {
-                try {
-                    leadsStore = JSON.parse(storedLeads);
-                } catch (e) {
-                    leadsStore = DEFAULT_LEADS;
-                }
-            } else {
-                leadsStore = DEFAULT_LEADS;
-                saveLeadsToStorage();
-            }
+            leadsStore = storedLeads ? JSON.parse(storedLeads) : DEFAULT_LEADS;
+            if (!storedLeads) saveLeadsToStorage();
         }
 
         function savePropertiesToStorage() {
@@ -1579,7 +1791,353 @@
             localStorage.setItem(STORAGE_KEY_LEADS, JSON.stringify(leadsStore));
         }
 
-        /* ---------------- NAVIGATION CONTROLLER ---------------- */
+        /* ================= UNIVERSAL SEARCHABLE TYPEAHEAD ENGINE ================= */
+        class SearchableTypeahead {
+            constructor(containerId, options, initialValue = "", onChange = null) {
+                this.container = document.getElementById(containerId);
+                this.options = options;
+                this.value = initialValue;
+                this.onChange = onChange;
+                this.render();
+            }
+
+            render() {
+                if (!this.container) return;
+                this.container.innerHTML = `
+                    <input type="text" class="typeahead-input" value="${this.value}" autocomplete="off" placeholder="Type or select...">
+                    <span class="typeahead-arrow">▼</span>
+                    <div class="typeahead-dropdown"></div>
+                `;
+
+                this.input = this.container.querySelector('.typeahead-input');
+                this.dropdown = this.container.querySelector('.typeahead-dropdown');
+
+                // Events
+                this.input.addEventListener('focus', () => this.openDropdown());
+                this.input.addEventListener('input', (e) => this.filterOptions(e.target.value));
+                this.input.addEventListener('blur', () => {
+                    setTimeout(() => this.dropdown.classList.remove('show-dropdown'), 200);
+                });
+            }
+
+            openDropdown() {
+                this.filterOptions(this.input.value);
+                this.dropdown.classList.add('show-dropdown');
+            }
+
+            filterOptions(query) {
+                const q = query.trim().toLowerCase();
+                const matched = this.options.filter(opt => opt.toLowerCase().includes(q));
+
+                if (matched.length === 0) {
+                    this.dropdown.innerHTML = `<div class="typeahead-no-results">No options match "${query}"</div>`;
+                    return;
+                }
+
+                // Sorting: matches that start with query first, then alphabetical
+                matched.sort((a, b) => {
+                    const aStarts = a.toLowerCase().startsWith(q);
+                    const bStarts = b.toLowerCase().startsWith(q);
+                    if (aStarts && !bStarts) return -1;
+                    if (!aStarts && bStarts) return 1;
+                    return a.localeCompare(b);
+                });
+
+                this.dropdown.innerHTML = '';
+                matched.forEach(opt => {
+                    const row = document.createElement('div');
+                    row.className = 'typeahead-option';
+                    row.innerText = opt;
+                    row.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        this.setValue(opt);
+                        this.dropdown.classList.remove('show-dropdown');
+                    });
+                    this.dropdown.appendChild(row);
+                });
+                this.dropdown.classList.add('show-dropdown');
+            }
+
+            setValue(val) {
+                this.value = val;
+                this.input.value = val;
+                if (this.onChange) this.onChange(val);
+            }
+
+            getValue() {
+                return this.value || this.input.value.trim();
+            }
+        }
+
+        function setupSearchableDropdowns() {
+            // Marketplace Filters
+            typeaheadInstances['filterTxType'] = new SearchableTypeahead('filterTxTypeContainer', 
+                ["All Transactions", "For Sale", "For Rent"], "All Transactions", () => applyFilters());
+
+            typeaheadInstances['filterBhk'] = new SearchableTypeahead('filterBhkContainer', 
+                ["All Configurations", "1 RK", "1 BHK", "2 BHK", "3 BHK", "4+ BHK", "Commercial"], "All Configurations", () => applyFilters());
+
+            typeaheadInstances['filterBudget'] = new SearchableTypeahead('filterBudgetContainer', 
+                ["Any Budget", "Under ₹ 50 Lakh", "Under ₹ 1.0 Crore", "Under ₹ 2.5 Crore", "Under ₹ 5.0 Crore", "Under ₹ 10.0 Crore"], "Any Budget", () => applyFilters());
+
+            // Post Form Fields
+            typeaheadInstances['propCity'] = new SearchableTypeahead('propCityContainer', 
+                ["Mumbai", "Bangalore", "Delhi-NCR", "Pune", "Hyderabad", "Chennai", "Kolkata", "Ahmedabad", "Chandigarh"], "Mumbai", () => updateLocalitiesForCity());
+
+            typeaheadInstances['propLocality'] = new SearchableTypeahead('propLocalityContainer', 
+                ["Bandra West", "Hiranandani Powai", "Goregaon West", "Whitefield", "Indiranagar", "Golf Course Road", "Cyber City", "Kothrud", "Banjara Hills", "Jubilee Hills", "Alipore"], "Bandra West");
+
+            typeaheadInstances['propType'] = new SearchableTypeahead('propTypeContainer', 
+                ["Apartment", "Independent Villa", "Penthouse", "Commercial Office", "Retail Showroom", "Residential Plot"], "Apartment");
+
+            typeaheadInstances['propBhk'] = new SearchableTypeahead('propBhkContainer', 
+                ["1 RK", "1 BHK", "2 BHK", "3 BHK", "4+ BHK", "Commercial"], "2 BHK");
+
+            typeaheadInstances['propTxType'] = new SearchableTypeahead('propTxTypeContainer', 
+                ["For Sale", "For Rent"], "For Sale");
+
+            typeaheadInstances['propFacing'] = new SearchableTypeahead('propFacingContainer', 
+                ["East Facing", "North-East Facing", "North Facing", "West Facing", "South Facing"], "East Facing");
+
+            typeaheadInstances['propPossession'] = new SearchableTypeahead('propPossessionContainer', 
+                ["Ready to Move (OC Received)", "Under Construction (Possession 2026)", "Under Construction (Possession 2027+)", "New Launch"], "Ready to Move (OC Received)");
+
+            typeaheadInstances['propParking'] = new SearchableTypeahead('propParkingContainer', 
+                ["1 Covered Basement", "2 Covered Basement", "1 Open Parking", "No Dedicated Parking"], "1 Covered Basement");
+        }
+
+        function updateLocalitiesForCity() {
+            const city = typeaheadInstances['propCity'].getValue();
+            let localities = ["City Center", "Greenfield Sector", "High Street"];
+            if (city === "Mumbai") localities = ["Bandra West", "Hiranandani Powai", "Goregaon West", "Worli Seaface", "Andheri West", "Thane West"];
+            if (city === "Bangalore") localities = ["Whitefield", "Indiranagar", "Koramangala", "HSR Layout", "Hebbal", "Sarjapur Road"];
+            if (city === "Delhi-NCR") localities = ["Golf Course Extension Road", "DLF Phase 5", "Noida Expressway", "Cyber Hub", "Greater Kailash"];
+            if (city === "Pune") localities = ["Kothrud", "Baner", "Hinjewadi Tech Park", "Viman Nagar", "Kalyani Nagar"];
+            
+            typeaheadInstances['propLocality'].options = localities;
+            typeaheadInstances['propLocality'].setValue(localities[0]);
+        }
+
+        /* ================= INDIAN NUMBERING SYSTEM FORMATTING ================= */
+        // Formats raw digits to Indian comma scheme: 12,34,56,789
+        function formatToIndianNumbering(rawDigits) {
+            if (!rawDigits) return "";
+            const str = rawDigits.toString().replace(/[^0-9]/g, '');
+            if (!str) return "";
+
+            let lastThree = str.substring(str.length - 3);
+            const otherNumbers = str.substring(0, str.length - 3);
+            if (otherNumbers !== '') {
+                lastThree = ',' + lastThree;
+            }
+            return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        }
+
+        // Returns verbal evaluation (e.g. ₹ 1.85 Crore)
+        function convertNumberToIndianWords(numberVal) {
+            const num = Number(numberVal);
+            if (isNaN(num) || num <= 0) return "₹ 0";
+            if (num >= 10000000) {
+                return `₹ ${(num / 10000000).toFixed(2)} Crore`;
+            } else if (num >= 100000) {
+                return `₹ ${(num / 100000).toFixed(2)} Lakh`;
+            } else if (num >= 1000) {
+                return `₹ ${(num / 1000).toFixed(2)} Thousand`;
+            }
+            return `₹ ${num.toLocaleString('en-IN')}`;
+        }
+
+        function handlePriceInputChange(inputEl) {
+            const rawDigits = inputEl.value.replace(/[^0-9]/g, '');
+            if (!rawDigits) {
+                inputEl.value = "";
+                document.getElementById('priceHelperTag').innerText = "₹ 0";
+                return;
+            }
+            inputEl.value = formatToIndianNumbering(rawDigits);
+            document.getElementById('priceHelperTag').innerText = `Evaluation: ${convertNumberToIndianWords(rawDigits)}`;
+        }
+
+        function formatAuxiliaryCurrency(inputEl) {
+            const rawDigits = inputEl.value.replace(/[^0-9]/g, '');
+            inputEl.value = formatToIndianNumbering(rawDigits);
+        }
+
+        /* ================= ADVANCED PHOTO UPLOAD & ASSET MANAGER ================= */
+        function handlePhotoUpload(files) {
+            if (!files || files.length === 0) return;
+
+            const remainingQuota = 8 - currentUploadedPhotos.length;
+            if (remainingQuota <= 0) {
+                showToast("Maximum photo limit reached (8 photos max).");
+                return;
+            }
+
+            const filesToProcess = Array.from(files).slice(0, remainingQuota);
+
+            filesToProcess.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const isFirstPhoto = currentUploadedPhotos.length === 0;
+                    currentUploadedPhotos.push({
+                        id: 'photo_' + Math.random().toString(36).substring(2, 9),
+                        dataUrl: e.target.result,
+                        tag: "Living Room",
+                        customTag: "",
+                        isCover: isFirstPhoto
+                    });
+                    renderPhotoPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Reset file input so same file can be chosen again if needed
+            document.getElementById('photoFileInput').value = '';
+        }
+
+        function renderPhotoPreviews() {
+            const container = document.getElementById('galleryPreviewContainer');
+            const counter = document.getElementById('photoCounterLabel');
+            container.innerHTML = '';
+
+            counter.innerText = `${currentUploadedPhotos.length} / 8 Uploaded`;
+
+            currentUploadedPhotos.forEach((item, index) => {
+                const el = document.createElement('div');
+                el.className = 'photo-preview-item';
+
+                const coverBadge = item.isCover ? `<div class="cover-badge">COVER PHOTO</div>` : '';
+
+                // Build custom option tags
+                let tagOptionsHtml = '';
+                ROOM_TAG_OPTIONS.forEach(opt => {
+                    tagOptionsHtml += `<option value="${opt}" ${item.tag === opt ? 'selected' : ''}>${opt}</option>`;
+                });
+
+                const isOther = (item.tag === "Others");
+                const otherInputHtml = isOther ? `
+                    <input type="text" class="boxy-input" style="padding:4px 6px; font-size:11px; margin-top:4px;" placeholder="Specify Room / Asset..." value="${item.customTag || ''}" oninput="updateCustomTag('${item.id}', this.value)">
+                ` : '';
+
+                el.innerHTML = `
+                    <div class="photo-preview-img-box">
+                        <img src="${item.dataUrl}" alt="Property Asset">
+                        ${coverBadge}
+                    </div>
+                    <div class="photo-preview-controls">
+                        <div>
+                            <label style="font-size:10px; font-weight:700; text-transform:uppercase;">Room Type Tag</label>
+                            <select class="boxy-input" style="padding:6px; font-size:12px; margin-top:2px;" onchange="updatePhotoTag('${item.id}', this.value)">
+                                ${tagOptionsHtml}
+                            </select>
+                            ${otherInputHtml}
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:4px;">
+                            <button type="button" class="btn-set-cover" onclick="setPhotoAsCover('${item.id}')" ${item.isCover ? 'disabled style="opacity:0.6;"' : ''}>
+                                ${item.isCover ? 'Cover Pic' : 'Set as Cover'}
+                            </button>
+                            <button type="button" class="btn-remove-photo" onclick="removePhoto('${item.id}')">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function updatePhotoTag(photoId, newTag) {
+            const photo = currentUploadedPhotos.find(p => p.id === photoId);
+            if (photo) {
+                photo.tag = newTag;
+                renderPhotoPreviews();
+            }
+        }
+
+        function updateCustomTag(photoId, customVal) {
+            const photo = currentUploadedPhotos.find(p => p.id === photoId);
+            if (photo) {
+                photo.customTag = customVal;
+            }
+        }
+
+        function setPhotoAsCover(photoId) {
+            currentUploadedPhotos.forEach(p => {
+                p.isCover = (p.id === photoId);
+            });
+            renderPhotoPreviews();
+            showToast("Cover photo updated.");
+        }
+
+        function removePhoto(photoId) {
+            currentUploadedPhotos = currentUploadedPhotos.filter(p => p.id !== photoId);
+            // If removed photo was cover and items exist, set first as cover
+            if (currentUploadedPhotos.length > 0 && !currentUploadedPhotos.some(p => p.isCover)) {
+                currentUploadedPhotos[0].isCover = true;
+            }
+            renderPhotoPreviews();
+        }
+
+        /* ================= AI DESCRIPTION GENERATOR & CHAR COUNTER ================= */
+        function validateDescriptionLength() {
+            const textarea = document.getElementById('propDescription');
+            const counter = document.getElementById('descCharCounter');
+            const len = textarea.value.length;
+
+            counter.innerText = `${len} / 2000 chars (Min: 100 required)`;
+
+            if (len >= 100 && len <= 2000) {
+                counter.className = 'char-counter valid';
+                return true;
+            } else {
+                counter.className = 'char-counter invalid';
+                return false;
+            }
+        }
+
+        function generateAiWriteup() {
+            const loadingBox = document.getElementById('aiProcessingState');
+            loadingBox.style.display = 'flex';
+
+            // Extract customer setup
+            const title = document.getElementById('propTitle').value.trim() || "Exclusive Premium Formation";
+            const bhk = typeaheadInstances['propBhk'].getValue();
+            const propType = typeaheadInstances['propType'].getValue();
+            const carpet = document.getElementById('propCarpetArea').value || "1,150";
+            const locality = typeaheadInstances['propLocality'].getValue();
+            const city = typeaheadInstances['propCity'].getValue();
+            const facing = typeaheadInstances['propFacing'].getValue();
+            const possession = typeaheadInstances['propPossession'].getValue();
+            const floor = document.getElementById('propFloor').value.trim() || "Higher Level Floor";
+            const price = document.getElementById('propPriceFormatted').value || "On Request";
+
+            // Gather active amenities
+            const amenitiesList = [];
+            if (document.getElementById('am_water').checked) amenitiesList.push("24/7 Municipal Water");
+            if (document.getElementById('am_power').checked) amenitiesList.push("100% DG Power Backup");
+            if (document.getElementById('am_gym').checked) amenitiesList.push("Gymnasium");
+            if (document.getElementById('am_club').checked) amenitiesList.push("Clubhouse");
+            if (document.getElementById('am_security').checked) amenitiesList.push("3-Tier Security");
+            if (document.getElementById('am_gas').checked) amenitiesList.push("Piped PNG Gas");
+
+            // 1 Second Sleek Animation Delay
+            setTimeout(() => {
+                loadingBox.style.display = 'none';
+
+                const aiGeneratedDraft = `BOXYARD Verified Executive Overview: Exceptional ${bhk} ${propType} located in the prestigious enclave of ${locality}, ${city}. 
+
+Spanning an expansive ${carpet} Sq.Ft of net RERA usable carpet area, this residence is situated on the ${floor}, enjoying unobstructed panoramic cross-ventilation and positive vastu alignment (${facing}). 
+
+Possession status: ${possession}. The property boasts an array of bespoke infrastructure features including ${amenitiesList.join(', ')}. Direct access to primary arterial roads, international schools, metro corridors, and corporate business districts makes this formation an unrivaled capital appreciation asset and dream residence. Direct from owner with absolute legal clarity.`;
+
+                const textarea = document.getElementById('propDescription');
+                textarea.value = aiGeneratedDraft;
+                validateDescriptionLength();
+                showToast("AI Description synthesized and applied successfully!");
+            }, 1000);
+        }
+
+        /* ================= NAVIGATION CONTROLLER ================= */
         function switchTab(targetTab) {
             document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active-section'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
@@ -1590,11 +2148,10 @@
             if (targetSection) targetSection.classList.add('active-section');
             if (targetButton) targetButton.classList.add('active');
 
-            // Hook data refreshes
             if (targetTab === 'dashboard') renderMarketplace();
             if (targetTab === 'myprops') renderMyProperties();
             if (targetTab === 'leads') renderLeads();
-            
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1608,48 +2165,32 @@
             document.getElementById('marketplaceCountBadge').innerText = `${propertiesStore.length} Formations Available`;
         }
 
-        /* ---------------- INDIAN CURRENCY FORMATTER ---------------- */
-        function formatIndianCurrency(amount) {
-            const num = Number(amount);
-            if (isNaN(num)) return "₹ 0";
-            if (num >= 10000000) {
-                return `₹ ${(num / 10000000).toFixed(2)} Cr`;
-            } else if (num >= 100000) {
-                return `₹ ${(num / 100000).toFixed(2)} Lakh`;
-            } else {
-                return `₹ ${num.toLocaleString('en-IN')}`;
-            }
-        }
-
-        function renderPriceHelper(val) {
-            const tag = document.getElementById('priceHelperTag');
-            if (!val || Number(val) <= 0) {
-                tag.innerText = "₹ 0";
-            } else {
-                tag.innerText = `Evaluation: ${formatIndianCurrency(val)}`;
-            }
-        }
-
-        /* ---------------- MARKETPLACE RENDERING & FILTERS ---------------- */
+        /* ================= MARKETPLACE RENDERING & FILTERS ================= */
         function renderMarketplace() {
             const container = document.getElementById('marketplaceListingsGrid');
             container.innerHTML = '';
 
             const keyword = document.getElementById('filterKeyword').value.trim().toLowerCase();
-            const txType = document.getElementById('filterTxType').value;
-            const bhk = document.getElementById('filterBhk').value;
-            const maxPrice = document.getElementById('filterMaxPrice').value;
+            const txType = typeaheadInstances['filterTxType'] ? typeaheadInstances['filterTxType'].getValue() : "All Transactions";
+            const bhk = typeaheadInstances['filterBhk'] ? typeaheadInstances['filterBhk'].getValue() : "All Configurations";
+            const budgetStr = typeaheadInstances['filterBudget'] ? typeaheadInstances['filterBudget'].getValue() : "Any Budget";
+
+            let maxPrice = Infinity;
+            if (budgetStr.includes("50 Lakh")) maxPrice = 5000000;
+            else if (budgetStr.includes("1.0 Crore")) maxPrice = 10000000;
+            else if (budgetStr.includes("2.5 Crore")) maxPrice = 25000000;
+            else if (budgetStr.includes("5.0 Crore")) maxPrice = 50000000;
+            else if (budgetStr.includes("10.0 Crore")) maxPrice = 100000000;
 
             const filtered = propertiesStore.filter(p => {
-                // Keyword matches title, locality, or city
                 const matchKeyword = !keyword || 
                     p.title.toLowerCase().includes(keyword) || 
                     p.locality.toLowerCase().includes(keyword) || 
                     p.city.toLowerCase().includes(keyword);
 
-                const matchTx = (txType === 'ALL') || (p.transactionType === txType);
-                const matchBhk = (bhk === 'ALL') || (p.bhk === bhk);
-                const matchPrice = (maxPrice === 'ALL') || (Number(p.price) <= Number(maxPrice));
+                const matchTx = (txType === "All Transactions") || (p.transactionType === txType);
+                const matchBhk = (bhk === "All Configurations") || (p.bhk === bhk);
+                const matchPrice = Number(p.price) <= maxPrice;
 
                 return matchKeyword && matchTx && matchBhk && matchPrice;
             });
@@ -1658,7 +2199,7 @@
                 container.innerHTML = `
                     <div class="empty-placeholder" style="grid-column: 1 / -1;">
                         <h4>No Matching Formations Located</h4>
-                        <p>Adjust your search filters, budget parameters, or locality query.</p>
+                        <p>Adjust your search query, budget scope, or layout parameters.</p>
                         <button class="btn-boxy btn-boxy-outline" onclick="resetFilters()" style="margin-top:10px;">Reset All Filters</button>
                     </div>
                 `;
@@ -1666,8 +2207,7 @@
             }
 
             filtered.forEach(p => {
-                const card = createPropertyCard(p, false);
-                container.appendChild(card);
+                container.appendChild(createPropertyCard(p, false));
             });
 
             updateBadges();
@@ -1679,13 +2219,13 @@
 
         function resetFilters() {
             document.getElementById('filterKeyword').value = '';
-            document.getElementById('filterTxType').value = 'ALL';
-            document.getElementById('filterBhk').value = 'ALL';
-            document.getElementById('filterMaxPrice').value = 'ALL';
+            typeaheadInstances['filterTxType'].setValue("All Transactions");
+            typeaheadInstances['filterBhk'].setValue("All Configurations");
+            typeaheadInstances['filterBudget'].setValue("Any Budget");
             renderMarketplace();
         }
 
-        /* ---------------- PROPERTY CARD BUILDER ---------------- */
+        /* ================= PROPERTY CARD BUILDER ================= */
         function createPropertyCard(p, isOwnerView = false) {
             const card = document.createElement('div');
             card.className = 'property-card';
@@ -1693,24 +2233,26 @@
             const ratePerSqFt = p.carpetArea > 0 ? Math.round(p.price / p.carpetArea) : 0;
             const isOwner = (p.ownerId === CURRENT_USER_ID);
 
-            const displayImage = p.imageUrl || "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80";
+            // Determine Cover Image
+            let coverImg = "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80";
+            if (p.photos && p.photos.length > 0) {
+                const coverObj = p.photos.find(img => img.isCover) || p.photos[0];
+                coverImg = coverObj.dataUrl;
+            }
 
-            // Fallback tags
+            const photoCount = p.photos ? p.photos.length : 1;
             const reraTag = p.reraNumber ? `<span class="tag-boxy tag-rera">${p.reraNumber}</span>` : `<span class="tag-boxy tag-rera">RERA Verified</span>`;
-            const ownerBadge = isOwner ? `<span class="tag-boxy tag-owner">Your Property</span>` : '';
-
-            // Status chip for owner view
+            const ownerBadge = isOwner ? `<span class="tag-boxy tag-owner">Your Formation</span>` : '';
             const statusBadge = isOwnerView ? `<div style="margin-bottom:8px;"><span class="identity-badge" style="display:inline-block; font-size:11px;">STATUS: ${p.status || 'Live on Marketplace'}</span></div>` : '';
 
-            // Card Bottom Actions
             let actionsHtml = '';
             if (!isOwnerView) {
                 actionsHtml = `
                     <div class="card-actions">
                         <button class="btn-boxy" onclick="openContactModal('${p.id}')">
-                            Inquire Now
+                            Inquire Desk
                         </button>
-                        <a href="https://wa.me/919820154321?text=Hi%2C%20I%20am%20interested%20in%20BOXYARD%20formation%3A%20${encodeURIComponent(p.title)}%20(${encodeURIComponent(p.bhk)})%20in%20${encodeURIComponent(p.locality)}" target="_blank" class="btn-boxy btn-boxy-whatsapp">
+                        <a href="https://wa.me/919820154321?text=Hello%20BOXYARD%2C%20I%20am%20interested%20in%20formation%3A%20${encodeURIComponent(p.title)}%20(${encodeURIComponent(p.bhk)})%20in%20${encodeURIComponent(p.locality)}" target="_blank" class="btn-boxy btn-boxy-whatsapp">
                             WhatsApp
                         </a>
                     </div>
@@ -1719,10 +2261,10 @@
                 actionsHtml = `
                     <div class="card-actions">
                         <button class="btn-boxy btn-boxy-outline btn-boxy-sm" onclick="togglePropertyStatus('${p.id}')">
-                            Change Status
+                            Status
                         </button>
                         <button class="btn-boxy btn-boxy-secondary btn-boxy-sm" onclick="deleteProperty('${p.id}')">
-                            Delete
+                            Purge
                         </button>
                     </div>
                 `;
@@ -1730,19 +2272,20 @@
 
             card.innerHTML = `
                 <div class="card-image-box">
-                    <img src="${displayImage}" alt="${p.title}" onerror="this.src='https://placehold.co/600x400/a92c1c/ffffff?text=BOXYARD+FORMATION'">
+                    <img src="${coverImg}" alt="${p.title}" onerror="this.src='https://placehold.co/600x400/a92c1c/ffffff?text=BOXYARD+FORMATION'">
                     <div class="badge-bar">
                         ${reraTag}
                         ${ownerBadge}
                     </div>
                     <div class="card-type-tag">${p.transactionType}</div>
+                    <div class="photo-count-tag">📷 ${photoCount} Photos</div>
                 </div>
 
                 <div class="card-content">
                     <div>
                         ${statusBadge}
                         <div class="card-price-row">
-                            <div class="card-price">${formatIndianCurrency(p.price)}</div>
+                            <div class="card-price">${convertNumberToIndianWords(p.price)}</div>
                             <div class="card-rate">${p.transactionType === 'For Rent' ? '/ month' : `₹ ${ratePerSqFt.toLocaleString('en-IN')}/sq.ft`}</div>
                         </div>
 
@@ -1773,7 +2316,7 @@
                         </div>
 
                         <p style="font-size:12px; color:var(--text-muted); line-height:1.4; margin-bottom:12px;">
-                            ${p.description ? p.description.substring(0, 110) + '...' : ''}
+                            ${p.description ? p.description.substring(0, 115) + '...' : ''}
                         </p>
                     </div>
 
@@ -1783,7 +2326,7 @@
             return card;
         }
 
-        /* ---------------- VIEW YOUR PROPERTIES ---------------- */
+        /* ================= VIEW YOUR PROPERTIES ================= */
         function renderMyProperties() {
             const container = document.getElementById('myPropertiesContainer');
             container.innerHTML = '';
@@ -1794,16 +2337,15 @@
                 container.innerHTML = `
                     <div class="empty-placeholder" style="grid-column: 1 / -1;">
                         <h4>No Formations Listed Under Your Account</h4>
-                        <p>You haven't listed any properties yet. Post your first property with zero brokerage fees.</p>
-                        <button class="btn-boxy" onclick="switchTab('post')" style="margin-top:12px;">Post Your Property Now</button>
+                        <p>You have not uploaded any real estate formations yet.</p>
+                        <button class="btn-boxy" onclick="switchTab('post')" style="margin-top:12px;">+ Post Your Property (Free)</button>
                     </div>
                 `;
                 return;
             }
 
             myProps.forEach(p => {
-                const card = createPropertyCard(p, true);
-                container.appendChild(card);
+                container.appendChild(createPropertyCard(p, true));
             });
             updateBadges();
         }
@@ -1812,24 +2354,129 @@
             const prop = propertiesStore.find(p => p.id === propId);
             if (!prop) return;
 
-            const nextStatus = prop.status === "Live on Marketplace" ? "Under Offer / In Deal" : 
-                               prop.status === "Under Offer / In Deal" ? "Sold / Leased Successfully" : "Live on Marketplace";
+            const nextStatus = prop.status === "Live on Marketplace" ? "Under Offer" : 
+                               prop.status === "Under Offer" ? "Sold / Leased" : "Live on Marketplace";
 
             prop.status = nextStatus;
             savePropertiesToStorage();
             renderMyProperties();
-            showToast(`Formation status updated to: ${nextStatus}`);
+            showToast(`Status updated: ${nextStatus}`);
         }
 
         function deleteProperty(propId) {
-            // Replaced default window.confirm with accessible in-app check
             propertiesStore = propertiesStore.filter(p => p.id !== propId);
             savePropertiesToStorage();
             renderMyProperties();
             showToast("Property listing purged from your inventory.");
         }
 
-        /* ---------------- OPPORTUNITIES / LEADS ---------------- */
+        /* ================= POST PROPERTY FORM HANDLER ================= */
+        function handlePostSubmit(e) {
+            e.preventDefault();
+
+            if (!validateDescriptionLength()) {
+                showToast("Description must have between 100 and 2000 characters.");
+                return;
+            }
+
+            const rawPrice = document.getElementById('propPriceFormatted').value.replace(/[^0-9]/g, '');
+            if (!rawPrice || Number(rawPrice) <= 0) {
+                showToast("Please enter a valid price assessment.");
+                return;
+            }
+
+            // Amenities collection
+            const selectedAmenities = [];
+            if (document.getElementById('am_water').checked) selectedAmenities.push("Municipal 24/7 Water");
+            if (document.getElementById('am_power').checked) selectedAmenities.push("100% DG Power Backup");
+            if (document.getElementById('am_gym').checked) selectedAmenities.push("Modern Gymnasium");
+            if (document.getElementById('am_club').checked) selectedAmenities.push("Clubhouse & Pool");
+            if (document.getElementById('am_security').checked) selectedAmenities.push("3-Tier Gated Security");
+            if (document.getElementById('am_lift').checked) selectedAmenities.push("High-speed Passenger Lift");
+            if (document.getElementById('am_gas').checked) selectedAmenities.push("Piped PNG Gas Line");
+            if (document.getElementById('am_ev').checked) selectedAmenities.push("EV Charging Bay");
+
+            // Guarantee at least one photo
+            let finalPhotos = [...currentUploadedPhotos];
+            if (finalPhotos.length === 0) {
+                finalPhotos.push({
+                    id: "p_default",
+                    dataUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                    tag: "Exterior",
+                    isCover: true
+                });
+            }
+
+            const newProperty = {
+                id: `BY-PROP-${Math.floor(1000 + Math.random() * 9000)}`,
+                ownerId: CURRENT_USER_ID,
+                title: document.getElementById('propTitle').value.trim(),
+                city: typeaheadInstances['propCity'].getValue(),
+                locality: typeaheadInstances['propLocality'].getValue(),
+                reraNumber: document.getElementById('propRera').value.trim() || "Applied / RERA Compliant",
+                propertyType: typeaheadInstances['propType'].getValue(),
+                bhk: typeaheadInstances['propBhk'].getValue(),
+                transactionType: typeaheadInstances['propTxType'].getValue(),
+                carpetArea: Number(document.getElementById('propCarpetArea').value),
+                superArea: Number(document.getElementById('propSuperArea').value) || Number(document.getElementById('propCarpetArea').value) * 1.35,
+                floor: document.getElementById('propFloor').value.trim() || "Mid-level Floor",
+                price: Number(rawPrice),
+                facing: typeaheadInstances['propFacing'].getValue(),
+                possession: typeaheadInstances['propPossession'].getValue(),
+                parking: typeaheadInstances['propParking'].getValue(),
+                amenities: selectedAmenities,
+                photos: finalPhotos,
+                description: document.getElementById('propDescription').value.trim(),
+                viewsCount: 1,
+                status: "Live on Marketplace",
+                createdDate: new Date().toISOString().split('T')[0]
+            };
+
+            propertiesStore.unshift(newProperty);
+            savePropertiesToStorage();
+
+            // Reset form
+            document.getElementById('postPropertyForm').reset();
+            currentUploadedPhotos = [];
+            renderPhotoPreviews();
+            document.getElementById('priceHelperTag').innerText = "₹ 0";
+            validateDescriptionLength();
+
+            showToast("Formation successfully posted to BOXYARD marketplace!");
+            switchTab('myprops');
+        }
+
+        function loadSampleListingData() {
+            document.getElementById('propTitle').value = "Oberoi Sky City Signature";
+            typeaheadInstances['propCity'].setValue("Mumbai");
+            updateLocalitiesForCity();
+            typeaheadInstances['propLocality'].setValue("Goregaon West");
+            document.getElementById('propRera').value = "P51800003507 (MahaRERA Registered)";
+            typeaheadInstances['propType'].setValue("Apartment");
+            typeaheadInstances['propBhk'].setValue("3 BHK");
+            typeaheadInstances['propTxType'].setValue("For Sale");
+            document.getElementById('propCarpetArea').value = 1085;
+            document.getElementById('propSuperArea').value = 1520;
+            document.getElementById('propFloor').value = "24th of 55 Floors";
+            
+            document.getElementById('propPriceFormatted').value = "3,65,00,000";
+            handlePriceInputChange(document.getElementById('propPriceFormatted'));
+
+            typeaheadInstances['propFacing'].setValue("East Facing");
+            typeaheadInstances['propPossession'].setValue("Ready to Move (OC Received)");
+            typeaheadInstances['propParking'].setValue("2 Covered Basement");
+
+            currentUploadedPhotos = [
+                { id: "demo1", dataUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80", tag: "Living Room", isCover: true },
+                { id: "demo2", dataUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", tag: "Master Bedroom", isCover: false }
+            ];
+            renderPhotoPreviews();
+
+            generateAiWriteup();
+            showToast("Demo listing configuration loaded.");
+        }
+
+        /* ================= OPPORTUNITIES & LEADS CRM ================= */
         function renderLeads() {
             const container = document.getElementById('leadsListContainer');
             container.innerHTML = '';
@@ -1839,8 +2486,8 @@
             if (myLeads.length === 0) {
                 container.innerHTML = `
                     <div class="empty-placeholder">
-                        <h4>No Inquiries Received Yet</h4>
-                        <p>Customer inquiries and site visit requests from prospective buyers will appear here in real time.</p>
+                        <h4>No Buyer Inquiries Received Yet</h4>
+                        <p>Customer contact requests and offers will be logged here immediately.</p>
                     </div>
                 `;
                 return;
@@ -1854,30 +2501,30 @@
 
                 el.innerHTML = `
                     <div>
-                        <div class="lead-property-ref">PROPERTY: ${lead.propertyTitle}</div>
+                        <div class="lead-property-ref">FORMATION: ${lead.propertyTitle}</div>
                         <div style="font-size:17px; font-weight:700; color:var(--text-dark); margin-bottom:2px;">${lead.buyerName}</div>
                         <div style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">
-                            📞 ${lead.buyerPhone} | ✉️ ${lead.buyerEmail || 'Not Provided'}
+                            📞 ${lead.buyerPhone} | ✉️ ${lead.buyerEmail || 'Not Specified'}
                         </div>
-                        <div style="font-size:13px; font-weight:600; color:var(--brand-primary); margin-bottom:6px;">
-                            Proposed Budget / Offer: ${lead.buyerOffer || 'As Demanded'}
+                        <div style="font-size:13px; font-weight:700; color:var(--brand-primary); margin-bottom:6px;">
+                            Budget / Offer: ₹ ${lead.buyerOffer || 'As Demanded'}
                         </div>
                         <div style="font-size:12px; background:#f9f9f9; border:1px dashed var(--border-light); padding:8px;">
-                            "${lead.message || 'Customer requested direct callback from owner.'}"
+                            "${lead.message || 'Direct callback requested from property desk.'}"
                         </div>
                         <div style="font-size:10px; color:var(--text-light); margin-top:4px; font-weight:bold;">
-                            LOGGED TIMESTAMP: ${lead.timestamp}
+                            TIMESTAMP: ${lead.timestamp}
                         </div>
                     </div>
 
                     <div>
-                        <div style="font-size:11px; font-weight:bold; text-transform:uppercase; margin-bottom:4px;">Lead Status</div>
-                        <select class="boxy-select" style="padding:6px; font-size:12px;" onchange="updateLeadStatus('${lead.id}', this.value)">
+                        <label style="font-size:10px; font-weight:bold; text-transform:uppercase;">Lead Pipeline Status</label>
+                        <select class="boxy-input" style="padding:6px; font-size:12px; margin-top:2px;" onchange="updateLeadStatus('${lead.id}', this.value)">
                             <option value="New Opportunity" ${lead.leadStatus === 'New Opportunity' ? 'selected' : ''}>New Opportunity</option>
                             <option value="In Negotiation" ${lead.leadStatus === 'In Negotiation' ? 'selected' : ''}>In Negotiation</option>
                             <option value="Site Visit Scheduled" ${lead.leadStatus === 'Site Visit Scheduled' ? 'selected' : ''}>Site Visit Scheduled</option>
                             <option value="Deal Closed" ${lead.leadStatus === 'Deal Closed' ? 'selected' : ''}>Deal Closed</option>
-                            <option value="Dropped / Cold" ${lead.leadStatus === 'Dropped / Cold' ? 'selected' : ''}>Dropped / Cold</option>
+                            <option value="Cold / Dropped" ${lead.leadStatus === 'Cold / Dropped' ? 'selected' : ''}>Cold / Dropped</option>
                         </select>
                     </div>
 
@@ -1886,7 +2533,7 @@
                             WhatsApp
                         </a>
                         <a href="tel:${lead.buyerPhone}" class="btn-boxy btn-boxy-outline btn-boxy-sm">
-                            Call Direct
+                            Call Desk
                         </a>
                     </div>
                 `;
@@ -1900,93 +2547,11 @@
             if (lead) {
                 lead.leadStatus = newStatus;
                 saveLeadsToStorage();
-                showToast(`Inquiry #${leadId} updated to: ${newStatus}`);
+                showToast(`Lead status updated to: ${newStatus}`);
             }
         }
 
-        /* ---------------- POST PROPERTY SUBMISSION ---------------- */
-        function handlePostSubmit(e) {
-            e.preventDefault();
-
-            // Collect active amenities
-            const selectedAmenities = [];
-            if (document.getElementById('am_water').checked) selectedAmenities.push("Municipal 24/7 Water");
-            if (document.getElementById('am_power').checked) selectedAmenities.push("100% DG Power Backup");
-            if (document.getElementById('am_gym').checked) selectedAmenities.push("Modern Gymnasium");
-            if (document.getElementById('am_club').checked) selectedAmenities.push("Clubhouse & Pool");
-            if (document.getElementById('am_security').checked) selectedAmenities.push("3-Tier Gated Security");
-            if (document.getElementById('am_lift').checked) selectedAmenities.push("High-speed Passenger Lift");
-            if (document.getElementById('am_gas').checked) selectedAmenities.push("Piped PNG Gas Line");
-            if (document.getElementById('am_ev').checked) selectedAmenities.push("EV Charging Bay");
-
-            const customImg = document.getElementById('propImageUrl').value.trim();
-            const fallbackImages = [
-                "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
-            ];
-            const chosenImage = customImg || fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
-
-            const newProperty = {
-                id: `BY-PROP-${Math.floor(1000 + Math.random() * 9000)}`,
-                ownerId: CURRENT_USER_ID,
-                title: document.getElementById('propTitle').value.trim(),
-                city: document.getElementById('propCity').value,
-                locality: document.getElementById('propLocality').value.trim(),
-                reraNumber: document.getElementById('propRera').value.trim() || "Applied / RERA Compliant",
-                propertyType: document.getElementById('propType').value,
-                bhk: document.getElementById('propBhk').value,
-                transactionType: document.getElementById('propTxType').value,
-                carpetArea: Number(document.getElementById('propCarpetArea').value),
-                superArea: Number(document.getElementById('propSuperArea').value) || Number(document.getElementById('propCarpetArea').value) * 1.35,
-                floor: document.getElementById('propFloor').value.trim() || "Mid-level Floor",
-                price: Number(document.getElementById('propPrice').value),
-                maintenance: Number(document.getElementById('propMaintenance').value) || 0,
-                deposit: Number(document.getElementById('propDeposit').value) || 0,
-                facing: document.getElementById('propFacing').value,
-                possession: document.getElementById('propPossession').value,
-                parking: document.getElementById('propParking').value,
-                amenities: selectedAmenities,
-                imageUrl: chosenImage,
-                description: document.getElementById('propDescription').value.trim(),
-                viewsCount: 1,
-                status: "Live on Marketplace",
-                createdDate: new Date().toISOString().split('T')[0]
-            };
-
-            propertiesStore.unshift(newProperty);
-            savePropertiesToStorage();
-
-            document.getElementById('postPropertyForm').reset();
-            renderPriceHelper(0);
-
-            showToast("Formation successfully published to BOXYARD marketplace!");
-            switchTab('myprops');
-        }
-
-        function loadSampleListingData() {
-            document.getElementById('propTitle').value = "Oberoi Sky City Signature Tower";
-            document.getElementById('propCity').value = "Mumbai";
-            document.getElementById('propLocality').value = "Borivali East, Western Express Highway";
-            document.getElementById('propRera').value = "P51800003507 (MahaRERA Registered)";
-            document.getElementById('propType').value = "Apartment";
-            document.getElementById('propBhk').value = "3 BHK";
-            document.getElementById('propTxType').value = "For Sale";
-            document.getElementById('propCarpetArea').value = 1085;
-            document.getElementById('propSuperArea').value = 1520;
-            document.getElementById('propFloor').value = "24th of 55 Floors";
-            document.getElementById('propPrice').value = 36500000;
-            renderPriceHelper(36500000);
-            document.getElementById('propMaintenance').value = 8500;
-            document.getElementById('propFacing').value = "East Facing";
-            document.getElementById('propPossession').value = "Ready to Move (OC Received)";
-            document.getElementById('propParking').value = "2 Covered Stilt/Basement";
-            document.getElementById('propImageUrl').value = "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80";
-            document.getElementById('propDescription').value = "Ultra-luxury residence with sprawling podium amenities, direct elevated access to Western Express Highway, next to Devipada Metro Station.";
-            showToast("Demo property fields populated successfully.");
-        }
-
-        /* ---------------- CONTACT & OPPORTUNITY DISPATCH ---------------- */
+        /* ================= INQUIRY MODAL ================= */
         function openContactModal(propId) {
             const prop = propertiesStore.find(p => p.id === propId);
             if (!prop) return;
@@ -1994,7 +2559,7 @@
             document.getElementById('inqPropertyId').value = prop.id;
             document.getElementById('inqOwnerId').value = prop.ownerId;
             document.getElementById('modalPropertyTitle').innerText = `Inquire: ${prop.title}`;
-            document.getElementById('modalPropertySubtitle').innerText = `${prop.bhk} • ${prop.locality}, ${prop.city} • Demand: ${formatIndianCurrency(p => prop.price)}`;
+            document.getElementById('modalPropertySubtitle').innerText = `${prop.bhk} • ${prop.locality}, ${prop.city} • Demand: ${convertNumberToIndianWords(prop.price)}`;
             document.getElementById('opportunityForm').reset();
 
             document.getElementById('contactModal').classList.add('active-modal');
@@ -2029,22 +2594,21 @@
             saveLeadsToStorage();
             closeContactModal();
 
-            showToast("Opportunity lead recorded and sent to owner!");
+            showToast("Opportunity lead dispatched to property owner!");
             updateBadges();
 
-            // If user inquired on their own property, they can immediately view it
             if (ownerId === CURRENT_USER_ID) {
                 switchTab('leads');
             }
         }
 
-        /* ---------------- EMI CALCULATOR ---------------- */
+        /* ================= EMI CALCULATOR ================= */
         function calculateEmi() {
             const P = Number(document.getElementById('loanAmountSlider').value);
             const annualRate = Number(document.getElementById('loanRateSlider').value);
             const tenureYears = Number(document.getElementById('loanTenureSlider').value);
 
-            document.getElementById('loanAmountDisplay').innerText = formatIndianCurrency(P);
+            document.getElementById('loanAmountDisplay').innerText = convertNumberToIndianWords(P);
             document.getElementById('loanRateDisplay').innerText = `${annualRate.toFixed(2)} %`;
             document.getElementById('loanTenureDisplay').innerText = `${tenureYears} Years`;
 
@@ -2056,12 +2620,12 @@
             const totalInterest = totalPayment - P;
 
             document.getElementById('emiResult').innerText = `₹ ${Math.round(emi).toLocaleString('en-IN')} / mo`;
-            document.getElementById('resPrincipal').innerText = formatIndianCurrency(P);
-            document.getElementById('resTotalInterest').innerText = formatIndianCurrency(totalInterest);
-            document.getElementById('resTotalPayment').innerText = formatIndianCurrency(totalPayment);
+            document.getElementById('resPrincipal').innerText = convertNumberToIndianWords(P);
+            document.getElementById('resTotalInterest').innerText = convertNumberToIndianWords(totalInterest);
+            document.getElementById('resTotalPayment').innerText = convertNumberToIndianWords(totalPayment);
         }
 
-        /* ---------------- TOAST UTILITY ---------------- */
+        /* ================= TOAST UTILITY ================= */
         function showToast(message) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
