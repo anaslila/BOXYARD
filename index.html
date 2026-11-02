@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BOXYARD - v1.03</title>
+    <title>BOXYARD - v1.04</title>
 
     <!-- Meta / SEO / iOS PWA Integration -->
     <meta name="application-name" content="BOXYARD">
@@ -142,10 +142,6 @@
             background: #107c41;
             color: #ffffff;
             border: 1px solid var(--border-color);
-        }
-
-        .btn-boxy-excel:hover {
-            background: #0b592e;
         }
 
         .badge-free {
@@ -447,6 +443,7 @@
             flex-direction: column;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
 
         .card-cover-box {
@@ -515,6 +512,14 @@
             font-size: 10px;
             font-weight: 700;
             color: #444444;
+        }
+
+        .card-project-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .card-title {
@@ -794,6 +799,249 @@
             color: #2e7d32;
         }
 
+        /* ------------------ BLURRED POSTING LOADER (1-2s RANDOM) ------------------ */
+        .blur-upload-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+        }
+
+        .upload-spinner-box {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            box-shadow: 4px 4px 0px var(--border-color);
+            padding: 24px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .boxy-rotating-spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid #e0e0e0;
+            border-top: 3px solid var(--primary);
+            animation: boxySpin 0.7s linear infinite;
+        }
+
+        @keyframes boxySpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .upload-status-heading {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .upload-status-sub {
+            font-size: 10px;
+            font-weight: 600;
+            color: #555555;
+        }
+
+        /* ------------------ SUCCESS SUMMARY MODAL ------------------ */
+        .success-summary-card {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0px var(--border-color);
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+        }
+
+        .success-badge-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #e8f5e9;
+            border: 1px solid #2e7d32;
+            color: #2e7d32;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+        }
+
+        .summary-cover-preview {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .summary-specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: 14px;
+        }
+
+        .summary-specs-table td {
+            padding: 5px 8px;
+            border: 1px solid #ececec;
+        }
+
+        .summary-specs-table td.label-col {
+            background: #f9f9f9;
+            font-weight: 700;
+            width: 40%;
+            color: #444;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        /* ------------------ FULLSCREEN DETAIL MODAL & SCROLLER ------------------ */
+        .fullscreen-modal-shade {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2500;
+            padding: 10px;
+        }
+
+        .fullscreen-modal-content {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0px #000000;
+            width: 100%;
+            max-width: 900px;
+            height: 92vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .fullscreen-modal-header {
+            background: #ffffff;
+            border-bottom: 2px solid var(--border-color);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fullscreen-scrollable-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .gallery-viewport-box {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            background: #000000;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .gallery-viewport-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            border: 1px solid #000000;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 700;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #000000;
+        }
+
+        .gallery-nav-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .gallery-thumbnails-strip {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 16px;
+        }
+
+        .gallery-thumb-item {
+            width: 70px;
+            height: 50px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            opacity: 0.65;
+            flex-shrink: 0;
+        }
+
+        .gallery-thumb-item.active-thumb {
+            opacity: 1;
+            border: 2px solid var(--primary);
+            box-shadow: 2px 2px 0px var(--border-color);
+        }
+
+        .detail-full-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .detail-box-stat {
+            background: #fcfcfc;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+        }
+
+        .detail-box-stat .stat-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .detail-box-stat .stat-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111;
+            margin-top: 2px;
+        }
+
         /* ------------------ MINIMAL CENTERED AI LOADER ------------------ */
         .ai-center-overlay {
             position: fixed;
@@ -921,6 +1169,15 @@
         <div class="splash-subtext"></div>
     </div>
 
+    <!-- 1-2s Realistic Random Upload Pipeline with Blurred Backdrop -->
+    <div class="blur-upload-backdrop" id="uploadPipelineOverlay">
+        <div class="upload-spinner-box">
+            <div class="boxy-rotating-spinner"></div>
+            <div class="upload-status-heading">Uploading Property Listing...</div>
+            <div class="upload-status-sub" id="uploadStepSubtext">Validating parameters & writing assets to database...</div>
+        </div>
+    </div>
+
     <!-- Minimal Centered AI Generator Modal -->
     <div class="ai-center-overlay" id="aiModalLoader">
         <div class="ai-center-box">
@@ -1009,6 +1266,12 @@
             <div class="form-layout-box">
                 <form id="propertyPostForm" onsubmit="handleFormSubmission(event)">
                     
+                    <!-- Required Name of Society / Project -->
+                    <div class="form-group">
+                        <label>Name of Society / Project / Tower *</label>
+                        <input type="text" id="propSociety" class="searchable-input" placeholder="e.g. Lodha Park, Oberoi Sky City, Hiranandani Estate" required>
+                    </div>
+
                     <div class="form-row-3">
                         <div class="form-group">
                             <label>Property Scope</label>
@@ -1304,6 +1567,118 @@
         </section>
     </div>
 
+    <!-- ================= FULLSCREEN PROPERTY DETAIL & GALLERY MODAL ================= -->
+    <div class="fullscreen-modal-shade" id="fullscreenDetailModal">
+        <div class="fullscreen-modal-content">
+            <div class="fullscreen-modal-header">
+                <div>
+                    <span id="fsProjectName" style="font-size:15px; font-weight:700; color:var(--primary); text-transform:uppercase;">Project Title</span>
+                    <span id="fsLocalityCity" style="font-size:11px; color:#555; margin-left:8px;">Locality, City</span>
+                </div>
+                <button class="btn-boxy" onclick="closeFullscreenModal()" style="padding:4px 9px;">✕ Close</button>
+            </div>
+
+            <div class="fullscreen-scrollable-body">
+                <!-- Main Gallery Viewport with Navigation Buttons -->
+                <div class="gallery-viewport-box">
+                    <button class="gallery-nav-btn" style="left:10px;" onclick="navigateGallery(-1)">❮</button>
+                    <img id="fsMainImage" src="" alt="Property View">
+                    <button class="gallery-nav-btn" style="right:10px;" onclick="navigateGallery(1)">❯</button>
+                    <div id="fsImageTagPill" class="cover-tag-pill" style="bottom:10px; top:auto;">Living Room</div>
+                </div>
+
+                <!-- Scrollable Thumbnails Strip -->
+                <div class="gallery-thumbnails-strip" id="fsThumbnailsStrip"></div>
+
+                <!-- Key Metrics Grid -->
+                <div class="detail-full-grid">
+                    <div class="detail-box-stat">
+                        <div class="stat-label">All-Inclusive Price</div>
+                        <div class="stat-value" id="fsPrice" style="color:var(--primary); font-size:16px;">₹ 0</div>
+                    </div>
+                    <div class="detail-box-stat">
+                        <div class="stat-label">Configuration & Type</div>
+                        <div class="stat-value" id="fsBhkType">2 BHK Apartment</div>
+                    </div>
+                    <div class="detail-box-stat">
+                        <div class="stat-label">Carpet Area (RERA)</div>
+                        <div class="stat-value" id="fsCarpet">0 Sq.Ft</div>
+                    </div>
+                    <div class="detail-box-stat">
+                        <div class="stat-label">Car Parking Allocation</div>
+                        <div class="stat-value" id="fsParking">1 Car (Covered)</div>
+                    </div>
+                    <div class="detail-box-stat">
+                        <div class="stat-label">Floor & Facing</div>
+                        <div class="stat-value" id="fsFloorFacing">10th • East</div>
+                    </div>
+                    <div class="detail-box-stat">
+                        <div class="stat-label">RERA Registration</div>
+                        <div class="stat-value" id="fsRera">Verified</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Property Description & Notes</label>
+                    <div id="fsDescription" style="background:#fcfcfc; border:1px solid #e0e0e0; padding:12px; font-size:12px; line-height:1.5;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Society Amenities & Infrastructure</label>
+                    <div class="card-amenities-tray" id="fsAmenitiesTray" style="gap:5px;"></div>
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:16px; border-top:1px solid #eee; padding-top:12px;">
+                    <button id="fsContactBtn" class="btn-boxy btn-boxy-primary" style="flex:1; padding:12px;">Contact Owner</button>
+                    <button id="fsWhatsAppBtn" class="btn-boxy" style="padding:12px;">Share on WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= POSTING SUCCESS SUMMARY MODAL ================= -->
+    <div class="modal-shade" id="postSuccessModal">
+        <div class="success-summary-card">
+            <div class="success-badge-header">
+                <span style="font-size:16px;">✓</span>
+                <span>Listing Uploaded Successfully!</span>
+            </div>
+
+            <img id="successCoverImg" class="summary-cover-preview" src="" alt="Cover Image">
+            
+            <h3 id="successProjectTitle" style="font-size:14px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:4px;">Project Name</h3>
+            <div id="successLocalityLine" style="font-size:10px; font-weight:600; color:#555; text-transform:uppercase; margin-bottom:12px;">Locality, City</div>
+
+            <table class="summary-specs-table">
+                <tr>
+                    <td class="label-col">Total Valuation</td>
+                    <td id="successPriceCell" style="font-weight:700; color:var(--primary);">₹ 0</td>
+                </tr>
+                <tr>
+                    <td class="label-col">Layout & Type</td>
+                    <td id="successBhkCell">2 BHK Apartment</td>
+                </tr>
+                <tr>
+                    <td class="label-col">RERA Carpet Area</td>
+                    <td id="successCarpetCell">0 Sq.Ft</td>
+                </tr>
+                <tr>
+                    <td class="label-col">Reserved Parking</td>
+                    <td id="successParkingCell">1 Car</td>
+                </tr>
+                <tr>
+                    <td class="label-col">Amenities Selected</td>
+                    <td id="successAmenitiesCell">0 Amenities</td>
+                </tr>
+            </table>
+
+            <div style="display:flex; gap:8px;">
+                <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="dismissSuccessModal('dashboard')">View in Marketplace</button>
+                <button class="btn-boxy" style="flex:1;" onclick="dismissSuccessModal('myprops')">Manage in View Listings</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= LEAD GENERATION INQUIRY MODAL ================= -->
     <div class="modal-shade" id="leadInquiryModal">
         <div class="modal-body">
@@ -1341,6 +1716,7 @@
             {
                 id: "BY-MUM-881",
                 ownerId: CURRENT_USER_ID,
+                society: "Oberoi Sky City",
                 title: "2 BHK Luxury High-Floor Residence",
                 txType: "For Sale",
                 propType: "Apartment",
@@ -1359,14 +1735,16 @@
                 amenities: ["Modern Gymnasium", "Swimming Pool", "Clubhouse", "24/7 Power Backup", "High-Speed Elevators", "CCTV Surveillance", "Piped Gas Connection"],
                 images: [
                     { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true },
-                    { url: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop&q=80", tag: "Master Bedroom", isCover: false }
+                    { url: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop&q=80", tag: "Master Bedroom", isCover: false },
+                    { url: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&auto=format&fit=crop&q=80", tag: "Kitchen", isCover: false }
                 ],
-                description: "Spacious East facing 2 BHK ready to move apartment on the 18th floor in Andheri West. Comes with 780 sq.ft RERA carpet area, open views, 1 Car Covered Basement parking, and complete OC. Immediate possession.",
+                description: "Spacious East facing 2 BHK ready to move apartment at Oberoi Sky City, Andheri West. Comes with 780 sq.ft RERA carpet area, open views, 1 Car Covered Basement parking, and complete OC. Immediate possession.",
                 timestamp: Date.now() - 86400000
             },
             {
                 id: "BY-BLR-402",
                 ownerId: "BY_EXT_999",
+                society: "Prestige Shantiniketan",
                 title: "3 BHK Premium Gated Community Apartment",
                 txType: "For Sale",
                 propType: "Apartment",
@@ -1384,14 +1762,16 @@
                 rera: "PRM/KA/RERA/1251/446/PR/190521",
                 amenities: ["Clubhouse", "Swimming Pool", "Badminton Court", "Children's Play Area", "Rainwater Harvesting", "EV Car Charging"],
                 images: [
-                    { url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true }
+                    { url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true },
+                    { url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=80", tag: "Exterior Building", isCover: false }
                 ],
-                description: "Well planned 3 BHK flat in a gated society at Whitefield. 1,320 sq.ft carpet area with North-East entrance, 2 Cars Covered Stilt parking, clubhouse, and swimming pool. Possession scheduled for late 2027.",
+                description: "Well planned 3 BHK flat in Prestige Shantiniketan at Whitefield. 1,320 sq.ft carpet area with North-East entrance, 2 Cars Covered Stilt parking, clubhouse, and swimming pool. Possession scheduled for late 2027.",
                 timestamp: Date.now() - 172800000
             },
             {
                 id: "BY-MUM-512",
                 ownerId: "BY_EXT_888",
+                society: "Bandra Sea Pearl",
                 title: "1 BHK Compact Smart Home",
                 txType: "For Rent",
                 propType: "Apartment",
@@ -1411,7 +1791,7 @@
                 images: [
                     { url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true }
                 ],
-                description: "Charming 1 BHK flat available for rent on 3rd floor in prime Bandra West location. 440 sq.ft carpet with semi-furnished kitchen and cupboards. Walking distance to market and railway station.",
+                description: "Charming 1 BHK flat in Bandra Sea Pearl available for rent on 3rd floor in prime Bandra West location. 440 sq.ft carpet with semi-furnished kitchen and cupboards. Walking distance to railway station.",
                 timestamp: Date.now() - 250000000
             }
         ];
@@ -1420,7 +1800,7 @@
             {
                 leadId: "LD-901",
                 propId: "BY-MUM-881",
-                propTitle: "2 BHK Luxury High-Floor Residence (Andheri West)",
+                propTitle: "Oberoi Sky City - 2 BHK (Andheri West)",
                 buyerName: "Karan Singhania",
                 buyerPhone: "9820145890",
                 buyerNote: "Looking to inspect this Saturday with family. Bank loan pre-approved.",
@@ -1457,7 +1837,7 @@
                 this.options = options;
                 this.config = Object.assign({
                     placeholder: "Type to search...",
-                    initialValue: options[0] || "",
+                    initialValue: "", // Set empty by default for clean form state
                     onChange: () => {}
                 }, config);
                 this.selectedValue = this.config.initialValue;
@@ -1492,9 +1872,6 @@
 
             closeDropdown() {
                 this.tray.style.display = 'none';
-                if (!this.options.includes(this.input.value.trim()) && this.options.length > 0) {
-                    if (this.selectedValue) this.input.value = this.selectedValue;
-                }
             }
 
             filterOptions(query = '') {
@@ -1536,37 +1913,64 @@
         let formTx, formProp, formBhk, formCity, formFacing, formPossession, formParkingCount, formParkingType;
 
         function initSearchableControls() {
+            // Marketplace Filters (Preset with Defaults)
             filterCity = new SearchableTypeahead('filterCityContainer', ['All Cities', 'Mumbai', 'Bengaluru', 'Delhi NCR', 'Pune', 'Hyderabad'], {
                 initialValue: 'All Cities',
+                placeholder: 'Filter City',
                 onChange: () => renderMarketplaceListings()
             });
 
             filterBhk = new SearchableTypeahead('filterBhkContainer', ['All BHKs', '1 BHK', '2 BHK', '3 BHK', '4+ BHK'], {
                 initialValue: 'All BHKs',
+                placeholder: 'Filter BHK',
                 onChange: () => renderMarketplaceListings()
             });
 
             filterTx = new SearchableTypeahead('filterTxContainer', ['All Properties', 'For Sale', 'For Rent'], {
                 initialValue: 'All Properties',
+                placeholder: 'Filter Transaction',
                 onChange: () => renderMarketplaceListings()
             });
 
             filterBudget = new SearchableTypeahead('filterBudgetContainer', ['Any Budget', '₹ 50 Lakh', '₹ 1 Crore', '₹ 2 Crore', '₹ 5 Crore', '₹ 10+ Crore'], {
                 initialValue: 'Any Budget',
+                placeholder: 'Filter Budget',
                 onChange: () => renderMarketplaceListings()
             });
 
-            // Post Property Form Dropdowns
-            formTx = new SearchableTypeahead('fieldTxType', ['For Sale', 'For Rent', 'Commercial Lease'], { initialValue: 'For Sale' });
-            formProp = new SearchableTypeahead('fieldPropType', ['Apartment', 'Independent Villa', 'Penthouse', 'Plot / Land', 'Commercial Office'], { initialValue: 'Apartment' });
-            formBhk = new SearchableTypeahead('fieldBhk', ['1 RK', '1 BHK', '2 BHK', '3 BHK', '4 BHK', '5+ BHK / NA'], { initialValue: '2 BHK' });
-            formCity = new SearchableTypeahead('fieldCity', ['Mumbai', 'Bengaluru', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai', 'Kolkata'], { initialValue: 'Mumbai' });
-            formFacing = new SearchableTypeahead('fieldFacing', ['East (Vastu Compliant)', 'North-East (Ishanya)', 'North', 'West', 'South', 'Don\'t Know'], { initialValue: 'East (Vastu Compliant)' });
-            formPossession = new SearchableTypeahead('fieldPossession', ['Ready to Move (OC Received)', 'Under Construction (Slab Stage)', 'Under Construction (Finishing)', 'Launch Phase'], { initialValue: 'Ready to Move (OC Received)' });
-            
-            // Separate Car Parking Inputs
-            formParkingCount = new SearchableTypeahead('fieldParkingCount', ['None / Zero', '1 Car', '2 Cars', '3 Cars', '4+ Cars'], { initialValue: '1 Car' });
-            formParkingType = new SearchableTypeahead('fieldParkingType', ['Covered Basement', 'Covered Stilt', 'Open Surface', 'Mechanical / Puzzle Tower', 'Stack Parking', 'None / No Parking'], { initialValue: 'Covered Basement' });
+            // Post Property Form Dropdowns - ALL EMPTY BY DEFAULT
+            formTx = new SearchableTypeahead('fieldTxType', ['For Sale', 'For Rent', 'Commercial Lease'], { 
+                initialValue: '',
+                placeholder: 'Choose Transaction...' 
+            });
+            formProp = new SearchableTypeahead('fieldPropType', ['Apartment', 'Independent Villa', 'Penthouse', 'Plot / Land', 'Commercial Office'], { 
+                initialValue: '',
+                placeholder: 'Choose Type...' 
+            });
+            formBhk = new SearchableTypeahead('fieldBhk', ['1 RK', '1 BHK', '2 BHK', '3 BHK', '4 BHK', '5+ BHK / NA'], { 
+                initialValue: '',
+                placeholder: 'Choose BHK...' 
+            });
+            formCity = new SearchableTypeahead('fieldCity', ['Mumbai', 'Bengaluru', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai', 'Kolkata'], { 
+                initialValue: '',
+                placeholder: 'Choose City...' 
+            });
+            formFacing = new SearchableTypeahead('fieldFacing', ['East (Vastu Compliant)', 'North-East (Ishanya)', 'North', 'West', 'South', 'Don\'t Know'], { 
+                initialValue: '',
+                placeholder: 'Choose Facing...' 
+            });
+            formPossession = new SearchableTypeahead('fieldPossession', ['Ready to Move (OC Received)', 'Under Construction (Slab Stage)', 'Under Construction (Finishing)', 'Launch Phase'], { 
+                initialValue: '',
+                placeholder: 'Choose Possession...' 
+            });
+            formParkingCount = new SearchableTypeahead('fieldParkingCount', ['None / Zero', '1 Car', '2 Cars', '3 Cars', '4+ Cars'], { 
+                initialValue: '',
+                placeholder: 'Number of Cars...' 
+            });
+            formParkingType = new SearchableTypeahead('fieldParkingType', ['Covered Basement', 'Covered Stilt', 'Open Surface', 'Mechanical / Puzzle Tower', 'Stack Parking', 'None / No Parking'], { 
+                initialValue: '',
+                placeholder: 'Parking Arrangement...' 
+            });
         }
 
         /* ---------------- CURRENCY FORMATTERS & WORD CALCULATORS ---------------- */
@@ -1683,8 +2087,9 @@
             renderPhotoTiles();
         }
 
-        /* ---------------- ACCURATE AI WRITER WITH EXTENDED AMENITIES & PARKING ---------------- */
+        /* ---------------- ACCURATE AI WRITER WITH EXTENDED AMENITIES & SOCIETY ---------------- */
         function generateCleanAIDescription() {
+            const society = document.getElementById('propSociety').value.trim();
             const bhk = formBhk ? formBhk.getValue() : "";
             const propType = formProp ? formProp.getValue() : "Property";
             const txType = formTx ? formTx.getValue() : "For Sale";
@@ -1702,8 +2107,8 @@
 
             const checkedAmenities = Array.from(document.querySelectorAll('input[name="amenityItem"]:checked')).map(el => el.value);
 
-            if (!locality && !city) {
-                alert("Please enter at least the City and Locality before running AI.");
+            if (!locality && !city && !society) {
+                alert("Please enter at least the Society Name, Locality or City before running AI.");
                 return;
             }
 
@@ -1713,11 +2118,13 @@
             setTimeout(() => {
                 let sentences = [];
 
-                if (locality && city) {
-                    sentences.push(`${bhk} ${propType} available ${txType.toLowerCase()} in ${locality}, ${city}.`);
-                } else if (city) {
-                    sentences.push(`${bhk} ${propType} available ${txType.toLowerCase()} in ${city}.`);
-                }
+                let placeString = "";
+                if (society && locality && city) placeString = `at ${society}, ${locality}, ${city}`;
+                else if (society && locality) placeString = `at ${society}, ${locality}`;
+                else if (locality && city) placeString = `in ${locality}, ${city}`;
+                else if (city) placeString = `in ${city}`;
+
+                sentences.push(`${bhk || ''} ${propType} available ${txType.toLowerCase()} ${placeString}.`.trim());
 
                 let areaParts = [];
                 if (carpet) areaParts.push(`${carpet} sq.ft RERA carpet area`);
@@ -1733,20 +2140,18 @@
                     sentences.push(`It is ${layoutParts.join(' with ')}.`);
                 }
 
-                // Dedicated Parking Syntax
                 if (pCount && !pCount.includes("None") && pType && !pType.includes("None")) {
-                    sentences.push(`Includes ${pCount} (${pType}) reserved parking space.`);
+                    sentences.push(`Includes ${pCount} (${pType}) reserved parking.`);
                 } else if (pCount && !pCount.includes("None")) {
-                    sentences.push(`Includes ${pCount} parking.`);
+                    sentences.push(`Includes ${pCount} reserved parking.`);
                 }
 
                 if (possession) {
-                    sentences.push(`Current possession status is ${possession.toLowerCase()}.`);
+                    sentences.push(`Possession status is ${possession.toLowerCase()}.`);
                 }
 
-                // Factoring in actual selected amenities
                 if (checkedAmenities.length > 0) {
-                    sentences.push(`Society amenities include ${checkedAmenities.slice(0, 5).join(', ')}.`);
+                    sentences.push(`Project features include ${checkedAmenities.slice(0, 5).join(', ')}.`);
                 }
 
                 if (rawPrice) {
@@ -1759,7 +2164,7 @@
                     sentences.push(`RERA ID: ${rera}.`);
                 }
 
-                sentences.push("Clean title documents and ready for site visit inspection.");
+                sentences.push("Clean documentation and ready for inspection.");
 
                 const finalCleanWriteup = sentences.join(' ');
                 const descBox = document.getElementById('propDescription');
@@ -1785,9 +2190,15 @@
             }
         }
 
-        /* ---------------- FORM SUBMISSION (LOCAL STORAGE) ---------------- */
+        /* ---------------- FORM SUBMISSION & RANDOM 1-2S BLUR PIPELINE ---------------- */
         function handleFormSubmission(e) {
             e.preventDefault();
+
+            const societyName = document.getElementById('propSociety').value.trim();
+            if (!societyName) {
+                alert("Please enter the Name of the Society / Project.");
+                return;
+            }
 
             const descText = document.getElementById('propDescription').value.trim();
             if (descText.length < 100) {
@@ -1802,7 +2213,7 @@
             }
 
             const imagesToSave = uploadedPhotoBuffer.length > 0 ? uploadedPhotoBuffer : [
-                { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80", tag: "Main Living", isCover: true }
+                { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true }
             ];
 
             const selectedAmenities = Array.from(document.querySelectorAll('input[name="amenityItem"]:checked')).map(el => el.value);
@@ -1811,19 +2222,20 @@
             const newProperty = {
                 id: newId,
                 ownerId: CURRENT_USER_ID,
-                title: `${formBhk.getValue()} ${formProp.getValue()} (${document.getElementById('propLocality').value.trim()})`,
-                txType: formTx.getValue(),
-                propType: formProp.getValue(),
-                bhk: formBhk.getValue(),
-                city: formCity.getValue(),
+                society: societyName,
+                title: `${formBhk.getValue() || 'Apartment'} (${societyName})`,
+                txType: formTx.getValue() || "For Sale",
+                propType: formProp.getValue() || "Apartment",
+                bhk: formBhk.getValue() || "2 BHK",
+                city: formCity.getValue() || "Mumbai",
                 locality: document.getElementById('propLocality').value.trim(),
                 price: Number(rawPrice),
                 carpetArea: Number(document.getElementById('propCarpetArea').value) || 0,
                 superArea: Number(document.getElementById('propSuperArea').value) || 0,
-                facing: formFacing.getValue(),
-                possession: formPossession.getValue(),
-                parkingCount: formParkingCount.getValue(),
-                parkingType: formParkingType.getValue(),
+                facing: formFacing.getValue() || "East",
+                possession: formPossession.getValue() || "Ready to Move",
+                parkingCount: formParkingCount.getValue() || "1 Car",
+                parkingType: formParkingType.getValue() || "Covered",
                 floor: document.getElementById('propFloor').value.trim() || "Mid Floor",
                 rera: document.getElementById('propRera').value.trim() || "NA",
                 amenities: selectedAmenities,
@@ -1832,19 +2244,51 @@
                 timestamp: Date.now()
             };
 
-            propertyStore.unshift(newProperty);
-            localStorage.setItem('by_properties', JSON.stringify(propertyStore));
+            // Show blurred upload overlay with random 1000ms - 2000ms duration
+            const blurOverlay = document.getElementById('uploadPipelineOverlay');
+            blurOverlay.style.display = 'flex';
 
-            alert(`Listing Published Successfully!\nProperty ID: ${newId}`);
-            document.getElementById('propertyPostForm').reset();
-            uploadedPhotoBuffer = [];
-            renderPhotoTiles();
-            renderMarketplaceListings();
-            renderUserOwnedListings();
-            switchTab('dashboard');
+            const randomDelay = Math.floor(1000 + Math.random() * 1000);
+
+            setTimeout(() => {
+                propertyStore.unshift(newProperty);
+                localStorage.setItem('by_properties', JSON.stringify(propertyStore));
+
+                blurOverlay.style.display = 'none';
+
+                // Display the upload success summary card
+                displaySuccessSummary(newProperty);
+
+                // Reset post form and photo buffer
+                document.getElementById('propertyPostForm').reset();
+                uploadedPhotoBuffer = [];
+                renderPhotoTiles();
+                initSearchableControls(); // Reinitialize dropdowns to empty state
+                renderMarketplaceListings();
+                renderUserOwnedListings();
+            }, randomDelay);
         }
 
-        /* ---------------- MARKETPLACE RENDERING & CARDS ---------------- */
+        function displaySuccessSummary(prop) {
+            const cover = prop.images.find(img => img.isCover) || prop.images[0];
+            document.getElementById('successCoverImg').src = cover.url;
+            document.getElementById('successProjectTitle').innerText = `${prop.society} (${prop.bhk})`;
+            document.getElementById('successLocalityLine').innerText = `${prop.locality}, ${prop.city} • ${prop.txType}`;
+            document.getElementById('successPriceCell').innerText = `₹ ${formatIndianCurrencyString(prop.price)} ${convertAmountToIndianWords(prop.price)}`;
+            document.getElementById('successBhkCell').innerText = `${prop.bhk} ${prop.propType}`;
+            document.getElementById('successCarpetCell').innerText = `${prop.carpetArea || '--'} Sq.Ft`;
+            document.getElementById('successParkingCell').innerText = `${prop.parkingCount} (${prop.parkingType})`;
+            document.getElementById('successAmenitiesCell').innerText = `${prop.amenities.length} Amenities Selected`;
+
+            document.getElementById('postSuccessModal').style.display = 'flex';
+        }
+
+        function dismissSuccessModal(targetTab) {
+            document.getElementById('postSuccessModal').style.display = 'none';
+            switchTab(targetTab);
+        }
+
+        /* ---------------- MARKETPLACE RENDERING & FULLSCREEN LAUNCH ---------------- */
         function renderMarketplaceListings() {
             const grid = document.getElementById('marketplaceGrid');
             grid.innerHTML = '';
@@ -1855,9 +2299,9 @@
             const selBudget = filterBudget ? filterBudget.getValue() : 'Any Budget';
 
             const filtered = propertyStore.filter(p => {
-                if (selCity !== 'All Cities' && p.city.toLowerCase() !== selCity.toLowerCase()) return false;
-                if (selBhk !== 'All BHKs' && p.bhk !== selBhk) return false;
-                if (selTx !== 'All Properties' && p.txType !== selTx) return false;
+                if (selCity && selCity !== 'All Cities' && p.city.toLowerCase() !== selCity.toLowerCase()) return false;
+                if (selBhk && selBhk !== 'All BHKs' && p.bhk !== selBhk) return false;
+                if (selTx && selTx !== 'All Properties' && p.txType !== selTx) return false;
                 if (selBudget === '₹ 50 Lakh' && p.price > 5000000) return false;
                 if (selBudget === '₹ 1 Crore' && p.price > 10000000) return false;
                 if (selBudget === '₹ 2 Crore' && p.price > 20000000) return false;
@@ -1891,6 +2335,12 @@
 
                 const card = document.createElement('div');
                 card.className = 'prop-card';
+                card.onclick = (e) => {
+                    // Prevent triggering fullscreen if clicking sub-buttons
+                    if (e.target.closest('button')) return;
+                    openFullscreenModal(p.id);
+                };
+
                 card.innerHTML = `
                     <div class="card-cover-box">
                         <img src="${cover.url}" alt="${p.title}">
@@ -1903,6 +2353,7 @@
                                 <div class="card-price">₹ ${formatIndianCurrencyString(p.price)}</div>
                                 <div class="card-rate">${ratePerSqFt}</div>
                             </div>
+                            <div class="card-project-name">${p.society || 'Exclusive Society'}</div>
                             <div class="card-title">${p.title}</div>
                             <div class="card-loc">${p.locality}, ${p.city} • ${p.txType}</div>
                             
@@ -1921,8 +2372,8 @@
                         </div>
 
                         <div class="card-actions-bar">
-                            <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="openInquiryModal('${p.id}', '${escape(p.title)}')">Contact Owner</button>
-                            <button class="btn-boxy" onclick="sharePropertyWhatsApp('${escape(p.title)}', '${p.price}', '${p.locality}')">WhatsApp</button>
+                            <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="openFullscreenModal('${p.id}')">View Details</button>
+                            <button class="btn-boxy" onclick="sharePropertyWhatsApp('${escape(p.society || p.title)}', '${p.price}', '${p.locality}')">WhatsApp</button>
                         </div>
                     </div>
                 `;
@@ -1938,7 +2389,7 @@
             renderMarketplaceListings();
         }
 
-        /* ---------------- VIEW LISTINGS (RENAMED FROM YOUR PROPERTIES) ---------------- */
+        /* ---------------- VIEW LISTINGS (USER'S OWN PROPERTIES) ---------------- */
         function renderUserOwnedListings() {
             const grid = document.getElementById('myPropsGrid');
             grid.innerHTML = '';
@@ -1955,6 +2406,11 @@
 
                 const card = document.createElement('div');
                 card.className = 'prop-card';
+                card.onclick = (e) => {
+                    if (e.target.closest('button')) return;
+                    openFullscreenModal(p.id);
+                };
+
                 card.innerHTML = `
                     <div class="card-cover-box" style="height:140px;">
                         <img src="${cover.url}" alt="${p.title}">
@@ -1963,6 +2419,7 @@
                     <div class="card-content">
                         <div>
                             <div class="card-price">₹ ${formatIndianCurrencyString(p.price)}</div>
+                            <div class="card-project-name">${p.society || 'My Property'}</div>
                             <div class="card-title">${p.title}</div>
                             <div class="card-loc">${p.locality}, ${p.city}</div>
                             <div style="font-size:10px; font-weight:700; color:var(--primary); margin-top:4px;">
@@ -1970,7 +2427,7 @@
                             </div>
                         </div>
                         <div class="card-actions-bar">
-                            <button class="btn-boxy" style="flex:1;" onclick="switchTab('leads')">View Inquiries</button>
+                            <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="openFullscreenModal('${p.id}')">View Fullscreen</button>
                             <button class="btn-boxy" style="color:#d32f2f;" onclick="deleteProperty('${p.id}')">Delete</button>
                         </div>
                     </div>
@@ -1985,6 +2442,94 @@
             localStorage.setItem('by_properties', JSON.stringify(propertyStore));
             renderMarketplaceListings();
             renderUserOwnedListings();
+        }
+
+        /* ---------------- FULLSCREEN MODAL & SCROLLABLE GALLERY ENGINE ---------------- */
+        let activeGalleryImages = [];
+        let activeGalleryIndex = 0;
+
+        function openFullscreenModal(propId) {
+            const p = propertyStore.find(item => item.id === propId);
+            if (!p) return;
+
+            document.getElementById('fsProjectName').innerText = p.society ? `${p.society} - ${p.bhk}` : p.title;
+            document.getElementById('fsLocalityCity').innerText = `${p.locality}, ${p.city} • ${p.txType}`;
+            document.getElementById('fsPrice').innerText = `₹ ${formatIndianCurrencyString(p.price)} ${convertAmountToIndianWords(p.price)}`;
+            document.getElementById('fsBhkType').innerText = `${p.bhk} • ${p.propType}`;
+            document.getElementById('fsCarpet').innerText = p.carpetArea ? `${p.carpetArea} Sq.Ft (RERA)` : 'N/A';
+            document.getElementById('fsParking').innerText = `${p.parkingCount || 'None'} (${p.parkingType || 'Standard'})`;
+            document.getElementById('fsFloorFacing').innerText = `${p.floor || 'Mid Floor'} • ${p.facing || 'East'}`;
+            document.getElementById('fsRera').innerText = p.rera && p.rera !== 'NA' ? p.rera : 'Verified Direct';
+            document.getElementById('fsDescription').innerText = p.description;
+
+            // Amenities
+            const amTray = document.getElementById('fsAmenitiesTray');
+            amTray.innerHTML = '';
+            if (p.amenities && p.amenities.length > 0) {
+                p.amenities.forEach(a => {
+                    const chip = document.createElement('span');
+                    chip.className = 'amenity-chip';
+                    chip.style.fontSize = '10px';
+                    chip.style.padding = '3px 8px';
+                    chip.textContent = `✓ ${a}`;
+                    amTray.appendChild(chip);
+                });
+            } else {
+                amTray.innerHTML = '<span style="font-size:11px; color:#777;">Standard Society Amenities Included</span>';
+            }
+
+            // Setup Gallery & Thumbnails
+            activeGalleryImages = (p.images && p.images.length > 0) ? p.images : [
+                { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800", tag: "Main Residence" }
+            ];
+            activeGalleryIndex = 0;
+            renderGalleryViewport();
+            renderThumbnailsStrip();
+
+            // Setup Contact & WhatsApp Actions
+            document.getElementById('fsContactBtn').onclick = () => {
+                closeFullscreenModal();
+                openInquiryModal(p.id, escape(p.society || p.title));
+            };
+            document.getElementById('fsWhatsAppBtn').onclick = () => {
+                sharePropertyWhatsApp(escape(p.society || p.title), p.price, p.locality);
+            };
+
+            document.getElementById('fullscreenDetailModal').style.display = 'flex';
+        }
+
+        function renderGalleryViewport() {
+            const currentImg = activeGalleryImages[activeGalleryIndex];
+            document.getElementById('fsMainImage').src = currentImg.url;
+            document.getElementById('fsImageTagPill').innerText = `${currentImg.tag || 'Interior'} (${activeGalleryIndex + 1}/${activeGalleryImages.length})`;
+        }
+
+        function renderThumbnailsStrip() {
+            const strip = document.getElementById('fsThumbnailsStrip');
+            strip.innerHTML = '';
+            activeGalleryImages.forEach((img, idx) => {
+                const thumb = document.createElement('img');
+                thumb.className = `gallery-thumb-item ${idx === activeGalleryIndex ? 'active-thumb' : ''}`;
+                thumb.src = img.url;
+                thumb.onclick = () => {
+                    activeGalleryIndex = idx;
+                    renderGalleryViewport();
+                    renderThumbnailsStrip();
+                };
+                strip.appendChild(thumb);
+            });
+        }
+
+        function navigateGallery(direction) {
+            activeGalleryIndex += direction;
+            if (activeGalleryIndex < 0) activeGalleryIndex = activeGalleryImages.length - 1;
+            if (activeGalleryIndex >= activeGalleryImages.length) activeGalleryIndex = 0;
+            renderGalleryViewport();
+            renderThumbnailsStrip();
+        }
+
+        function closeFullscreenModal() {
+            document.getElementById('fullscreenDetailModal').style.display = 'none';
         }
 
         /* ---------------- OPPORTUNITIES CRM & EXCEL (.CSV) DOWNLOAD ---------------- */
@@ -2093,7 +2638,7 @@
             const newLead = {
                 leadId: `LD-${Math.floor(100 + Math.random() * 900)}`,
                 propId: propId,
-                propTitle: propObj ? propObj.title : "Marketplace Residence",
+                propTitle: propObj ? (propObj.society ? `${propObj.society} (${propObj.locality})` : propObj.title) : "Marketplace Residence",
                 buyerName: buyerName,
                 buyerPhone: buyerPhone,
                 buyerNote: buyerNote,
@@ -2110,7 +2655,7 @@
         }
 
         function sharePropertyWhatsApp(titleEsc, price, loc) {
-            const text = `Take a look at this property on BOXYARD:\n*${unescape(titleEsc)}*\nPrice: ₹ ${Number(price).toLocaleString('en-IN')}\nLocation: ${loc}`;
+            const text = `Check out this property on BOXYARD:\n*${unescape(titleEsc)}*\nPrice: ₹ ${Number(price).toLocaleString('en-IN')}\nLocation: ${loc}`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         }
 
