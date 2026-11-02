@@ -3,636 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BOXYARD - v1.01</title>
-    
-    <!-- Favicon & Touch Icons -->
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/Znywz0fP/BY.png">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/Znywz0fP/BY.png">
-    
-    <!-- iOS Add to Home Screen Meta Tags -->
+    <title>BOXYARD - v1.03</title>
+
+    <!-- Meta / SEO / iOS PWA Integration -->
+    <meta name="application-name" content="BOXYARD">
+    <meta name="apple-mobile-web-app-title" content="BOXYARD">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="BOXYARD">
-    <meta name="application-name" content="BOXYARD">
     <meta name="theme-color" content="#a92c1c">
 
-    <!-- PWA Web App Manifest Data URI -->
-    <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22BOXYARD%22%2C%22short_name%22%3A%22BOXYARD%22%2C%22description%22%3A%22Best%20Property%20Portal%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FFFFFF%22%2C%22theme_color%22%3A%22%23a92c1c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.postimg.cc%2FZnywz0fP%2FBY.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/tJCdfc2T/BOXYARD.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/tJCdfc2T/BOXYARD.png">
+
+    <!-- Web App Manifest (Data URI) -->
+    <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22BOXYARD%22%2C%22short_name%22%3A%22BOXYARD%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23a92c1c%22%2C%22theme_color%22%3A%22%23a92c1c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.postimg.cc%2FtJCdfc2T%2FBOXYARD.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
 
     <style>
-        /* ==========================================================================
-           BOXYARD v1.01 DESIGN TOKENS
-           Typography: 'Century Schoolbook', Georgia, serif
-           Primary Color: #a92c1c
-           Boxy Discipline: 0px border-radius strictly everywhere
-           ========================================================================== */
         :root {
-            --brand-primary: #a92c1c;
-            --brand-dark: #6e1c12;
-            --brand-light: #fdf5f2;
-            --bg-page: #f5f5f5;
-            --bg-surface: #ffffff;
-            --text-dark: #111111;
+            --primary: #a92c1c;
+            --primary-dark: #872316;
+            --primary-light: #fef4f3;
+            --bg-main: #f5f5f5;
+            --surface: #ffffff;
+            --border-color: #000000;
+            --text-main: #111111;
             --text-muted: #555555;
-            --text-light: #777777;
-            --border-crisp: #000000;
-            --border-light: #d1d1d1;
-            --success-color: #1a6f37;
-            --warning-color: #a92c1c;
+            --font-family: 'Century Schoolbook', Georgia, serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            border-radius: 0px !important;
+            font-family: var(--font-family);
+            border-radius: 0px !important; /* Strict Boxy Design Across Entire App */
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Century Schoolbook', 'New Century Schoolbook', Georgia, 'Times New Roman', serif;
-            background-color: var(--bg-page);
-            color: var(--text-dark);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding-bottom: 60px;
+            overflow-x: hidden;
+            font-size: 13px;
             line-height: 1.45;
-            padding-bottom: 70px;
-            font-size: 15px;
         }
 
-        /* ---------------- HEADER ---------------- */
-        header {
-            background-color: #ffffff;
-            border-bottom: 3px solid var(--brand-primary);
-            position: sticky;
+        /* ------------------ 1-SEC INITIAL SPLASH PULSE OVERLAY ------------------ */
+        #appSplashLoader {
+            position: fixed;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
-        .header-top {
+        .splash-logo-container {
+            width: 110px;
+            height: 110px;
+            background: #ffffff;
+            border: 2px solid #000000;
+            box-shadow: 4px 4px 0px #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            animation: boxyLogoPulse 1s ease-in-out infinite;
+        }
+
+        .splash-logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .splash-subtext {
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-top: 18px;
+            text-transform: uppercase;
+        }
+
+        @keyframes boxyLogoPulse {
+            0% { transform: scale(0.92); opacity: 0.85; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.92); opacity: 0.85; }
+        }
+
+        /* ------------------ BOXY BUTTONS & BADGES ------------------ */
+        .btn-boxy {
+            background: var(--surface);
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            padding: 7px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 2px 2px 0px var(--border-color);
+            transition: all 0.15s ease;
+        }
+
+        .btn-boxy:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--border-color);
+        }
+
+        .btn-boxy:active {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0px var(--border-color);
+        }
+
+        .btn-boxy-primary {
+            background: var(--primary);
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-boxy-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-boxy-excel {
+            background: #107c41;
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-boxy-excel:hover {
+            background: #0b592e;
+        }
+
+        .badge-free {
+            background: #2e7d32;
+            color: #ffffff;
+            font-size: 9px;
+            padding: 2px 5px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-left: 2px;
+        }
+
+        /* ------------------ HEADER ARCHITECTURE ------------------ */
+        header {
+            background-color: var(--surface);
+            border-bottom: 2px solid var(--border-color);
+            padding: 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 18px;
-            max-width: 1280px;
-            margin: 0 auto;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .brand-container {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             cursor: pointer;
-            text-decoration: none;
         }
 
-        .brand-img {
-            width: 42px;
-            height: 42px;
+        .brand-logo {
+            width: 38px;
+            height: 38px;
             object-fit: contain;
-            border: 2px solid var(--border-crisp);
+            border: 1px solid var(--border-color);
             background: #ffffff;
-            padding: 2px;
         }
 
-        .brand-text h1 {
-            font-size: 24px;
+        .brand-text-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-size: 19px;
             font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--brand-primary);
-            text-transform: uppercase;
-            line-height: 1;
+            color: var(--primary);
+            letter-spacing: 1px;
+            line-height: 1.1;
         }
 
-        .brand-text span {
-            font-size: 11px;
-            color: var(--text-dark);
+        .brand-subline {
+            font-size: 9px;
             font-weight: 700;
             letter-spacing: 1.5px;
-            text-transform: uppercase;
-            display: block;
-            margin-top: 2px;
+            color: #222222;
         }
 
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .identity-badge {
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #ffffff;
-            border: 1.5px solid var(--border-crisp);
-            padding: 6px 12px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--brand-primary);
         }
 
-        .identity-badge .dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--brand-primary);
-            display: inline-block;
-        }
-
-        /* Prominent Isolated Post Property Button */
-        .btn-post-property-header {
-            background-color: var(--brand-primary);
-            color: #ffffff;
-            border: 2px solid var(--border-crisp);
-            padding: 8px 16px;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+        .profile-corner-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            box-shadow: 2px 2px 0px var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            box-shadow: 3px 3px 0px #000000;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            padding: 0;
+            transition: all 0.15s ease;
         }
 
-        .btn-post-property-header:hover {
-            background-color: var(--brand-dark);
+        .profile-corner-btn:hover {
+            background: var(--primary-light);
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px var(--border-color);
         }
 
-        .btn-post-property-header:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #000000;
+        .profile-corner-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2.2;
         }
 
-        .badge-free {
-            background-color: #ffffff;
-            color: var(--brand-primary);
-            font-size: 10px;
-            padding: 1px 6px;
-            font-weight: 900;
-            border: 1px solid var(--border-crisp);
-            letter-spacing: 0.5px;
-        }
-
-        /* ---------------- NAVIGATION ---------------- */
+        /* ------------------ NAVIGATION MATRIX ------------------ */
         nav {
             background-color: #ffffff;
-            border-top: 1px solid var(--border-light);
-            border-bottom: 2px solid var(--border-crisp);
-        }
-
-        .nav-inner {
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             overflow-x: auto;
-            max-width: 1280px;
-            margin: 0 auto;
             scrollbar-width: none;
+            position: sticky;
+            top: 54px;
+            z-index: 999;
         }
 
-        .nav-inner::-webkit-scrollbar {
+        nav::-webkit-scrollbar {
             display: none;
         }
 
-        .nav-btn {
-            background: #ffffff;
+        nav button {
+            background: none;
             border: none;
-            border-right: 1px solid var(--border-light);
-            color: var(--text-dark);
-            padding: 12px 20px;
-            font-family: inherit;
-            font-size: 13px;
+            border-right: 1px solid #e0e0e0;
+            color: var(--text-main);
+            font-size: 11px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
             cursor: pointer;
+            text-transform: uppercase;
+            padding: 11px 16px;
             white-space: nowrap;
-            transition: all 0.15s ease-in-out;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            letter-spacing: 0.5px;
+            transition: all 0.1s ease;
         }
 
-        .nav-btn:hover {
-            background-color: var(--brand-light);
-            color: var(--brand-primary);
-        }
-
-        .nav-btn.active {
-            background-color: var(--brand-primary);
+        nav button.active {
+            background-color: var(--primary);
             color: #ffffff;
-            border-right: 1px solid var(--brand-primary);
+            border-right-color: var(--border-color);
         }
 
-        .nav-badge {
-            background: #000000;
-            color: #ffffff;
-            font-size: 10px;
-            padding: 1px 6px;
-            margin-left: 4px;
-        }
-
-        .nav-btn.active .nav-badge {
-            background: #ffffff;
-            color: var(--brand-primary);
-        }
-
-        /* ---------------- CONTAINER & SECTIONS ---------------- */
+        /* ------------------ LAYOUT & CONTAINERS ------------------ */
         .container {
-            max-width: 1280px;
-            margin: 20px auto;
-            padding: 0 16px;
+            max-width: 1040px;
+            margin: 16px auto;
+            padding: 0 12px;
         }
 
-        .app-section {
+        section {
             display: none;
         }
 
-        .app-section.active-section {
+        section.active-section {
             display: block;
-            animation: fadeIn 0.2s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Section Headings with White Background & #a92c1c text */
         .section-header-box {
             background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            border-left: 8px solid var(--brand-primary);
-            padding: 14px 20px;
-            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            box-shadow: 2px 2px 0px var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
-            box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
+            gap: 8px;
         }
 
         .section-header-box h2 {
-            font-size: 20px;
-            text-transform: uppercase;
-            color: var(--brand-primary);
-            letter-spacing: 1px;
+            font-size: 15px;
             font-weight: 700;
-        }
-
-        .section-header-box p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 3px;
-        }
-
-        /* ---------------- BOXY BUTTONS ---------------- */
-        .btn-boxy {
-            background-color: var(--brand-primary);
-            color: #ffffff;
-            border: 2px solid var(--border-crisp);
-            padding: 9px 18px;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 700;
+            color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px #000000;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
         }
 
-        .btn-boxy:hover {
-            background-color: var(--brand-dark);
-        }
-
-        .btn-boxy:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #000000;
-        }
-
-        .btn-boxy-outline {
-            background-color: #ffffff;
-            color: var(--brand-primary);
-            border: 2px solid var(--border-crisp);
-            box-shadow: 3px 3px 0px #000000;
-        }
-
-        .btn-boxy-outline:hover {
-            background-color: var(--brand-light);
-        }
-
-        .btn-boxy-secondary {
-            background-color: #000000;
-            color: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 3px 3px 0px #555555;
-        }
-
-        .btn-boxy-whatsapp {
-            background-color: #128c7e;
-            color: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 2px 2px 0px #000000;
-        }
-
-        .btn-boxy-sm {
-            padding: 5px 10px;
-            font-size: 11px;
-            box-shadow: 2px 2px 0px #000000;
-        }
-
-        .btn-ai-generate {
-            background-color: #1a1a1a;
-            color: #f5f5f5;
-            border: 2px solid var(--border-crisp);
-            padding: 7px 14px;
-            font-size: 11px;
+        .section-header-box .meta-pill {
+            font-size: 10px;
             font-weight: 700;
-            letter-spacing: 0.8px;
-            cursor: pointer;
-            box-shadow: 2px 2px 0px var(--brand-primary);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            color: #000000;
+            border: 1px solid #000000;
+            padding: 2px 6px;
+            background: #f9f9f9;
         }
 
-        .btn-ai-generate:hover {
-            background-color: var(--brand-primary);
-            color: #ffffff;
+        /* ------------------ BOXY TYPEAHEAD DROPDOWNS ------------------ */
+        .form-group {
+            margin-bottom: 12px;
+            position: relative;
         }
 
-        /* ---------------- SEARCHABLE TYPEAHEAD DROPDOWNS ---------------- */
-        .typeahead-container {
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #111111;
+        }
+
+        .searchable-select-wrap {
             position: relative;
             width: 100%;
         }
 
-        .typeahead-input {
+        .searchable-input {
             width: 100%;
-            padding: 10px 32px 10px 12px;
-            background: #ffffff;
-            border: 1.5px solid var(--border-crisp);
-            font-family: inherit;
-            font-size: 14px;
-            color: var(--text-dark);
+            padding: 9px 10px;
+            border: 1px solid var(--border-color);
+            background-color: var(--surface);
+            color: var(--text-main);
+            font-size: 12px;
+            font-weight: 600;
             outline: none;
-            cursor: text;
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.1);
         }
 
-        .typeahead-input:focus {
-            border-color: var(--brand-primary);
-            background-color: #fffefb;
-            box-shadow: 2px 2px 0px var(--brand-primary);
+        .searchable-input:focus {
+            border-color: var(--primary);
+            box-shadow: 2px 2px 0px var(--border-color);
         }
 
-        .typeahead-arrow {
+        .dropdown-results-tray {
             position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            font-size: 10px;
-            color: var(--text-dark);
-            font-weight: bold;
-        }
-
-        .typeahead-dropdown {
-            position: absolute;
-            top: 100%;
+            top: calc(100% + 2px);
             left: 0;
-            width: 100%;
-            max-height: 220px;
-            background: #ffffff;
-            border: 1.5px solid var(--border-crisp);
-            border-top: none;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            box-shadow: 3px 3px 0px var(--border-color);
+            max-height: 180px;
             overflow-y: auto;
             z-index: 1050;
-            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
             display: none;
-            animation: slideDownMenu 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            transform-origin: top;
+            animation: dropdownSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes slideDownMenu {
+        @keyframes dropdownSlideDown {
             from {
                 opacity: 0;
-                transform: scaleY(0.6);
+                transform: translateY(-8px);
             }
             to {
                 opacity: 1;
-                transform: scaleY(1);
+                transform: translateY(0);
             }
         }
 
-        .typeahead-dropdown.show-dropdown {
-            display: block;
-        }
-
-        .typeahead-option {
-            padding: 9px 12px;
-            font-size: 13px;
+        .dropdown-item-row {
+            padding: 8px 10px;
+            font-size: 11px;
+            font-weight: 600;
             cursor: pointer;
             border-bottom: 1px solid #f0f0f0;
-            font-weight: 500;
-        }
-
-        .typeahead-option:hover, .typeahead-option.highlighted {
-            background-color: var(--brand-light);
-            color: var(--brand-primary);
-            font-weight: 700;
-        }
-
-        .typeahead-no-results {
-            padding: 10px 12px;
-            font-size: 12px;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        /* ---------------- FORMS & INPUTS ---------------- */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            position: relative;
-        }
-
-        .form-group label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-            color: var(--text-dark);
-        }
-
-        .boxy-input {
-            width: 100%;
-            padding: 10px 12px;
             background: #ffffff;
-            border: 1.5px solid var(--border-crisp);
-            font-family: inherit;
-            font-size: 14px;
-            color: var(--text-dark);
-            outline: none;
         }
 
-        .boxy-input:focus {
-            border-color: var(--brand-primary);
-            background-color: #fffefb;
-            box-shadow: 2px 2px 0px var(--brand-primary);
+        .dropdown-item-row:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
         }
 
-        .currency-helper {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--brand-primary);
-            margin-top: 3px;
-            min-height: 18px;
+        .dropdown-item-row:last-child {
+            border-bottom: none;
         }
 
-        /* Filter Matrix */
-        .filter-matrix {
+        /* ------------------ FILTER TOOLBAR (MARKETPLACE) ------------------ */
+        .filter-panel {
             background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            padding: 18px;
-            margin-bottom: 24px;
-            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            margin-bottom: 16px;
+            box-shadow: 2px 2px 0px var(--border-color);
         }
 
         .filter-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr auto;
-            gap: 12px;
-            align-items: end;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            align-items: flex-end;
         }
 
-        @media (max-width: 900px) {
-            .filter-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 580px) {
-            .filter-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ---------------- PROPERTY GRID & CARDS ---------------- */
-        .properties-grid {
+        /* ------------------ PROPERTY GRID & CARDS ------------------ */
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 22px;
+            grid-template-columns: 1fr;
+            gap: 14px;
         }
 
-        @media (max-width: 480px) {
-            .properties-grid {
-                grid-template-columns: 1fr;
+        @media (min-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        .property-card {
-            background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 4px 4px 0px #000000;
+        @media (min-width: 980px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .prop-card {
+            background: var(--surface);
+            border: 1px solid var(--border-color);
+            box-shadow: 3px 3px 0px var(--border-color);
             display: flex;
             flex-direction: column;
-            position: relative;
-            transition: transform 0.15s ease;
-        }
-
-        .property-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 0px #000000;
-        }
-
-        .card-image-box {
-            position: relative;
-            height: 220px;
-            background: #1a1a1a;
-            border-bottom: 2px solid var(--border-crisp);
             overflow: hidden;
+            position: relative;
         }
 
-        .card-image-box img {
+        .card-cover-box {
+            position: relative;
+            width: 100%;
+            height: 175px;
+            background: #e8e8e8;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-cover-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
 
-        .badge-bar {
+        .cover-tag-pill {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            z-index: 2;
-        }
-
-        .tag-boxy {
-            background: var(--brand-primary);
-            color: #ffffff;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border: 1px solid #000000;
-            letter-spacing: 0.5px;
-            box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
-            display: inline-block;
-        }
-
-        .tag-rera {
+            top: 8px;
+            left: 8px;
             background: #000000;
             color: #ffffff;
-        }
-
-        .tag-owner {
-            background: #ffffff;
-            color: var(--brand-primary);
-            border: 1px solid var(--brand-primary);
-        }
-
-        .card-type-tag {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.85);
-            color: #ffffff;
-            font-size: 11px;
-            padding: 3px 8px;
-            border: 1px solid #ffffff;
-            font-weight: bold;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 7px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
+            border: 1px solid #ffffff;
         }
 
-        .photo-count-tag {
+        .rera-stamp-pill {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.75);
-            color: #ffffff;
-            font-size: 10px;
-            padding: 3px 8px;
-            border: 1px solid #ffffff;
-            font-weight: bold;
+            top: 8px;
+            right: 8px;
+            background: #ffffff;
+            color: var(--primary);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 7px;
+            border: 1px solid var(--border-color);
         }
 
         .card-content {
-            padding: 16px;
-            flex-grow: 1;
+            padding: 12px;
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
             justify-content: space-between;
         }
 
@@ -640,2004 +502,1675 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 6px;
-            border-bottom: 1px dashed var(--border-light);
-            padding-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .card-price {
-            font-size: 24px;
+            font-size: 17px;
             font-weight: 700;
-            color: var(--brand-primary);
-            letter-spacing: -0.5px;
+            color: var(--primary);
         }
 
         .card-rate {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: 700;
+            color: #444444;
         }
 
         .card-title {
-            font-size: 17px;
+            font-size: 13px;
             font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-            line-height: 1.3;
+            margin-bottom: 3px;
+            color: #000000;
         }
 
         .card-loc {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .spec-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            border: 1.5px solid var(--border-crisp);
-            background: #fdfdfd;
-            margin-bottom: 14px;
-            text-align: center;
-        }
-
-        .spec-item {
-            padding: 8px 4px;
-            border-right: 1px solid var(--border-crisp);
-        }
-
-        .spec-item:last-child {
-            border-right: none;
-        }
-
-        .spec-label {
             font-size: 10px;
+            font-weight: 600;
+            color: #555555;
             text-transform: uppercase;
-            color: var(--text-light);
-            font-weight: bold;
+            margin-bottom: 8px;
         }
 
-        .spec-val {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-top: 2px;
-        }
-
-        .features-chips {
+        .card-spec-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 16px;
+            gap: 4px;
+            margin-bottom: 8px;
         }
 
-        .chip {
-            background: #f0f0f0;
-            border: 1px solid #c2c2c2;
-            font-size: 11px;
-            padding: 2px 7px;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .card-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: auto;
-            border-top: 1.5px solid var(--border-crisp);
-            padding-top: 12px;
-        }
-
-        /* ---------------- ADVANCED PHOTO UPLOAD & ASSET MANAGER ---------------- */
-        .photo-upload-zone {
-            background: #fcfcfc;
-            border: 2px dashed var(--border-crisp);
-            padding: 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: background 0.15s ease;
-            position: relative;
-        }
-
-        .photo-upload-zone:hover {
-            background: var(--brand-light);
-        }
-
-        .photo-upload-zone input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .gallery-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .photo-preview-item {
-            background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 3px 3px 0px #000000;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .photo-preview-img-box {
-            position: relative;
-            height: 160px;
-            background: #111111;
-            overflow: hidden;
-            border-bottom: 1.5px solid var(--border-crisp);
-        }
-
-        .photo-preview-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .cover-badge {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            background: var(--brand-primary);
-            color: #ffffff;
+        .spec-tag {
+            background: #f1f1f1;
+            border: 1px solid #d0d0d0;
+            padding: 2px 6px;
             font-size: 9px;
-            font-weight: 900;
-            padding: 3px 6px;
-            border: 1px solid #000000;
-            letter-spacing: 0.5px;
-            box-shadow: 1px 1px 0px #000000;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
-        .photo-preview-controls {
-            padding: 10px;
+        .card-amenities-tray {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            flex-wrap: wrap;
+            gap: 3px;
+            margin-bottom: 8px;
+        }
+
+        .amenity-chip {
             background: #ffffff;
-        }
-
-        .btn-set-cover {
-            background: #f5f5f5;
-            border: 1px solid var(--border-crisp);
-            font-family: inherit;
-            font-size: 11px;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 8px;
             font-weight: 700;
-            padding: 5px;
-            cursor: pointer;
-            text-transform: uppercase;
+            padding: 1px 5px;
         }
 
-        .btn-set-cover:hover {
-            background: var(--brand-light);
-            color: var(--brand-primary);
-        }
-
-        .btn-remove-photo {
-            background: #000000;
-            color: #ffffff;
-            border: 1px solid #000000;
-            font-family: inherit;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 5px;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        /* ---------------- POST PROPERTY FORM STYLING ---------------- */
-        .post-form-matrix {
-            background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 5px 5px 0px #000000;
-            padding: 24px;
-            margin-bottom: 30px;
-        }
-
-        .form-section-title {
-            background: #ffffff;
-            color: var(--brand-primary);
-            font-size: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid var(--brand-primary);
-            padding-bottom: 4px;
-            margin: 22px 0 14px 0;
+        .card-actions-bar {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            gap: 6px;
+            margin-top: 10px;
+            border-top: 1px solid #ececec;
+            padding-top: 10px;
         }
 
-        .form-section-title:first-child {
-            margin-top: 0;
+        /* ------------------ POST PROPERTY FORM ------------------ */
+        .form-layout-box {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            box-shadow: 3px 3px 0px var(--border-color);
         }
 
         .form-row-2 {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 14px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .form-row-2 {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         .form-row-3 {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 14px;
+            grid-template-columns: 1fr;
+            gap: 12px;
         }
 
-        @media (max-width: 768px) {
-            .form-row-2, .form-row-3 {
-                grid-template-columns: 1fr;
+        @media (min-width: 768px) {
+            .form-row-3 {
+                grid-template-columns: 1fr 1fr 1fr;
             }
         }
 
-        .checkbox-group-boxy {
+        .currency-words-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 3px;
+            min-height: 14px;
+        }
+
+        /* Amenities Multi-Select Grid */
+        .amenities-group-container {
+            border: 1px solid var(--border-color);
+            background: #fbfbfb;
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+
+        .amenity-section-heading {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 3px;
+            margin-bottom: 8px;
+        }
+
+        .amenities-checklist-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 10px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
-        .checkbox-label {
+        .amenity-checkbox-label {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: #fdfdfd;
-            border: 1px solid var(--border-crisp);
-            padding: 8px 10px;
-            font-size: 13px;
-            cursor: pointer;
+            gap: 6px;
+            font-size: 10px;
             font-weight: 600;
+            cursor: pointer;
+            text-transform: none;
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 5px 8px;
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+            transition: all 0.1s ease;
         }
 
-        .checkbox-label input[type="checkbox"] {
-            accent-color: var(--brand-primary);
-            width: 16px;
-            height: 16px;
+        .amenity-checkbox-label:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
         }
 
-        /* Description with Character Counter & AI Generator */
-        .description-header {
+        .amenity-checkbox-label input[type="checkbox"] {
+            accent-color: var(--primary);
+            cursor: pointer;
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Photo Upload & Classification Matrix */
+        .photo-upload-zone {
+            border: 2px dashed var(--border-color);
+            padding: 18px;
+            text-align: center;
+            background: #fbfbfb;
+            cursor: pointer;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .photo-upload-zone:hover {
+            background: var(--primary-light);
+        }
+
+        .photo-grid-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .photo-tile {
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            padding: 6px;
+            box-shadow: 2px 2px 0px var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            position: relative;
+        }
+
+        .photo-tile img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border: 1px solid #000000;
+        }
+
+        .cover-badge-selected {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary);
+            color: #ffffff;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 2px 5px;
+            border: 1px solid #000000;
+        }
+
+        .tile-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tile-controls select, .tile-controls input {
+            padding: 4px;
+            font-size: 9px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-tile-cover {
+            background: #f0f0f0;
+            border: 1px solid var(--border-color);
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-tile-cover.active-cover {
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .btn-tile-del {
+            background: #fff0f0;
+            border: 1px solid #d32f2f;
+            color: #d32f2f;
+            font-size: 8px;
+            font-weight: 700;
+            padding: 2px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Description Box & AI Tools */
+        textarea.boxy-textarea {
+            width: 100%;
+            height: 110px;
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #ffffff;
+            outline: none;
+            resize: vertical;
+        }
+
+        textarea.boxy-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 2px 2px 0px var(--border-color);
+        }
+
+        .desc-status-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-top: 4px;
+            font-size: 10px;
+            font-weight: 700;
         }
 
         .char-counter {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-muted);
+            color: #666666;
         }
 
         .char-counter.invalid {
-            color: var(--warning-color);
+            color: #d32f2f;
         }
 
         .char-counter.valid {
-            color: var(--success-color);
+            color: #2e7d32;
         }
 
-        /* AI Loading Animation Box */
-        .ai-processing-box {
+        /* ------------------ MINIMAL CENTERED AI LOADER ------------------ */
+        .ai-center-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
             display: none;
-            background: #111111;
-            color: #ffffff;
-            border: 2px solid var(--brand-primary);
-            padding: 12px 16px;
-            margin-bottom: 10px;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .ai-center-box {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            box-shadow: 4px 4px 0px var(--border-color);
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-pulse-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            animation: pulseMini 0.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseMini {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .ai-center-text {
             font-size: 12px;
             font-weight: 700;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 3px 3px 0px var(--brand-primary);
+            color: #000000;
         }
 
-        .ai-spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid #ffffff;
-            border-top: 2px solid var(--brand-primary);
-            animation: spin 0.8s linear infinite;
+        /* ------------------ LEAD CRM TABLE ------------------ */
+        .lead-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 2px 2px 0px var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .lead-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 6px;
         }
 
-        /* ---------------- INQUIRY MODAL (BOXY) ---------------- */
-        .modal-overlay {
-            display: none;
+        .lead-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .lead-time {
+            font-size: 9px;
+            font-weight: 600;
+            color: #666666;
+        }
+
+        /* ------------------ MODAL GENERIC ------------------ */
+        .modal-shade {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
-        }
-
-        .modal-overlay.active-modal {
-            display: flex;
-        }
-
-        .modal-box {
-            background: #ffffff;
-            border: 3px solid #000000;
-            box-shadow: 8px 8px 0px var(--brand-primary);
-            max-width: 520px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-header {
-            background: #ffffff;
-            border-bottom: 2px solid var(--border-crisp);
-            padding: 14px 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            color: var(--brand-primary);
-            font-size: 18px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .modal-close {
-            background: #000000;
-            color: #ffffff;
-            border: none;
-            width: 28px;
-            height: 28px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
+            background: rgba(0,0,0,0.5);
+            display: none;
             align-items: center;
             justify-content: center;
+            z-index: 1500;
+            padding: 14px;
         }
 
         .modal-body {
-            padding: 20px;
-        }
-
-        /* ---------------- OPPORTUNITIES / LEADS VIEW ---------------- */
-        .lead-card {
             background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 4px 4px 0px #000000;
+            border: 2px solid var(--border-color);
+            box-shadow: 5px 5px 0px var(--border-color);
+            width: 100%;
+            max-width: 440px;
             padding: 16px;
-            margin-bottom: 16px;
-            display: grid;
-            grid-template-columns: 2fr 1fr auto;
-            gap: 16px;
-            align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .lead-card {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .lead-property-ref {
-            font-size: 12px;
-            background: var(--brand-light);
-            color: var(--brand-primary);
-            padding: 3px 8px;
-            font-weight: bold;
-            border: 1px solid var(--brand-primary);
-            display: inline-block;
-            margin-bottom: 6px;
-        }
-
-        /* ---------------- CALCULATORS & INSIGHTS ---------------- */
-        .calc-matrix {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 24px;
-        }
-
-        @media (max-width: 860px) {
-            .calc-matrix {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .calc-box {
+        .empty-display-box {
             background: #ffffff;
-            border: 2px solid var(--border-crisp);
-            box-shadow: 5px 5px 0px #000000;
-            padding: 20px;
-        }
-
-        .slider-control {
-            margin: 14px 0;
-        }
-
-        .slider-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .slider-header span:last-child {
-            color: var(--brand-primary);
-            font-size: 16px;
-        }
-
-        input[type=range] {
-            width: 100%;
-            height: 10px;
-            background: #e0e0e0;
-            border: 1.5px solid #000000;
-            outline: none;
-            accent-color: var(--brand-primary);
-        }
-
-        .calc-results-display {
-            background: #ffffff;
-            border: 2px solid var(--brand-primary);
-            padding: 20px;
+            border: 1px dashed var(--border-color);
+            padding: 26px 14px;
             text-align: center;
-            box-shadow: 4px 4px 0px var(--brand-primary);
-        }
-
-        .emi-amount {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--brand-primary);
-            margin: 6px 0 14px 0;
-        }
-
-        .breakdown-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            text-align: left;
-            margin-top: 14px;
-        }
-
-        .breakdown-table td {
-            padding: 8px 6px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .breakdown-table td:last-child {
-            text-align: right;
-            font-weight: 700;
-        }
-
-        /* ---------------- TOAST NOTIFICATIONS ---------------- */
-        #toastContainer {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .toast-box {
-            background: #ffffff;
-            border: 2px solid #000000;
-            border-left: 8px solid var(--brand-primary);
-            padding: 12px 18px;
-            color: var(--text-dark);
-            font-weight: 700;
-            box-shadow: 4px 4px 0px #000000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 280px;
-            animation: slideInRight 0.2s ease-in-out;
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .empty-placeholder {
-            background: #ffffff;
-            border: 2px dashed var(--border-crisp);
-            padding: 40px 20px;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .empty-placeholder h4 {
-            color: var(--brand-primary);
-            font-size: 18px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 11px;
+            color: #666666;
         }
     </style>
 </head>
 <body>
 
-    <!-- ================= APP HEADER ================= -->
-    <header>
-        <div class="header-top">
-            <div class="brand-container" onclick="switchTab('dashboard')">
-                <img src="https://i.postimg.cc/Znywz0fP/BY.png" alt="BOXYARD" class="brand-img" onerror="this.src='https://placehold.co/42x42/a92c1c/ffffff?text=BY'">
-                <div class="brand-text">
-                    <h1>BOXYARD</h1>
-                    <span>BEST PROPERTY PORTAL</span>
-                </div>
-            </div>
-
-            <div class="header-controls">
-                <div class="identity-badge" title="Active Verified Terminal">
-                    <span class="dot"></span>
-                    <span id="activeUserLabel">USER: BY-IND-8821</span>
-                </div>
-                <!-- SEPARATE DEDICATED POST PROPERTY ACTION -->
-                <button class="btn-post-property-header" onclick="switchTab('post')">
-                    <span>+ Post Property</span>
-                    <span class="badge-free">FREE</span>
-                </button>
-            </div>
+    <!-- 1-Sec App Loading Splash Overlay with Pulsing Logo -->
+    <div id="appSplashLoader">
+        <div class="splash-logo-container">
+            <img src="https://i.postimg.cc/tJCdfc2T/BOXYARD.png" alt="BOXYARD">
         </div>
+        <div class="splash-subtext">BOXYARD ARCHITECTURE v1.03</div>
+    </div>
 
-        <!-- NAVIGATION TABS -->
-        <nav>
-            <div class="nav-inner">
-                <button class="nav-btn active" id="tab-dashboard" onclick="switchTab('dashboard')">
-                    Marketplace Dashboard
-                </button>
-                <button class="nav-btn" id="tab-myprops" onclick="switchTab('myprops')">
-                    View Your Properties <span class="nav-badge" id="myPropsBadge">0</span>
-                </button>
-                <button class="nav-btn" id="tab-leads" onclick="switchTab('leads')">
-                    Opportunities & Leads <span class="nav-badge" id="leadsBadge">0</span>
-                </button>
-                <button class="nav-btn" id="tab-insights" onclick="switchTab('insights')">
-                    Calculators & Insights
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- ================= MAIN CONTAINER ================= -->
-    <main class="container">
-
-        <!-- ================= SECTION 1: MARKETPLACE DASHBOARD ================= -->
-        <section id="sec-dashboard" class="app-section active-section">
-            <div class="section-header-box">
-                <div>
-                    <h2>Indian Realty Marketplace</h2>
-                    <p>Verified RERA formations, zero-brokerage owner properties, and high-yield commercial assets across India.</p>
-                </div>
-                <div>
-                    <span class="identity-badge" id="marketplaceCountBadge">Loading formations...</span>
-                </div>
-            </div>
-
-            <!-- SEARCH & FILTER MATRIX WITH UNIVERSAL SEARCHABLE DROPDOWNS -->
-            <div class="filter-matrix">
-                <div class="filter-grid">
-                    <div class="form-group">
-                        <label>Search Locality, Society, Landmark</label>
-                        <input type="text" id="filterKeyword" class="boxy-input" placeholder="e.g. Bandra West, Powai, Whitefield..." oninput="applyFilters()">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Transaction Scope</label>
-                        <div class="typeahead-container" id="filterTxTypeContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>BHK Layout</label>
-                        <div class="typeahead-container" id="filterBhkContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Max Budget (INR ₹)</label>
-                        <div class="typeahead-container" id="filterBudgetContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn-boxy btn-boxy-outline" onclick="resetFilters()">Reset</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LISTINGS GRID -->
-            <div id="marketplaceListingsGrid" class="properties-grid"></div>
-        </section>
-
-        <!-- ================= SECTION 2: POST YOUR PROPERTY ================= -->
-        <section id="sec-post" class="app-section">
-            <div class="section-header-box">
-                <div>
-                    <h2>Post Your Property Without Brokerage</h2>
-                    <p>Complete all property specifications and add up to 8 categorized photos to receive verified buyer inquiries.</p>
-                </div>
-                <button class="btn-boxy btn-boxy-outline" onclick="loadSampleListingData()">Fill Demo Sample Data</button>
-            </div>
-
-            <form id="postPropertyForm" class="post-form-matrix" onsubmit="handlePostSubmit(event)">
-                <!-- 1. IDENTIFIERS -->
-                <div class="form-section-title">1. Formation Identity & Location</div>
-                <div class="form-row-2">
-                    <div class="form-group">
-                        <label>Building / Society / Project Name *</label>
-                        <input type="text" id="propTitle" class="boxy-input" placeholder="e.g. Kalpataru Avana, Lodha Bellissimo" required>
-                    </div>
-                    <div class="form-group">
-                        <label>City *</label>
-                        <div class="typeahead-container" id="propCityContainer"></div>
-                    </div>
-                </div>
-
-                <div class="form-row-2">
-                    <div class="form-group">
-                        <label>Specific Locality / Sector *</label>
-                        <div class="typeahead-container" id="propLocalityContainer"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>RERA Registration Number (or 'Applied' / 'OC Received')</label>
-                        <input type="text" id="propRera" class="boxy-input" placeholder="e.g. P51900001234 (MahaRERA Registered)">
-                    </div>
-                </div>
-
-                <!-- 2. TYPE & DIMENSIONS -->
-                <div class="form-section-title">2. Configuration & Carpet Area Metrics</div>
-                <div class="form-row-3">
-                    <div class="form-group">
-                        <label>Property Classification *</label>
-                        <div class="typeahead-container" id="propTypeContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>BHK Specification *</label>
-                        <div class="typeahead-container" id="propBhkContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Transaction Model *</label>
-                        <div class="typeahead-container" id="propTxTypeContainer"></div>
-                    </div>
-                </div>
-
-                <div class="form-row-3">
-                    <div class="form-group">
-                        <label>RERA Usable Carpet Area (Sq.Ft) *</label>
-                        <input type="number" id="propCarpetArea" class="boxy-input" placeholder="e.g. 845" required min="50">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Super Built-Up Area (Sq.Ft)</label>
-                        <input type="number" id="propSuperArea" class="boxy-input" placeholder="e.g. 1190">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Floor Level Details</label>
-                        <input type="text" id="propFloor" class="boxy-input" placeholder="e.g. 14th of 28 Floors">
-                    </div>
-                </div>
-
-                <!-- 3. FINANCIAL DETAILS -->
-                <div class="form-section-title">3. All-Inclusive Price Assessment (INR ₹)</div>
-                <div class="form-row-3">
-                    <div class="form-group">
-                        <label>Total Demand Value (INR ₹) *</label>
-                        <input type="text" id="propPriceFormatted" class="boxy-input" placeholder="e.g. 1,85,00,000" required oninput="handlePriceInputChange(this)">
-                        <div id="priceHelperTag" class="currency-helper">₹ 0</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Monthly Maintenance (₹)</label>
-                        <input type="text" id="propMaintenanceFormatted" class="boxy-input" placeholder="e.g. 6,500" oninput="formatAuxiliaryCurrency(this)">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Security Deposit (If Renting)</label>
-                        <input type="text" id="propDepositFormatted" class="boxy-input" placeholder="e.g. 2,00,000" oninput="formatAuxiliaryCurrency(this)">
-                    </div>
-                </div>
-
-                <!-- 4. VASTU, STATUS & AMENITIES -->
-                <div class="form-section-title">4. Vastu, Construction Stage & Parking</div>
-                <div class="form-row-3">
-                    <div class="form-group">
-                        <label>Vastu Entrance Facing</label>
-                        <div class="typeahead-container" id="propFacingContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Possession Timeline *</label>
-                        <div class="typeahead-container" id="propPossessionContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Dedicated Car Parking</label>
-                        <div class="typeahead-container" id="propParkingContainer"></div>
-                    </div>
-                </div>
-
-                <div class="form-group" style="margin-top: 10px;">
-                    <label>Society & Lifestyle Amenities Included:</label>
-                    <div class="checkbox-group-boxy">
-                        <label class="checkbox-label"><input type="checkbox" id="am_water" checked> Municipal 24/7 Water</label>
-                        <label class="checkbox-label"><input type="checkbox" id="am_power" checked> 100% DG Power Backup</label>
-                        <label class="checkbox-label"><input type="checkbox" id="am_gym" checked> Modern Gymnasium</label>
-                        <label class="checkbox-label"><input type="checkbox" id="am_club" checked> Clubhouse & Pool</label>
-                        <label class="checkbox-label"><input type="checkbox" id="am_security" checked> 3-Tier Gated Security</label>
-                        <label class="checkbox-label"><input type="checkbox" id="am_lift" checked> High-speed Passenger Lift</label>
-                        <label class="checkbox-label"><input type="checkbox" id="am_gas" checked> Piped PNG Gas Line</label>
-                        <label class="checkbox-label"><input type="checkbox" id="am_ev"> EV Charging Bay</label>
-                    </div>
-                </div>
-
-                <!-- 5. ADVANCED PHOTO UPLOAD & ASSET MANAGER (MAX 8 PICS) -->
-                <div class="form-section-title">
-                    <span>5. Property Photos (Max 8 Images)</span>
-                    <span id="photoCounterLabel" style="font-size:12px; color:var(--text-dark);">0 / 8 Uploaded</span>
-                </div>
-
-                <div class="photo-upload-zone" id="photoDropArea">
-                    <input type="file" id="photoFileInput" multiple accept="image/*" onchange="handlePhotoUpload(this.files)">
-                    <div style="font-size: 16px; font-weight: 700; color: var(--brand-primary); margin-bottom: 4px;">
-                        + CLICK OR DROP LOCAL PROPERTY PHOTOS
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-muted);">
-                        Upload up to 8 crisp photos. Tag room types (Living Room, Kitchen, Master Bedroom, etc.) and designate one as cover picture.
-                    </div>
-                </div>
-
-                <div id="galleryPreviewContainer" class="gallery-preview-grid"></div>
-
-                <!-- 6. AI DESCRIPTION GENERATOR & CHARACTER COUNTER -->
-                <div class="form-section-title" style="margin-top:24px;">
-                    <span>6. Executive Architectural Description</span>
-                    <button type="button" class="btn-ai-generate" onclick="generateAiWriteup()">
-                        ⚡ GENERATE WITH AI
-                    </button>
-                </div>
-
-                <!-- 1-Sec Sleek AI Loading Indicator -->
-                <div class="ai-processing-box" id="aiProcessingState">
-                    <div class="ai-spinner"></div>
-                    <span>AI Architect Synthesizing Property Blueprint & Sales Pitch...</span>
-                </div>
-
-                <div class="form-group">
-                    <div class="description-header">
-                        <label>Detailed Property Write-up *</label>
-                        <div class="char-counter invalid" id="descCharCounter">0 / 2000 chars (Min: 100 required)</div>
-                    </div>
-                    <textarea id="propDescription" class="boxy-input" rows="5" placeholder="Detail proximity to Metro, Highway, schools, flooring quality, balcony views, and lifestyle conveniences..." required oninput="validateDescriptionLength()"></textarea>
-                </div>
-
-                <div style="margin-top: 24px; display: flex; gap: 12px;">
-                    <button type="submit" class="btn-boxy" style="width: 100%; padding: 14px; font-size: 15px;">
-                        Upload Formation to BOXYARD Portal
-                    </button>
-                </div>
-            </form>
-        </section>
-
-        <!-- ================= SECTION 3: VIEW YOUR PROPERTIES ================= -->
-        <section id="sec-myprops" class="app-section">
-            <div class="section-header-box">
-                <div>
-                    <h2>Your Uploaded Real Estate Formations</h2>
-                    <p>Live inventory managed under your verified identity signature. Toggle listing statuses or delete inventory.</p>
-                </div>
-                <button class="btn-boxy" onclick="switchTab('post')">+ Post Another Property</button>
-            </div>
-
-            <div id="myPropertiesContainer" class="properties-grid"></div>
-        </section>
-
-        <!-- ================= SECTION 4: OPPORTUNITIES & LEADS ================= -->
-        <section id="sec-leads" class="app-section">
-            <div class="section-header-box">
-                <div>
-                    <h2>Opportunities & Customer Inquiries</h2>
-                    <p>Prospective buyers and tenants who enquired directly on your uploaded properties.</p>
-                </div>
-                <div class="identity-badge" id="leadsSummaryBadge">0 Active Inquiries</div>
-            </div>
-
-            <div id="leadsListContainer"></div>
-        </section>
-
-        <!-- ================= SECTION 5: CALCULATORS & INSIGHTS ================= -->
-        <section id="sec-insights" class="app-section">
-            <div class="section-header-box">
-                <div>
-                    <h2>Financial Calculators & Market Trends</h2>
-                    <p>Repo-linked home loan EMI estimations and statutory stamp duty tax slabs across Indian metro hubs.</p>
-                </div>
-            </div>
-
-            <div class="calc-matrix">
-                <!-- EMI CALCULATOR -->
-                <div class="calc-box">
-                    <div class="form-section-title" style="margin-top:0;">Indian Home Loan EMI Engine</div>
-                    
-                    <div class="slider-control">
-                        <div class="slider-header">
-                            <span>Loan Principal Amount</span>
-                            <span id="loanAmountDisplay">₹ 50,00,000</span>
-                        </div>
-                        <input type="range" id="loanAmountSlider" min="500000" max="50000000" step="100000" value="5000000" oninput="calculateEmi()">
-                    </div>
-
-                    <div class="slider-control">
-                        <div class="slider-header">
-                            <span>Repo-Linked Interest Rate (p.a.)</span>
-                            <span id="loanRateDisplay">8.50 %</span>
-                        </div>
-                        <input type="range" id="loanRateSlider" min="6.5" max="14.0" step="0.1" value="8.5" oninput="calculateEmi()">
-                    </div>
-
-                    <div class="slider-control">
-                        <div class="slider-header">
-                            <span>Repayment Tenure (Years)</span>
-                            <span id="loanTenureDisplay">20 Years</span>
-                        </div>
-                        <input type="range" id="loanTenureSlider" min="5" max="30" step="1" value="20" oninput="calculateEmi()">
-                    </div>
-
-                    <div class="calc-results-display">
-                        <div style="font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-dark);">Estimated Monthly Outflow</div>
-                        <div class="emi-amount" id="emiResult">₹ 43,391 / mo</div>
-
-                        <table class="breakdown-table">
-                            <tr>
-                                <td>Principal Borrowed</td>
-                                <td id="resPrincipal">₹ 50,00,000</td>
-                            </tr>
-                            <tr>
-                                <td>Total Bank Interest Outgo</td>
-                                <td id="resTotalInterest">₹ 54,13,879</td>
-                            </tr>
-                            <tr>
-                                <td>Total Outlay (Principal + Interest)</td>
-                                <td id="resTotalPayment">₹ 1,04,13,879</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- STAMP DUTY BREAKDOWN -->
-                <div class="calc-box">
-                    <div class="form-section-title" style="margin-top:0;">Indian State Stamp Duty & Registration Guide</div>
-                    <table class="breakdown-table">
-                        <tr style="background:#f0f0f0; font-weight:bold;">
-                            <td>State / Region</td>
-                            <td>Stamp Duty %</td>
-                            <td>Registration Fee</td>
-                        </tr>
-                        <tr>
-                            <td>Maharashtra (Mumbai/Pune)</td>
-                            <td>6.0% (5% + 1% Metro Cess)</td>
-                            <td>1% (Capped ₹30,000)</td>
-                        </tr>
-                        <tr>
-                            <td>Karnataka (Bengaluru)</td>
-                            <td>5.0% + 10% Cess</td>
-                            <td>1.0% of Value</td>
-                        </tr>
-                        <tr>
-                            <td>Delhi-NCR (Gurugram/Noida)</td>
-                            <td>5% to 7%</td>
-                            <td>1.0% (Capped ₹50,000)</td>
-                        </tr>
-                        <tr>
-                            <td>Telangana (Hyderabad)</td>
-                            <td>5.5% Duty + 1.5% Transfer</td>
-                            <td>0.5% Registration</td>
-                        </tr>
-                    </table>
-
-                    <div class="form-section-title">Verified City Capital Growth Trends</div>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
-                        <div style="border:1.5px solid var(--border-crisp); padding:10px; background:#fdfdfd;">
-                            <div style="font-size:11px; font-weight:bold; color:var(--text-muted);">MUMBAI SUBURBS</div>
-                            <div style="font-size:18px; font-weight:bold; color:var(--brand-primary);">₹ 34,500/sq.ft</div>
-                            <div style="font-size:11px; color:var(--success-color); font-weight:bold;">▲ +8.4% YoY</div>
-                        </div>
-                        <div style="border:1.5px solid var(--border-crisp); padding:10px; background:#fdfdfd;">
-                            <div style="font-size:11px; font-weight:bold; color:var(--text-muted);">BENGALURU ORR</div>
-                            <div style="font-size:18px; font-weight:bold; color:var(--brand-primary);">₹ 11,200/sq.ft</div>
-                            <div style="font-size:11px; color:var(--success-color); font-weight:bold;">▲ +12.1% YoY</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ================= INQUIRY CONTACT MODAL ================= -->
-    <div id="contactModal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3 id="modalPropertyTitle">Contact Property Desk</h3>
-                <button class="modal-close" onclick="closeContactModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p id="modalPropertySubtitle" style="font-size:12px; color:var(--text-muted); margin-bottom:14px; font-weight:bold;"></p>
-                
-                <form id="opportunityForm" onsubmit="submitInquiry(event)">
-                    <input type="hidden" id="inqPropertyId">
-                    <input type="hidden" id="inqOwnerId">
-                    
-                    <div class="form-group" style="margin-bottom:12px;">
-                        <label>Your Full Name *</label>
-                        <input type="text" id="inqBuyerName" class="boxy-input" placeholder="e.g. Rahul Sharma" required>
-                    </div>
-
-                    <div class="form-group" style="margin-bottom:12px;">
-                        <label>Indian Mobile Number (WhatsApp & SMS) *</label>
-                        <input type="tel" id="inqBuyerPhone" class="boxy-input" placeholder="+91 98765 43210" required>
-                    </div>
-
-                    <div class="form-group" style="margin-bottom:12px;">
-                        <label>Email Address</label>
-                        <input type="email" id="inqBuyerEmail" class="boxy-input" placeholder="buyer@example.com">
-                    </div>
-
-                    <div class="form-group" style="margin-bottom:12px;">
-                        <label>Proposed Budget / Offer (INR ₹)</label>
-                        <input type="text" id="inqBuyerOffer" class="boxy-input" placeholder="e.g. 1,80,00,000" oninput="formatAuxiliaryCurrency(this)">
-                    </div>
-
-                    <div class="form-group" style="margin-bottom:16px;">
-                        <label>Preferred Site Visit Slot / Question</label>
-                        <textarea id="inqBuyerMessage" class="boxy-input" rows="3" placeholder="Requesting Saturday site visit slot and floor plan verification..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-boxy" style="width:100%; padding:12px;">
-                        Dispatch Direct Opportunity to Owner
-                    </button>
-                </form>
-            </div>
+    <!-- Minimal Centered AI Generator Modal -->
+    <div class="ai-center-overlay" id="aiModalLoader">
+        <div class="ai-center-box">
+            <div class="ai-pulse-icon">✦</div>
+            <div class="ai-center-text">Compiling Accurate Overview...</div>
         </div>
     </div>
 
-    <!-- ================= TOAST CONTAINER ================= -->
-    <div id="toastContainer"></div>
+    <!-- Application Header -->
+    <header>
+        <div class="brand-container" onclick="switchTab('dashboard')">
+            <img src="https://i.postimg.cc/tJCdfc2T/BOXYARD.png" alt="BOXYARD" class="brand-logo">
+            <div class="brand-text-col">
+                <span class="brand-title">BOXYARD</span>
+                <span class="brand-subline">BUY • SELL • LEASE</span>
+            </div>
+        </div>
 
-    <!-- ================= APPLICATION JAVASCRIPT ================= -->
+        <div class="header-actions">
+            <!-- Dedicated Post Property Button -->
+            <button class="btn-boxy btn-boxy-primary" onclick="switchTab('post')">
+                <span>+ Post Property</span>
+                <span class="badge-free">FREE</span>
+            </button>
+
+            <!-- Compact Corner Profile Action Button -->
+            <button class="profile-corner-btn" onclick="switchTab('profile')" title="Profile Terminal">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="7" r="4"></circle>
+                    <path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav>
+        <button id="tab-dashboard" class="active" onclick="switchTab('dashboard')">Marketplace</button>
+        <button id="tab-myprops" onclick="switchTab('myprops')">View Listings</button>
+        <button id="tab-leads" onclick="switchTab('leads')">Opportunities (<span id="leadsBadgeCounter">0</span>)</button>
+        <button id="tab-calc" onclick="switchTab('calc')">EMI & Insights</button>
+    </nav>
+
+    <div class="container">
+
+        <!-- ================= SECTION 1: MARKETPLACE DASHBOARD ================= -->
+        <section id="sec-dashboard" class="active-section">
+            <div class="section-header-box">
+                <h2>Verified Marketplace</h2>
+                <span class="meta-pill" id="totalListingsCounter">Loading...</span>
+            </div>
+
+            <!-- Boxy Filter Toolbar with Searchable Inputs -->
+            <div class="filter-panel">
+                <div class="filter-grid">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>City Location</label>
+                        <div id="filterCityContainer"></div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>Configuration</label>
+                        <div id="filterBhkContainer"></div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>Transaction</label>
+                        <div id="filterTxContainer"></div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>Maximum Budget</label>
+                        <div id="filterBudgetContainer"></div>
+                    </div>
+                    <button class="btn-boxy" onclick="resetMarketplaceFilters()" style="height:36px;">Reset</button>
+                </div>
+            </div>
+
+            <div id="marketplaceGrid" class="grid"></div>
+        </section>
+
+        <!-- ================= SECTION 2: POST YOUR PROPERTY ================= -->
+        <section id="sec-post">
+            <div class="section-header-box">
+                <h2>List Property Free</h2>
+                <span class="meta-pill">Direct Owner Listing</span>
+            </div>
+
+            <div class="form-layout-box">
+                <form id="propertyPostForm" onsubmit="handleFormSubmission(event)">
+                    
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label>Property Scope</label>
+                            <div id="fieldTxType"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <div id="fieldPropType"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>BHK Layout</label>
+                            <div id="fieldBhk"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>City Location</label>
+                            <div id="fieldCity"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Locality / Sector</label>
+                            <input type="text" id="propLocality" class="searchable-input" placeholder="e.g. Andheri West, Bandra, Whitefield" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label>All-Inclusive Price (₹ INR)</label>
+                            <input type="text" id="propPriceRaw" class="searchable-input" placeholder="e.g. 1,85,00,000" oninput="formatCurrencyInput(this)" required>
+                            <div class="currency-words-label" id="priceWordDisplay"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>RERA Carpet Area (Sq.Ft)</label>
+                            <input type="number" id="propCarpetArea" class="searchable-input" placeholder="Net usable sq.ft">
+                        </div>
+                        <div class="form-group">
+                            <label>Super Built-Up Area (Sq.Ft)</label>
+                            <input type="number" id="propSuperArea" class="searchable-input" placeholder="Total area sq.ft">
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>Vastu / Facing Orientation</label>
+                            <div id="fieldFacing"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Possession State</label>
+                            <div id="fieldPossession"></div>
+                        </div>
+                    </div>
+
+                    <!-- Separate Parking: Number & Type -->
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>No. of Car Parking</label>
+                            <div id="fieldParkingCount"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Type of Car Parking</label>
+                            <div id="fieldParkingType"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label>Floor Placement</label>
+                            <input type="text" id="propFloor" class="searchable-input" placeholder="e.g. 14th of 24 Floors">
+                        </div>
+                        <div class="form-group">
+                            <label>RERA Registration Number (Optional)</label>
+                            <input type="text" id="propRera" class="searchable-input" placeholder="e.g. P51800001234">
+                        </div>
+                    </div>
+
+                    <!-- Extensive Indian Society Amenities Checklist -->
+                    <div class="amenities-group-container">
+                        <div class="amenity-section-heading">Society Amenities & Infrastructure (Select All Applicable)</div>
+                        
+                        <div style="font-size:9px; font-weight:700; color:#444; margin-bottom:6px; text-transform:uppercase;">Club & Fitness</div>
+                        <div class="amenities-checklist-grid">
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Modern Gymnasium"> Gymnasium</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Swimming Pool"> Swimming Pool</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Clubhouse"> Grand Clubhouse</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Badminton Court"> Badminton Court</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Squash Court"> Squash Court</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Jogging Track"> Jogging Track</label>
+                        </div>
+
+                        <div style="font-size:9px; font-weight:700; color:#444; margin-bottom:6px; text-transform:uppercase;">Utilities & Security</div>
+                        <div class="amenities-checklist-grid">
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="24/7 Power Backup"> 24/7 Power Backup</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="High-Speed Elevators"> High-Speed Elevators</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="CCTV Surveillance"> 24x7 CCTV & Security</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Intercom Facility"> Intercom Facility</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Fire Fighting System"> Fire Fighting System</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Piped Gas Connection"> Piped Gas (IGL/MGL)</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Municipal / 24x7 Water"> 24x7 Municipal Water</label>
+                        </div>
+
+                        <div style="font-size:9px; font-weight:700; color:#444; margin-bottom:6px; text-transform:uppercase;">Lifestyle & Eco</div>
+                        <div class="amenities-checklist-grid">
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Children's Play Area"> Children's Play Area</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Senior Citizen Deck"> Senior Citizen Deck</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Vastu Compliant Design"> Vastu Compliant</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="EV Car Charging"> EV Car Charging Station</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Rainwater Harvesting"> Rainwater Harvesting</label>
+                            <label class="amenity-checkbox-label"><input type="checkbox" name="amenityItem" value="Solar Lighting"> Solar Common Lighting</label>
+                        </div>
+                    </div>
+
+                    <!-- Images Upload and Tagging System (Max 8 Files) -->
+                    <div class="form-group">
+                        <label>Property Photographs (Max 8 Images)</label>
+                        <div class="photo-upload-zone" onclick="document.getElementById('photoFileInput').click()">
+                            <p style="font-size:11px; font-weight:700; text-transform:uppercase;">Click to Choose Photographs from Device</p>
+                            <p style="font-size:10px; color:#666; margin-top:3px;">Select up to 8 images. You can categorize and pick a cover pic below.</p>
+                        </div>
+                        <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none;" onchange="handleDevicePhotoSelection(event)">
+                        
+                        <div class="photo-grid-preview" id="photoTilesMatrix"></div>
+                    </div>
+
+                    <!-- AI Listing Description & Strict Character Counter -->
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4px;">
+                            <label style="margin-bottom:0;">Property Overview (100 - 2,000 Characters)</label>
+                            <button type="button" class="btn-boxy" onclick="generateCleanAIDescription()" style="padding:4px 8px; font-size:9px;">
+                                <span>✦ Quick AI Writeup</span>
+                            </button>
+                        </div>
+                        <textarea id="propDescription" class="boxy-textarea" placeholder="Provide accurate details about the unit, society, connectivity, and viewing availability..." oninput="updateCharCounter(this)"></textarea>
+                        <div class="desc-status-bar">
+                            <span id="charCountLabel" class="char-counter invalid">0 / 100 Characters (Min 100 required)</span>
+                            <span style="font-size:9px; color:#666;">Plain & simple format for genuine buyers</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2" style="margin-top:14px;">
+                        <button type="submit" class="btn-boxy btn-boxy-primary" style="padding:12px; font-size:12px;">Publish Property Listing</button>
+                        <button type="button" class="btn-boxy" onclick="switchTab('dashboard')" style="padding:12px; font-size:12px;">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 3: VIEW LISTINGS ================= -->
+        <section id="sec-myprops">
+            <div class="section-header-box">
+                <h2>View Listings</h2>
+                <button class="btn-boxy btn-boxy-primary" onclick="switchTab('post')">+ Post Another</button>
+            </div>
+            <div id="myPropsGrid" class="grid"></div>
+        </section>
+
+        <!-- ================= SECTION 4: OPPORTUNITIES & LEADS CRM ================= -->
+        <section id="sec-leads">
+            <div class="section-header-box">
+                <div>
+                    <h2>Direct Buyer Opportunities</h2>
+                    <span class="meta-pill">Enquiries from your listings</span>
+                </div>
+                <button class="btn-boxy btn-boxy-excel" onclick="exportOpportunitiesToExcel()">
+                    <span>⬇ Export to Excel (.CSV)</span>
+                </button>
+            </div>
+            <div id="leadsContainer"></div>
+        </section>
+
+        <!-- ================= SECTION 5: EMI CALCULATOR & INSIGHTS ================= -->
+        <section id="sec-calc">
+            <div class="section-header-box">
+                <h2>Indian Real Estate Financial Toolkit</h2>
+                <span class="meta-pill">Repo-Linked Estimator</span>
+            </div>
+
+            <div class="form-layout-box" style="margin-bottom:16px;">
+                <h3 style="font-size:13px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:10px;">Monthly Home Loan EMI Estimator</h3>
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label>Loan Amount (₹)</label>
+                        <input type="text" id="calcPrincipal" class="searchable-input" value="75,00,000" oninput="formatCurrencyInput(this); recalculateEMI();">
+                    </div>
+                    <div class="form-group">
+                        <label>Interest Rate (% P.A.)</label>
+                        <input type="number" id="calcRate" class="searchable-input" value="8.5" step="0.05" oninput="recalculateEMI();">
+                    </div>
+                    <div class="form-group">
+                        <label>Tenure (Years)</label>
+                        <input type="number" id="calcTenure" class="searchable-input" value="20" min="1" max="30" oninput="recalculateEMI();">
+                    </div>
+                </div>
+
+                <div style="background:#fcfcfc; border:1px solid var(--border-color); padding:14px; margin-top:10px; display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:10px; text-align:center;">
+                    <div>
+                        <div style="font-size:9px; font-weight:700; text-transform:uppercase; color:#666;">Monthly Outlay (EMI)</div>
+                        <div id="resMonthlyEmi" style="font-size:18px; font-weight:700; color:var(--primary); margin-top:4px;">₹ 65,091</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9px; font-weight:700; text-transform:uppercase; color:#666;">Total Interest Payable</div>
+                        <div id="resTotalInterest" style="font-size:15px; font-weight:700; margin-top:4px;">₹ 81,21,902</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9px; font-weight:700; text-transform:uppercase; color:#666;">Principal + Interest</div>
+                        <div id="resTotalRepayment" style="font-size:15px; font-weight:700; margin-top:4px;">₹ 1,56,21,902</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indian Sub-Market Benchmarks -->
+            <div class="form-layout-box">
+                <h3 style="font-size:13px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:10px;">Locality Benchmark Values (2026 Rate Guide)</h3>
+                <div style="overflow-x:auto;">
+                    <table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">
+                        <thead>
+                            <tr style="border-bottom:2px solid #000; background:#f9f9f9;">
+                                <th style="padding:8px 6px;">Micro-Market</th>
+                                <th style="padding:8px 6px;">Avg Carpet Rate (₹/Sq.Ft)</th>
+                                <th style="padding:8px 6px;">2 BHK Average</th>
+                                <th style="padding:8px 6px;">YoY Shift</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid #ddd;">
+                                <td style="padding:8px 6px; font-weight:700;">Andheri West, Mumbai</td>
+                                <td style="padding:8px 6px;">₹ 32,500 - 38,000</td>
+                                <td style="padding:8px 6px;">₹ 2.40 Cr</td>
+                                <td style="padding:8px 6px; color:#2e7d32; font-weight:700;">+8.2%</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #ddd;">
+                                <td style="padding:8px 6px; font-weight:700;">Bandra West, Mumbai</td>
+                                <td style="padding:8px 6px;">₹ 65,000 - 95,000</td>
+                                <td style="padding:8px 6px;">₹ 5.80 Cr</td>
+                                <td style="padding:8px 6px; color:#2e7d32; font-weight:700;">+11.4%</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #ddd;">
+                                <td style="padding:8px 6px; font-weight:700;">Whitefield, Bengaluru</td>
+                                <td style="padding:8px 6px;">₹ 9,200 - 12,800</td>
+                                <td style="padding:8px 6px;">₹ 1.25 Cr</td>
+                                <td style="padding:8px 6px; color:#2e7d32; font-weight:700;">+14.1%</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px 6px; font-weight:700;">Sector 62, Noida</td>
+                                <td style="padding:8px 6px;">₹ 7,800 - 9,500</td>
+                                <td style="padding:8px 6px;">₹ 92 Lakh</td>
+                                <td style="padding:8px 6px; color:#2e7d32; font-weight:700;">+6.5%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 6: PROFILE TERMINAL ================= -->
+        <section id="sec-profile">
+            <div class="section-header-box">
+                <h2>User Profile Terminal</h2>
+                <span class="meta-pill" id="terminalStatusPill">Active Device Session</span>
+            </div>
+
+            <div class="form-layout-box" style="max-width:540px; margin:0 auto;">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid #eee;">
+                    <div style="width:48px; height:48px; border:1px solid #000; background:var(--primary-light); display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:700; color:var(--primary);">
+                        <span id="profileInitialBadge">U</span>
+                    </div>
+                    <div>
+                        <div id="profileDisplayName" style="font-size:14px; font-weight:700;">Authenticated User</div>
+                        <div id="profilePhoneDisplay" style="font-size:11px; color:#666;">+91 98200 00000</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Account Owner Name</label>
+                    <input type="text" id="profInputName" class="searchable-input" value="Primary Member">
+                </div>
+
+                <div class="form-group">
+                    <label>WhatsApp / Phone Number</label>
+                    <input type="text" id="profInputPhone" class="searchable-input" value="9820000000">
+                </div>
+
+                <div class="form-group">
+                    <label>Default City</label>
+                    <input type="text" id="profInputCity" class="searchable-input" value="Mumbai">
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:16px;">
+                    <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="saveProfileConfiguration()">Save Profile Settings</button>
+                    <button class="btn-boxy" onclick="clearLocalDatabase()">Reset Database</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= LEAD GENERATION INQUIRY MODAL ================= -->
+    <div class="modal-shade" id="leadInquiryModal">
+        <div class="modal-body">
+            <h3 style="font-size:13px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:6px;">Contact Property Owner</h3>
+            <p id="modalPropTitle" style="font-size:10px; font-weight:600; margin-bottom:10px; color:#555;">Inquiry Reference Unit</p>
+            
+            <form onsubmit="submitBuyerInquiry(event)">
+                <input type="hidden" id="modalPropId">
+                <div class="form-group">
+                    <label>Your Full Name</label>
+                    <input type="text" id="modalBuyerName" class="searchable-input" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label>Mobile / WhatsApp Number</label>
+                    <input type="tel" id="modalBuyerPhone" class="searchable-input" placeholder="e.g. 9820123456" required>
+                </div>
+                <div class="form-group">
+                    <label>Specific Message / Inspection Time</label>
+                    <textarea id="modalBuyerNote" class="boxy-textarea" style="height:65px;" placeholder="I want to schedule an inspection this weekend..."></textarea>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:10px;">
+                    <button type="submit" class="btn-boxy btn-boxy-primary" style="flex:1;">Submit Inquiry</button>
+                    <button type="button" class="btn-boxy" onclick="closeInquiryModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT APPLICATION CORE ================= -->
     <script>
-        /* ==========================================================================
-           BOXYARD v1.01 APPLICATION ENGINE
-           ========================================================================== */
-        const CURRENT_USER_ID = "BY-IND-8821";
-        const STORAGE_KEY_PROPS = "boxyard_properties_store_v101";
-        const STORAGE_KEY_LEADS = "boxyard_leads_store_v101";
+        /* ---------------- DATA STORAGE & INITIAL SEED ---------------- */
+        const CURRENT_USER_ID = "BY_OWNER_101";
 
-        // Preloaded Indian Real Estate Formations
         const DEFAULT_PROPERTIES = [
             {
-                id: "BY-PROP-1001",
-                ownerId: "BY-IND-8821",
-                title: "Kalpataru Radiance Towers",
-                locality: "Siddharth Nagar, Goregaon West",
-                city: "Mumbai",
-                propertyType: "Apartment",
-                bhk: "3 BHK",
-                transactionType: "For Sale",
-                price: 32500000,
-                carpetArea: 1140,
-                superArea: 1650,
-                reraNumber: "P51800000812 (MahaRERA)",
-                possession: "Ready to Move (OC Received)",
-                floor: "18th of 34 Floors",
-                facing: "East Facing",
-                parking: "2 Covered Basement",
-                amenities: ["Municipal 24/7 Water", "100% DG Power Backup", "Modern Gymnasium", "Clubhouse & Pool", "3-Tier Gated Security", "Piped PNG Gas Line"],
-                photos: [
-                    { id: "p1", dataUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80", tag: "Living Room", isCover: true },
-                    { id: "p2", dataUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", tag: "Master Bedroom", isCover: false }
-                ],
-                description: "Spacious Vastu-compliant 3 BHK high-floor residence with panoramic vistas of the Aarey greens. Located within 5 minutes of the Western Express Highway and Goregaon West Metro Station. Features high ceiling spans, double-glazed soundproof glass, and imported marble flooring.",
-                viewsCount: 342,
-                status: "Live on Marketplace",
-                createdDate: "2026-10-14"
-            },
-            {
-                id: "BY-PROP-1002",
-                ownerId: "BY-IND-4019",
-                title: "Prestige Shantiniketan Parkland",
-                locality: "ITPL Main Road, Whitefield",
-                city: "Bangalore",
-                propertyType: "Apartment",
+                id: "BY-MUM-881",
+                ownerId: CURRENT_USER_ID,
+                title: "2 BHK Luxury High-Floor Residence",
+                txType: "For Sale",
+                propType: "Apartment",
                 bhk: "2 BHK",
-                transactionType: "For Sale",
-                price: 13500000,
-                carpetArea: 920,
-                superArea: 1290,
-                reraNumber: "PRM/KA/RERA/1251/446/PR/170915",
+                city: "Mumbai",
+                locality: "Andheri West",
+                price: 24500000,
+                carpetArea: 780,
+                superArea: 1120,
+                facing: "East (Vastu Compliant)",
                 possession: "Ready to Move (OC Received)",
-                floor: "9th of 18 Floors",
-                facing: "North-East Facing",
-                parking: "1 Covered Basement",
-                amenities: ["Municipal 24/7 Water", "100% DG Power Backup", "Modern Gymnasium", "3-Tier Gated Security", "High-speed Passenger Lift"],
-                photos: [
-                    { id: "p1", dataUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", tag: "Living Room", isCover: true }
+                parkingCount: "1 Car",
+                parkingType: "Covered Basement",
+                floor: "18th of 26 Floors",
+                rera: "P51800028911",
+                amenities: ["Modern Gymnasium", "Swimming Pool", "Clubhouse", "24/7 Power Backup", "High-Speed Elevators", "CCTV Surveillance", "Piped Gas Connection"],
+                images: [
+                    { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true },
+                    { url: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&auto=format&fit=crop&q=80", tag: "Master Bedroom", isCover: false }
                 ],
-                description: "Prime township living located adjacent to Whitefield Tech Parks. Full club access, international school inside premises, direct skywalk to commercial hub, and uninterrupted municipal Kaveri water connection with 100% DG generator backup.",
-                viewsCount: 681,
-                status: "Live on Marketplace",
-                createdDate: "2026-10-20"
+                description: "Spacious East facing 2 BHK ready to move apartment on the 18th floor in Andheri West. Comes with 780 sq.ft RERA carpet area, open views, 1 Car Covered Basement parking, and complete OC. Immediate possession.",
+                timestamp: Date.now() - 86400000
             },
             {
-                id: "BY-PROP-1003",
-                ownerId: "BY-IND-8821",
-                title: "DLF Cyber Heights Executive Suite",
-                locality: "Golf Course Extension Road",
-                city: "Delhi-NCR",
-                propertyType: "Commercial Office",
-                bhk: "Commercial",
-                transactionType: "For Sale",
-                price: 48000000,
-                carpetArea: 2100,
-                superArea: 3200,
-                reraNumber: "HRERA-PKL-GGM-1092-2021",
-                possession: "Ready to Move (OC Received)",
-                floor: "7th of 16 Floors",
-                facing: "East Facing",
-                parking: "3 Covered Basement",
-                amenities: ["100% DG Power Backup", "High-speed Passenger Lift", "3-Tier Gated Security", "EV Charging Bay"],
-                photos: [
-                    { id: "p1", dataUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80", tag: "Exterior", isCover: true }
+                id: "BY-BLR-402",
+                ownerId: "BY_EXT_999",
+                title: "3 BHK Premium Gated Community Apartment",
+                txType: "For Sale",
+                propType: "Apartment",
+                bhk: "3 BHK",
+                city: "Bengaluru",
+                locality: "Whitefield",
+                price: 13500000,
+                carpetArea: 1320,
+                superArea: 1840,
+                facing: "North-East (Ishanya)",
+                possession: "Under Construction (Slab Stage)",
+                parkingCount: "2 Cars",
+                parkingType: "Covered Stilt",
+                floor: "6th of 14 Floors",
+                rera: "PRM/KA/RERA/1251/446/PR/190521",
+                amenities: ["Clubhouse", "Swimming Pool", "Badminton Court", "Children's Play Area", "Rainwater Harvesting", "EV Car Charging"],
+                images: [
+                    { url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true }
                 ],
-                description: "Grade-A LEED Platinum certified commercial office plate with existing Fortune 500 MNC tenant lease running until 2029. High 8.2% gross rental yield with annual escalation clauses. Fully furnished with executive boardroom and cafeteria.",
-                viewsCount: 512,
-                status: "Live on Marketplace",
-                createdDate: "2026-10-28"
+                description: "Well planned 3 BHK flat in a gated society at Whitefield. 1,320 sq.ft carpet area with North-East entrance, 2 Cars Covered Stilt parking, clubhouse, and swimming pool. Possession scheduled for late 2027.",
+                timestamp: Date.now() - 172800000
+            },
+            {
+                id: "BY-MUM-512",
+                ownerId: "BY_EXT_888",
+                title: "1 BHK Compact Smart Home",
+                txType: "For Rent",
+                propType: "Apartment",
+                bhk: "1 BHK",
+                city: "Mumbai",
+                locality: "Bandra West",
+                price: 65000,
+                carpetArea: 440,
+                superArea: 600,
+                facing: "West",
+                possession: "Ready to Move (OC Received)",
+                parkingCount: "None / Zero",
+                parkingType: "None / No Parking",
+                floor: "3rd of 7 Floors",
+                rera: "NA",
+                amenities: ["High-Speed Elevators", "CCTV Surveillance", "Municipal / 24x7 Water"],
+                images: [
+                    { url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=80", tag: "Living Room", isCover: true }
+                ],
+                description: "Charming 1 BHK flat available for rent on 3rd floor in prime Bandra West location. 440 sq.ft carpet with semi-furnished kitchen and cupboards. Walking distance to market and railway station.",
+                timestamp: Date.now() - 250000000
             }
         ];
 
         const DEFAULT_LEADS = [
             {
-                id: "LEAD-901",
-                propertyId: "BY-PROP-1001",
-                propertyTitle: "Kalpataru Radiance Towers (3 BHK)",
-                ownerId: "BY-IND-8821",
-                buyerName: "Vikramaditya Singhania",
-                buyerPhone: "+91 98201 54321",
-                buyerEmail: "v.singhania@apexfin.in",
-                buyerOffer: "3,15,00,000",
-                message: "Interested in the high floor unit. Can we schedule an on-site inspection this coming Sunday at 11:30 AM?",
-                leadStatus: "New Opportunity",
-                timestamp: "2026-10-30 14:22"
+                leadId: "LD-901",
+                propId: "BY-MUM-881",
+                propTitle: "2 BHK Luxury High-Floor Residence (Andheri West)",
+                buyerName: "Karan Singhania",
+                buyerPhone: "9820145890",
+                buyerNote: "Looking to inspect this Saturday with family. Bank loan pre-approved.",
+                timestamp: Date.now() - 14400000
             }
         ];
 
-        // Global Stores
-        let propertiesStore = [];
-        let leadsStore = [];
-        let currentUploadedPhotos = []; // Local photos for post form
-        let typeaheadInstances = {};
+        let propertyStore = JSON.parse(localStorage.getItem('by_properties')) || DEFAULT_PROPERTIES;
+        let leadsStore = JSON.parse(localStorage.getItem('by_leads')) || DEFAULT_LEADS;
+        let uploadedPhotoBuffer = [];
 
-        // Room tagging list
-        const ROOM_TAG_OPTIONS = [
-            "Living Room",
-            "Master Bedroom",
-            "Bedroom",
-            "Kitchen",
-            "Washroom",
-            "Balcony",
-            "Exterior",
-            "Floor Plan",
-            "Others"
-        ];
-
-        /* ================= INITIALIZATION ================= */
+        /* ---------------- 1-SECOND PULSE ANIMATION ON APP LOAD ---------------- */
         window.addEventListener('DOMContentLoaded', () => {
-            initializeDatabase();
-            setupSearchableDropdowns();
-            calculateEmi();
-            updateBadges();
-            renderMarketplace();
-            validateDescriptionLength();
+            setTimeout(() => {
+                const splash = document.getElementById('appSplashLoader');
+                if (splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => { splash.style.display = 'none'; }, 300);
+                }
+            }, 1000);
+
+            initSearchableControls();
+            renderMarketplaceListings();
+            renderUserOwnedListings();
+            renderLeadsPipeline();
+            recalculateEMI();
+            updateLeadsBadge();
         });
 
-        function initializeDatabase() {
-            const storedProps = localStorage.getItem(STORAGE_KEY_PROPS);
-            propertiesStore = storedProps ? JSON.parse(storedProps) : DEFAULT_PROPERTIES;
-            if (!storedProps) savePropertiesToStorage();
-
-            const storedLeads = localStorage.getItem(STORAGE_KEY_LEADS);
-            leadsStore = storedLeads ? JSON.parse(storedLeads) : DEFAULT_LEADS;
-            if (!storedLeads) saveLeadsToStorage();
-        }
-
-        function savePropertiesToStorage() {
-            localStorage.setItem(STORAGE_KEY_PROPS, JSON.stringify(propertiesStore));
-        }
-
-        function saveLeadsToStorage() {
-            localStorage.setItem(STORAGE_KEY_LEADS, JSON.stringify(leadsStore));
-        }
-
-        /* ================= UNIVERSAL SEARCHABLE TYPEAHEAD ENGINE ================= */
+        /* ---------------- SEARCHABLE TYPEAHEAD ENGINE ---------------- */
         class SearchableTypeahead {
-            constructor(containerId, options, initialValue = "", onChange = null) {
+            constructor(containerId, options, config = {}) {
                 this.container = document.getElementById(containerId);
                 this.options = options;
-                this.value = initialValue;
-                this.onChange = onChange;
-                this.render();
+                this.config = Object.assign({
+                    placeholder: "Type to search...",
+                    initialValue: options[0] || "",
+                    onChange: () => {}
+                }, config);
+                this.selectedValue = this.config.initialValue;
+                this.init();
             }
 
-            render() {
+            init() {
                 if (!this.container) return;
                 this.container.innerHTML = `
-                    <input type="text" class="typeahead-input" value="${this.value}" autocomplete="off" placeholder="Type or select...">
-                    <span class="typeahead-arrow">▼</span>
-                    <div class="typeahead-dropdown"></div>
+                    <div class="searchable-select-wrap">
+                        <input type="text" class="searchable-input" placeholder="${this.config.placeholder}" value="${this.selectedValue}">
+                        <div class="dropdown-results-tray"></div>
+                    </div>
                 `;
+                this.input = this.container.querySelector('.searchable-input');
+                this.tray = this.container.querySelector('.dropdown-results-tray');
 
-                this.input = this.container.querySelector('.typeahead-input');
-                this.dropdown = this.container.querySelector('.typeahead-dropdown');
-
-                // Events
                 this.input.addEventListener('focus', () => this.openDropdown());
                 this.input.addEventListener('input', (e) => this.filterOptions(e.target.value));
-                this.input.addEventListener('blur', () => {
-                    setTimeout(() => this.dropdown.classList.remove('show-dropdown'), 200);
+
+                document.addEventListener('click', (e) => {
+                    if (!this.container.contains(e.target)) {
+                        this.closeDropdown();
+                    }
                 });
             }
 
             openDropdown() {
                 this.filterOptions(this.input.value);
-                this.dropdown.classList.add('show-dropdown');
+                this.tray.style.display = 'block';
             }
 
-            filterOptions(query) {
-                const q = query.trim().toLowerCase();
-                const matched = this.options.filter(opt => opt.toLowerCase().includes(q));
+            closeDropdown() {
+                this.tray.style.display = 'none';
+                if (!this.options.includes(this.input.value.trim()) && this.options.length > 0) {
+                    if (this.selectedValue) this.input.value = this.selectedValue;
+                }
+            }
 
+            filterOptions(query = '') {
+                const q = query.toLowerCase().trim();
+                const matched = this.options.filter(item => item.toLowerCase().includes(q));
+                
+                this.tray.innerHTML = '';
                 if (matched.length === 0) {
-                    this.dropdown.innerHTML = `<div class="typeahead-no-results">No options match "${query}"</div>`;
+                    this.tray.innerHTML = `<div class="dropdown-item-row" style="color:#888;">No matching options</div>`;
                     return;
                 }
 
-                // Sorting: matches that start with query first, then alphabetical
-                matched.sort((a, b) => {
-                    const aStarts = a.toLowerCase().startsWith(q);
-                    const bStarts = b.toLowerCase().startsWith(q);
-                    if (aStarts && !bStarts) return -1;
-                    if (!aStarts && bStarts) return 1;
-                    return a.localeCompare(b);
-                });
-
-                this.dropdown.innerHTML = '';
-                matched.forEach(opt => {
+                matched.forEach(item => {
                     const row = document.createElement('div');
-                    row.className = 'typeahead-option';
-                    row.innerText = opt;
-                    row.addEventListener('mousedown', (e) => {
-                        e.preventDefault();
-                        this.setValue(opt);
-                        this.dropdown.classList.remove('show-dropdown');
-                    });
-                    this.dropdown.appendChild(row);
+                    row.className = 'dropdown-item-row';
+                    row.textContent = item;
+                    row.onclick = () => {
+                        this.selectedValue = item;
+                        this.input.value = item;
+                        this.closeDropdown();
+                        this.config.onChange(item);
+                    };
+                    this.tray.appendChild(row);
                 });
-                this.dropdown.classList.add('show-dropdown');
-            }
-
-            setValue(val) {
-                this.value = val;
-                this.input.value = val;
-                if (this.onChange) this.onChange(val);
             }
 
             getValue() {
-                return this.value || this.input.value.trim();
+                return this.input ? this.input.value.trim() : this.selectedValue;
+            }
+
+            setValue(val) {
+                this.selectedValue = val;
+                if (this.input) this.input.value = val;
             }
         }
 
-        function setupSearchableDropdowns() {
-            // Marketplace Filters
-            typeaheadInstances['filterTxType'] = new SearchableTypeahead('filterTxTypeContainer', 
-                ["All Transactions", "For Sale", "For Rent"], "All Transactions", () => applyFilters());
+        /* ---------------- CONTROLLERS & DROPDOWNS SETUP ---------------- */
+        let filterCity, filterBhk, filterTx, filterBudget;
+        let formTx, formProp, formBhk, formCity, formFacing, formPossession, formParkingCount, formParkingType;
 
-            typeaheadInstances['filterBhk'] = new SearchableTypeahead('filterBhkContainer', 
-                ["All Configurations", "1 RK", "1 BHK", "2 BHK", "3 BHK", "4+ BHK", "Commercial"], "All Configurations", () => applyFilters());
+        function initSearchableControls() {
+            filterCity = new SearchableTypeahead('filterCityContainer', ['All Cities', 'Mumbai', 'Bengaluru', 'Delhi NCR', 'Pune', 'Hyderabad'], {
+                initialValue: 'All Cities',
+                onChange: () => renderMarketplaceListings()
+            });
 
-            typeaheadInstances['filterBudget'] = new SearchableTypeahead('filterBudgetContainer', 
-                ["Any Budget", "Under ₹ 50 Lakh", "Under ₹ 1.0 Crore", "Under ₹ 2.5 Crore", "Under ₹ 5.0 Crore", "Under ₹ 10.0 Crore"], "Any Budget", () => applyFilters());
+            filterBhk = new SearchableTypeahead('filterBhkContainer', ['All BHKs', '1 BHK', '2 BHK', '3 BHK', '4+ BHK'], {
+                initialValue: 'All BHKs',
+                onChange: () => renderMarketplaceListings()
+            });
 
-            // Post Form Fields
-            typeaheadInstances['propCity'] = new SearchableTypeahead('propCityContainer', 
-                ["Mumbai", "Bangalore", "Delhi-NCR", "Pune", "Hyderabad", "Chennai", "Kolkata", "Ahmedabad", "Chandigarh"], "Mumbai", () => updateLocalitiesForCity());
+            filterTx = new SearchableTypeahead('filterTxContainer', ['All Properties', 'For Sale', 'For Rent'], {
+                initialValue: 'All Properties',
+                onChange: () => renderMarketplaceListings()
+            });
 
-            typeaheadInstances['propLocality'] = new SearchableTypeahead('propLocalityContainer', 
-                ["Bandra West", "Hiranandani Powai", "Goregaon West", "Whitefield", "Indiranagar", "Golf Course Road", "Cyber City", "Kothrud", "Banjara Hills", "Jubilee Hills", "Alipore"], "Bandra West");
+            filterBudget = new SearchableTypeahead('filterBudgetContainer', ['Any Budget', '₹ 50 Lakh', '₹ 1 Crore', '₹ 2 Crore', '₹ 5 Crore', '₹ 10+ Crore'], {
+                initialValue: 'Any Budget',
+                onChange: () => renderMarketplaceListings()
+            });
 
-            typeaheadInstances['propType'] = new SearchableTypeahead('propTypeContainer', 
-                ["Apartment", "Independent Villa", "Penthouse", "Commercial Office", "Retail Showroom", "Residential Plot"], "Apartment");
-
-            typeaheadInstances['propBhk'] = new SearchableTypeahead('propBhkContainer', 
-                ["1 RK", "1 BHK", "2 BHK", "3 BHK", "4+ BHK", "Commercial"], "2 BHK");
-
-            typeaheadInstances['propTxType'] = new SearchableTypeahead('propTxTypeContainer', 
-                ["For Sale", "For Rent"], "For Sale");
-
-            typeaheadInstances['propFacing'] = new SearchableTypeahead('propFacingContainer', 
-                ["East Facing", "North-East Facing", "North Facing", "West Facing", "South Facing"], "East Facing");
-
-            typeaheadInstances['propPossession'] = new SearchableTypeahead('propPossessionContainer', 
-                ["Ready to Move (OC Received)", "Under Construction (Possession 2026)", "Under Construction (Possession 2027+)", "New Launch"], "Ready to Move (OC Received)");
-
-            typeaheadInstances['propParking'] = new SearchableTypeahead('propParkingContainer', 
-                ["1 Covered Basement", "2 Covered Basement", "1 Open Parking", "No Dedicated Parking"], "1 Covered Basement");
-        }
-
-        function updateLocalitiesForCity() {
-            const city = typeaheadInstances['propCity'].getValue();
-            let localities = ["City Center", "Greenfield Sector", "High Street"];
-            if (city === "Mumbai") localities = ["Bandra West", "Hiranandani Powai", "Goregaon West", "Worli Seaface", "Andheri West", "Thane West"];
-            if (city === "Bangalore") localities = ["Whitefield", "Indiranagar", "Koramangala", "HSR Layout", "Hebbal", "Sarjapur Road"];
-            if (city === "Delhi-NCR") localities = ["Golf Course Extension Road", "DLF Phase 5", "Noida Expressway", "Cyber Hub", "Greater Kailash"];
-            if (city === "Pune") localities = ["Kothrud", "Baner", "Hinjewadi Tech Park", "Viman Nagar", "Kalyani Nagar"];
+            // Post Property Form Dropdowns
+            formTx = new SearchableTypeahead('fieldTxType', ['For Sale', 'For Rent', 'Commercial Lease'], { initialValue: 'For Sale' });
+            formProp = new SearchableTypeahead('fieldPropType', ['Apartment', 'Independent Villa', 'Penthouse', 'Plot / Land', 'Commercial Office'], { initialValue: 'Apartment' });
+            formBhk = new SearchableTypeahead('fieldBhk', ['1 RK', '1 BHK', '2 BHK', '3 BHK', '4 BHK', '5+ BHK / NA'], { initialValue: '2 BHK' });
+            formCity = new SearchableTypeahead('fieldCity', ['Mumbai', 'Bengaluru', 'Delhi NCR', 'Pune', 'Hyderabad', 'Chennai', 'Kolkata'], { initialValue: 'Mumbai' });
+            formFacing = new SearchableTypeahead('fieldFacing', ['East (Vastu Compliant)', 'North-East (Ishanya)', 'North', 'West', 'South', 'Don\'t Know'], { initialValue: 'East (Vastu Compliant)' });
+            formPossession = new SearchableTypeahead('fieldPossession', ['Ready to Move (OC Received)', 'Under Construction (Slab Stage)', 'Under Construction (Finishing)', 'Launch Phase'], { initialValue: 'Ready to Move (OC Received)' });
             
-            typeaheadInstances['propLocality'].options = localities;
-            typeaheadInstances['propLocality'].setValue(localities[0]);
+            // Separate Car Parking Inputs
+            formParkingCount = new SearchableTypeahead('fieldParkingCount', ['None / Zero', '1 Car', '2 Cars', '3 Cars', '4+ Cars'], { initialValue: '1 Car' });
+            formParkingType = new SearchableTypeahead('fieldParkingType', ['Covered Basement', 'Covered Stilt', 'Open Surface', 'Mechanical / Puzzle Tower', 'Stack Parking', 'None / No Parking'], { initialValue: 'Covered Basement' });
         }
 
-        /* ================= INDIAN NUMBERING SYSTEM FORMATTING ================= */
-        // Formats raw digits to Indian comma scheme: 12,34,56,789
-        function formatToIndianNumbering(rawDigits) {
-            if (!rawDigits) return "";
-            const str = rawDigits.toString().replace(/[^0-9]/g, '');
-            if (!str) return "";
-
-            let lastThree = str.substring(str.length - 3);
-            const otherNumbers = str.substring(0, str.length - 3);
-            if (otherNumbers !== '') {
-                lastThree = ',' + lastThree;
-            }
-            return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        /* ---------------- CURRENCY FORMATTERS & WORD CALCULATORS ---------------- */
+        function formatIndianCurrencyString(num) {
+            if (!num || isNaN(num)) return "0";
+            return Number(num).toLocaleString('en-IN');
         }
 
-        // Returns verbal evaluation (e.g. ₹ 1.85 Crore)
-        function convertNumberToIndianWords(numberVal) {
-            const num = Number(numberVal);
-            if (isNaN(num) || num <= 0) return "₹ 0";
-            if (num >= 10000000) {
-                return `₹ ${(num / 10000000).toFixed(2)} Crore`;
-            } else if (num >= 100000) {
-                return `₹ ${(num / 100000).toFixed(2)} Lakh`;
-            } else if (num >= 1000) {
-                return `₹ ${(num / 1000).toFixed(2)} Thousand`;
-            }
-            return `₹ ${num.toLocaleString('en-IN')}`;
-        }
-
-        function handlePriceInputChange(inputEl) {
-            const rawDigits = inputEl.value.replace(/[^0-9]/g, '');
-            if (!rawDigits) {
-                inputEl.value = "";
-                document.getElementById('priceHelperTag').innerText = "₹ 0";
+        function formatCurrencyInput(elem) {
+            let digits = elem.value.replace(/[^0-9]/g, '');
+            if (!digits) {
+                elem.value = '';
+                document.getElementById('priceWordDisplay').innerText = '';
                 return;
             }
-            inputEl.value = formatToIndianNumbering(rawDigits);
-            document.getElementById('priceHelperTag').innerText = `Evaluation: ${convertNumberToIndianWords(rawDigits)}`;
+            elem.value = Number(digits).toLocaleString('en-IN');
+            document.getElementById('priceWordDisplay').innerText = convertAmountToIndianWords(Number(digits));
         }
 
-        function formatAuxiliaryCurrency(inputEl) {
-            const rawDigits = inputEl.value.replace(/[^0-9]/g, '');
-            inputEl.value = formatToIndianNumbering(rawDigits);
+        function convertAmountToIndianWords(amount) {
+            if (!amount || amount === 0) return "";
+            if (amount >= 10000000) {
+                const cr = (amount / 10000000).toFixed(2);
+                return `(₹ ${cr} Crore)`;
+            } else if (amount >= 100000) {
+                const lk = (amount / 100000).toFixed(2);
+                return `(₹ ${lk} Lakh)`;
+            } else if (amount >= 1000) {
+                const th = (amount / 1000).toFixed(1);
+                return `(₹ ${th} Thousand)`;
+            }
+            return `(₹ ${amount})`;
         }
 
-        /* ================= ADVANCED PHOTO UPLOAD & ASSET MANAGER ================= */
-        function handlePhotoUpload(files) {
-            if (!files || files.length === 0) return;
+        /* ---------------- PHOTO ENGINE (MAX 8 LOCAL IMAGES) ---------------- */
+        function handleDevicePhotoSelection(e) {
+            const files = Array.from(e.target.files);
+            if (!files.length) return;
 
-            const remainingQuota = 8 - currentUploadedPhotos.length;
-            if (remainingQuota <= 0) {
-                showToast("Maximum photo limit reached (8 photos max).");
+            if (uploadedPhotoBuffer.length + files.length > 8) {
+                alert("Upload Limit: A maximum of 8 photographs is allowed.");
                 return;
             }
 
-            const filesToProcess = Array.from(files).slice(0, remainingQuota);
-
-            filesToProcess.forEach(file => {
+            files.forEach(file => {
                 const reader = new FileReader();
-                reader.onload = (e) => {
-                    const isFirstPhoto = currentUploadedPhotos.length === 0;
-                    currentUploadedPhotos.push({
-                        id: 'photo_' + Math.random().toString(36).substring(2, 9),
-                        dataUrl: e.target.result,
+                reader.onload = (event) => {
+                    const isFirst = uploadedPhotoBuffer.length === 0;
+                    uploadedPhotoBuffer.push({
+                        url: event.target.result,
                         tag: "Living Room",
                         customTag: "",
-                        isCover: isFirstPhoto
+                        isCover: isFirst
                     });
-                    renderPhotoPreviews();
+                    renderPhotoTiles();
                 };
                 reader.readAsDataURL(file);
             });
-
-            // Reset file input so same file can be chosen again if needed
-            document.getElementById('photoFileInput').value = '';
+            e.target.value = '';
         }
 
-        function renderPhotoPreviews() {
-            const container = document.getElementById('galleryPreviewContainer');
-            const counter = document.getElementById('photoCounterLabel');
+        function renderPhotoTiles() {
+            const container = document.getElementById('photoTilesMatrix');
             container.innerHTML = '';
 
-            counter.innerText = `${currentUploadedPhotos.length} / 8 Uploaded`;
+            uploadedPhotoBuffer.forEach((photo, index) => {
+                const tile = document.createElement('div');
+                tile.className = 'photo-tile';
 
-            currentUploadedPhotos.forEach((item, index) => {
-                const el = document.createElement('div');
-                el.className = 'photo-preview-item';
+                const isCoverClass = photo.isCover ? 'active-cover' : '';
+                const isCustomTag = photo.tag === 'Others';
 
-                const coverBadge = item.isCover ? `<div class="cover-badge">COVER PHOTO</div>` : '';
-
-                // Build custom option tags
-                let tagOptionsHtml = '';
-                ROOM_TAG_OPTIONS.forEach(opt => {
-                    tagOptionsHtml += `<option value="${opt}" ${item.tag === opt ? 'selected' : ''}>${opt}</option>`;
-                });
-
-                const isOther = (item.tag === "Others");
-                const otherInputHtml = isOther ? `
-                    <input type="text" class="boxy-input" style="padding:4px 6px; font-size:11px; margin-top:4px;" placeholder="Specify Room / Asset..." value="${item.customTag || ''}" oninput="updateCustomTag('${item.id}', this.value)">
-                ` : '';
-
-                el.innerHTML = `
-                    <div class="photo-preview-img-box">
-                        <img src="${item.dataUrl}" alt="Property Asset">
-                        ${coverBadge}
-                    </div>
-                    <div class="photo-preview-controls">
-                        <div>
-                            <label style="font-size:10px; font-weight:700; text-transform:uppercase;">Room Type Tag</label>
-                            <select class="boxy-input" style="padding:6px; font-size:12px; margin-top:2px;" onchange="updatePhotoTag('${item.id}', this.value)">
-                                ${tagOptionsHtml}
-                            </select>
-                            ${otherInputHtml}
-                        </div>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:4px;">
-                            <button type="button" class="btn-set-cover" onclick="setPhotoAsCover('${item.id}')" ${item.isCover ? 'disabled style="opacity:0.6;"' : ''}>
-                                ${item.isCover ? 'Cover Pic' : 'Set as Cover'}
-                            </button>
-                            <button type="button" class="btn-remove-photo" onclick="removePhoto('${item.id}')">
-                                Delete
-                            </button>
-                        </div>
+                tile.innerHTML = `
+                    <img src="${photo.url}" alt="Property Asset">
+                    ${photo.isCover ? '<div class="cover-badge-selected">★ COVER PIC</div>' : ''}
+                    <div class="tile-controls">
+                        <select onchange="updatePhotoTag(${index}, this.value)">
+                            <option value="Living Room" ${photo.tag === 'Living Room' ? 'selected' : ''}>Living Room</option>
+                            <option value="Master Bedroom" ${photo.tag === 'Master Bedroom' ? 'selected' : ''}>Master Bedroom</option>
+                            <option value="Kitchen" ${photo.tag === 'Kitchen' ? 'selected' : ''}>Kitchen</option>
+                            <option value="Washroom" ${photo.tag === 'Washroom' ? 'selected' : ''}>Washroom</option>
+                            <option value="Balcony" ${photo.tag === 'Balcony' ? 'selected' : ''}>Balcony</option>
+                            <option value="Exterior Building" ${photo.tag === 'Exterior Building' ? 'selected' : ''}>Exterior / Elevation</option>
+                            <option value="Others" ${photo.tag === 'Others' ? 'selected' : ''}>Others (Specify)</option>
+                        </select>
+                        <input type="text" placeholder="Specify Area" value="${photo.customTag}" style="display:${isCustomTag ? 'block' : 'none'};" oninput="updatePhotoCustomTag(${index}, this.value)">
+                        <button type="button" class="btn-tile-cover ${isCoverClass}" onclick="setCoverPic(${index})">Set As Cover</button>
+                        <button type="button" class="btn-tile-del" onclick="removePhoto(${index})">Remove</button>
                     </div>
                 `;
-                container.appendChild(el);
+                container.appendChild(tile);
             });
         }
 
-        function updatePhotoTag(photoId, newTag) {
-            const photo = currentUploadedPhotos.find(p => p.id === photoId);
-            if (photo) {
-                photo.tag = newTag;
-                renderPhotoPreviews();
+        function updatePhotoTag(index, tagVal) {
+            uploadedPhotoBuffer[index].tag = tagVal;
+            renderPhotoTiles();
+        }
+
+        function updatePhotoCustomTag(index, customText) {
+            uploadedPhotoBuffer[index].customTag = customText;
+        }
+
+        function setCoverPic(index) {
+            uploadedPhotoBuffer.forEach((p, i) => p.isCover = (i === index));
+            renderPhotoTiles();
+        }
+
+        function removePhoto(index) {
+            uploadedPhotoBuffer.splice(index, 1);
+            if (uploadedPhotoBuffer.length > 0 && !uploadedPhotoBuffer.some(p => p.isCover)) {
+                uploadedPhotoBuffer[0].isCover = true;
             }
+            renderPhotoTiles();
         }
 
-        function updateCustomTag(photoId, customVal) {
-            const photo = currentUploadedPhotos.find(p => p.id === photoId);
-            if (photo) {
-                photo.customTag = customVal;
+        /* ---------------- ACCURATE AI WRITER WITH EXTENDED AMENITIES & PARKING ---------------- */
+        function generateCleanAIDescription() {
+            const bhk = formBhk ? formBhk.getValue() : "";
+            const propType = formProp ? formProp.getValue() : "Property";
+            const txType = formTx ? formTx.getValue() : "For Sale";
+            const city = formCity ? formCity.getValue() : "";
+            const locality = document.getElementById('propLocality').value.trim();
+            const carpet = document.getElementById('propCarpetArea').value.trim();
+            const superArea = document.getElementById('propSuperArea').value.trim();
+            const floor = document.getElementById('propFloor').value.trim();
+            const facing = formFacing ? formFacing.getValue() : "";
+            const pCount = formParkingCount ? formParkingCount.getValue() : "";
+            const pType = formParkingType ? formParkingType.getValue() : "";
+            const possession = formPossession ? formPossession.getValue() : "";
+            const rera = document.getElementById('propRera').value.trim();
+            const rawPrice = document.getElementById('propPriceRaw').value.trim();
+
+            const checkedAmenities = Array.from(document.querySelectorAll('input[name="amenityItem"]:checked')).map(el => el.value);
+
+            if (!locality && !city) {
+                alert("Please enter at least the City and Locality before running AI.");
+                return;
             }
-        }
 
-        function setPhotoAsCover(photoId) {
-            currentUploadedPhotos.forEach(p => {
-                p.isCover = (p.id === photoId);
-            });
-            renderPhotoPreviews();
-            showToast("Cover photo updated.");
-        }
+            const loader = document.getElementById('aiModalLoader');
+            loader.style.display = 'flex';
 
-        function removePhoto(photoId) {
-            currentUploadedPhotos = currentUploadedPhotos.filter(p => p.id !== photoId);
-            // If removed photo was cover and items exist, set first as cover
-            if (currentUploadedPhotos.length > 0 && !currentUploadedPhotos.some(p => p.isCover)) {
-                currentUploadedPhotos[0].isCover = true;
-            }
-            renderPhotoPreviews();
-        }
-
-        /* ================= AI DESCRIPTION GENERATOR & CHAR COUNTER ================= */
-        function validateDescriptionLength() {
-            const textarea = document.getElementById('propDescription');
-            const counter = document.getElementById('descCharCounter');
-            const len = textarea.value.length;
-
-            counter.innerText = `${len} / 2000 chars (Min: 100 required)`;
-
-            if (len >= 100 && len <= 2000) {
-                counter.className = 'char-counter valid';
-                return true;
-            } else {
-                counter.className = 'char-counter invalid';
-                return false;
-            }
-        }
-
-        function generateAiWriteup() {
-            const loadingBox = document.getElementById('aiProcessingState');
-            loadingBox.style.display = 'flex';
-
-            // Extract customer setup
-            const title = document.getElementById('propTitle').value.trim() || "Exclusive Premium Formation";
-            const bhk = typeaheadInstances['propBhk'].getValue();
-            const propType = typeaheadInstances['propType'].getValue();
-            const carpet = document.getElementById('propCarpetArea').value || "1,150";
-            const locality = typeaheadInstances['propLocality'].getValue();
-            const city = typeaheadInstances['propCity'].getValue();
-            const facing = typeaheadInstances['propFacing'].getValue();
-            const possession = typeaheadInstances['propPossession'].getValue();
-            const floor = document.getElementById('propFloor').value.trim() || "Higher Level Floor";
-            const price = document.getElementById('propPriceFormatted').value || "On Request";
-
-            // Gather active amenities
-            const amenitiesList = [];
-            if (document.getElementById('am_water').checked) amenitiesList.push("24/7 Municipal Water");
-            if (document.getElementById('am_power').checked) amenitiesList.push("100% DG Power Backup");
-            if (document.getElementById('am_gym').checked) amenitiesList.push("Gymnasium");
-            if (document.getElementById('am_club').checked) amenitiesList.push("Clubhouse");
-            if (document.getElementById('am_security').checked) amenitiesList.push("3-Tier Security");
-            if (document.getElementById('am_gas').checked) amenitiesList.push("Piped PNG Gas");
-
-            // 1 Second Sleek Animation Delay
             setTimeout(() => {
-                loadingBox.style.display = 'none';
+                let sentences = [];
 
-                const aiGeneratedDraft = `BOXYARD Verified Executive Overview: Exceptional ${bhk} ${propType} located in the prestigious enclave of ${locality}, ${city}. 
+                if (locality && city) {
+                    sentences.push(`${bhk} ${propType} available ${txType.toLowerCase()} in ${locality}, ${city}.`);
+                } else if (city) {
+                    sentences.push(`${bhk} ${propType} available ${txType.toLowerCase()} in ${city}.`);
+                }
 
-Spanning an expansive ${carpet} Sq.Ft of net RERA usable carpet area, this residence is situated on the ${floor}, enjoying unobstructed panoramic cross-ventilation and positive vastu alignment (${facing}). 
+                let areaParts = [];
+                if (carpet) areaParts.push(`${carpet} sq.ft RERA carpet area`);
+                if (superArea) areaParts.push(`${superArea} sq.ft built-up area`);
+                if (areaParts.length > 0) {
+                    sentences.push(`The property offers ${areaParts.join(' and ')}.`);
+                }
 
-Possession status: ${possession}. The property boasts an array of bespoke infrastructure features including ${amenitiesList.join(', ')}. Direct access to primary arterial roads, international schools, metro corridors, and corporate business districts makes this formation an unrivaled capital appreciation asset and dream residence. Direct from owner with absolute legal clarity.`;
+                let layoutParts = [];
+                if (floor) layoutParts.push(`located on the ${floor}`);
+                if (facing && !facing.includes("Don't Know")) layoutParts.push(`${facing} orientation`);
+                if (layoutParts.length > 0) {
+                    sentences.push(`It is ${layoutParts.join(' with ')}.`);
+                }
 
-                const textarea = document.getElementById('propDescription');
-                textarea.value = aiGeneratedDraft;
-                validateDescriptionLength();
-                showToast("AI Description synthesized and applied successfully!");
-            }, 1000);
+                // Dedicated Parking Syntax
+                if (pCount && !pCount.includes("None") && pType && !pType.includes("None")) {
+                    sentences.push(`Includes ${pCount} (${pType}) reserved parking space.`);
+                } else if (pCount && !pCount.includes("None")) {
+                    sentences.push(`Includes ${pCount} parking.`);
+                }
+
+                if (possession) {
+                    sentences.push(`Current possession status is ${possession.toLowerCase()}.`);
+                }
+
+                // Factoring in actual selected amenities
+                if (checkedAmenities.length > 0) {
+                    sentences.push(`Society amenities include ${checkedAmenities.slice(0, 5).join(', ')}.`);
+                }
+
+                if (rawPrice) {
+                    const priceDigits = Number(rawPrice.replace(/[^0-9]/g, ''));
+                    const wordVal = convertAmountToIndianWords(priceDigits);
+                    sentences.push(`Asking price is ₹ ${rawPrice} ${wordVal}.`);
+                }
+
+                if (rera && rera.toUpperCase() !== 'NA') {
+                    sentences.push(`RERA ID: ${rera}.`);
+                }
+
+                sentences.push("Clean title documents and ready for site visit inspection.");
+
+                const finalCleanWriteup = sentences.join(' ');
+                const descBox = document.getElementById('propDescription');
+                descBox.value = finalCleanWriteup;
+                updateCharCounter(descBox);
+
+                loader.style.display = 'none';
+            }, 900);
         }
 
-        /* ================= NAVIGATION CONTROLLER ================= */
-        function switchTab(targetTab) {
-            document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active-section'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-
-            const targetSection = document.getElementById(`sec-${targetTab}`);
-            const targetButton = document.getElementById(`tab-${targetTab}`);
-
-            if (targetSection) targetSection.classList.add('active-section');
-            if (targetButton) targetButton.classList.add('active');
-
-            if (targetTab === 'dashboard') renderMarketplace();
-            if (targetTab === 'myprops') renderMyProperties();
-            if (targetTab === 'leads') renderLeads();
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function updateCharCounter(elem) {
+            const count = elem.value.length;
+            const counterLabel = document.getElementById('charCountLabel');
+            if (count < 100) {
+                counterLabel.className = 'char-counter invalid';
+                counterLabel.innerText = `${count} / 100 Characters (Minimum 100 required)`;
+            } else if (count > 2000) {
+                counterLabel.className = 'char-counter invalid';
+                counterLabel.innerText = `${count} / 2,000 Characters (Max limit exceeded)`;
+            } else {
+                counterLabel.className = 'char-counter valid';
+                counterLabel.innerText = `${count} Characters (Valid)`;
+            }
         }
 
-        function updateBadges() {
-            const myCount = propertiesStore.filter(p => p.ownerId === CURRENT_USER_ID).length;
-            const leadsCount = leadsStore.filter(l => l.ownerId === CURRENT_USER_ID).length;
+        /* ---------------- FORM SUBMISSION (LOCAL STORAGE) ---------------- */
+        function handleFormSubmission(e) {
+            e.preventDefault();
 
-            document.getElementById('myPropsBadge').innerText = myCount;
-            document.getElementById('leadsBadge').innerText = leadsCount;
-            document.getElementById('leadsSummaryBadge').innerText = `${leadsCount} Active Inquiries Received`;
-            document.getElementById('marketplaceCountBadge').innerText = `${propertiesStore.length} Formations Available`;
+            const descText = document.getElementById('propDescription').value.trim();
+            if (descText.length < 100) {
+                alert("Please add at least 100 characters in the property description.");
+                return;
+            }
+
+            const rawPrice = document.getElementById('propPriceRaw').value.replace(/[^0-9]/g, '');
+            if (!rawPrice || Number(rawPrice) <= 0) {
+                alert("Please enter a valid price amount.");
+                return;
+            }
+
+            const imagesToSave = uploadedPhotoBuffer.length > 0 ? uploadedPhotoBuffer : [
+                { url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80", tag: "Main Living", isCover: true }
+            ];
+
+            const selectedAmenities = Array.from(document.querySelectorAll('input[name="amenityItem"]:checked')).map(el => el.value);
+
+            const newId = `BY-IND-${Math.floor(100 + Math.random() * 900)}`;
+            const newProperty = {
+                id: newId,
+                ownerId: CURRENT_USER_ID,
+                title: `${formBhk.getValue()} ${formProp.getValue()} (${document.getElementById('propLocality').value.trim()})`,
+                txType: formTx.getValue(),
+                propType: formProp.getValue(),
+                bhk: formBhk.getValue(),
+                city: formCity.getValue(),
+                locality: document.getElementById('propLocality').value.trim(),
+                price: Number(rawPrice),
+                carpetArea: Number(document.getElementById('propCarpetArea').value) || 0,
+                superArea: Number(document.getElementById('propSuperArea').value) || 0,
+                facing: formFacing.getValue(),
+                possession: formPossession.getValue(),
+                parkingCount: formParkingCount.getValue(),
+                parkingType: formParkingType.getValue(),
+                floor: document.getElementById('propFloor').value.trim() || "Mid Floor",
+                rera: document.getElementById('propRera').value.trim() || "NA",
+                amenities: selectedAmenities,
+                images: imagesToSave,
+                description: descText,
+                timestamp: Date.now()
+            };
+
+            propertyStore.unshift(newProperty);
+            localStorage.setItem('by_properties', JSON.stringify(propertyStore));
+
+            alert(`Listing Published Successfully!\nProperty ID: ${newId}`);
+            document.getElementById('propertyPostForm').reset();
+            uploadedPhotoBuffer = [];
+            renderPhotoTiles();
+            renderMarketplaceListings();
+            renderUserOwnedListings();
+            switchTab('dashboard');
         }
 
-        /* ================= MARKETPLACE RENDERING & FILTERS ================= */
-        function renderMarketplace() {
-            const container = document.getElementById('marketplaceListingsGrid');
-            container.innerHTML = '';
+        /* ---------------- MARKETPLACE RENDERING & CARDS ---------------- */
+        function renderMarketplaceListings() {
+            const grid = document.getElementById('marketplaceGrid');
+            grid.innerHTML = '';
 
-            const keyword = document.getElementById('filterKeyword').value.trim().toLowerCase();
-            const txType = typeaheadInstances['filterTxType'] ? typeaheadInstances['filterTxType'].getValue() : "All Transactions";
-            const bhk = typeaheadInstances['filterBhk'] ? typeaheadInstances['filterBhk'].getValue() : "All Configurations";
-            const budgetStr = typeaheadInstances['filterBudget'] ? typeaheadInstances['filterBudget'].getValue() : "Any Budget";
+            const selCity = filterCity ? filterCity.getValue() : 'All Cities';
+            const selBhk = filterBhk ? filterBhk.getValue() : 'All BHKs';
+            const selTx = filterTx ? filterTx.getValue() : 'All Properties';
+            const selBudget = filterBudget ? filterBudget.getValue() : 'Any Budget';
 
-            let maxPrice = Infinity;
-            if (budgetStr.includes("50 Lakh")) maxPrice = 5000000;
-            else if (budgetStr.includes("1.0 Crore")) maxPrice = 10000000;
-            else if (budgetStr.includes("2.5 Crore")) maxPrice = 25000000;
-            else if (budgetStr.includes("5.0 Crore")) maxPrice = 50000000;
-            else if (budgetStr.includes("10.0 Crore")) maxPrice = 100000000;
-
-            const filtered = propertiesStore.filter(p => {
-                const matchKeyword = !keyword || 
-                    p.title.toLowerCase().includes(keyword) || 
-                    p.locality.toLowerCase().includes(keyword) || 
-                    p.city.toLowerCase().includes(keyword);
-
-                const matchTx = (txType === "All Transactions") || (p.transactionType === txType);
-                const matchBhk = (bhk === "All Configurations") || (p.bhk === bhk);
-                const matchPrice = Number(p.price) <= maxPrice;
-
-                return matchKeyword && matchTx && matchBhk && matchPrice;
+            const filtered = propertyStore.filter(p => {
+                if (selCity !== 'All Cities' && p.city.toLowerCase() !== selCity.toLowerCase()) return false;
+                if (selBhk !== 'All BHKs' && p.bhk !== selBhk) return false;
+                if (selTx !== 'All Properties' && p.txType !== selTx) return false;
+                if (selBudget === '₹ 50 Lakh' && p.price > 5000000) return false;
+                if (selBudget === '₹ 1 Crore' && p.price > 10000000) return false;
+                if (selBudget === '₹ 2 Crore' && p.price > 20000000) return false;
+                if (selBudget === '₹ 5 Crore' && p.price > 50000000) return false;
+                return true;
             });
+
+            document.getElementById('totalListingsCounter').innerText = `${filtered.length} Properties Available`;
 
             if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-placeholder" style="grid-column: 1 / -1;">
-                        <h4>No Matching Formations Located</h4>
-                        <p>Adjust your search query, budget scope, or layout parameters.</p>
-                        <button class="btn-boxy btn-boxy-outline" onclick="resetFilters()" style="margin-top:10px;">Reset All Filters</button>
-                    </div>
-                `;
+                grid.innerHTML = `<div class="empty-display-box" style="grid-column:1/-1;">No properties match the chosen filter configuration. Try adjusting filters.</div>`;
                 return;
             }
 
             filtered.forEach(p => {
-                container.appendChild(createPropertyCard(p, false));
+                const cover = p.images.find(img => img.isCover) || p.images[0] || { url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800', tag: 'Unit' };
+                const ratePerSqFt = p.carpetArea > 0 ? `₹ ${Math.round(p.price / p.carpetArea).toLocaleString('en-IN')}/sq.ft` : '';
+
+                let parkingLabel = '';
+                if (p.parkingCount && !p.parkingCount.includes("None")) {
+                    parkingLabel = `${p.parkingCount} (${p.parkingType || 'Covered'})`;
+                }
+
+                let amenitiesHTML = '';
+                if (p.amenities && p.amenities.length > 0) {
+                    amenitiesHTML = `<div class="card-amenities-tray">` + 
+                        p.amenities.slice(0, 4).map(a => `<span class="amenity-chip">✓ ${a}</span>`).join('') +
+                        (p.amenities.length > 4 ? `<span class="amenity-chip">+${p.amenities.length - 4} More</span>` : '') +
+                        `</div>`;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'prop-card';
+                card.innerHTML = `
+                    <div class="card-cover-box">
+                        <img src="${cover.url}" alt="${p.title}">
+                        <div class="cover-tag-pill">${cover.tag || 'Residence'}</div>
+                        ${p.rera && p.rera !== 'NA' ? '<div class="rera-stamp-pill">✓ RERA</div>' : ''}
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <div class="card-price-row">
+                                <div class="card-price">₹ ${formatIndianCurrencyString(p.price)}</div>
+                                <div class="card-rate">${ratePerSqFt}</div>
+                            </div>
+                            <div class="card-title">${p.title}</div>
+                            <div class="card-loc">${p.locality}, ${p.city} • ${p.txType}</div>
+                            
+                            <div class="card-spec-tags">
+                                ${p.carpetArea ? `<span class="spec-tag">${p.carpetArea} Sq.Ft Carpet</span>` : ''}
+                                ${p.floor ? `<span class="spec-tag">${p.floor}</span>` : ''}
+                                ${p.facing ? `<span class="spec-tag">${p.facing.split(' ')[0]} Facing</span>` : ''}
+                                ${parkingLabel ? `<span class="spec-tag">${parkingLabel}</span>` : ''}
+                            </div>
+
+                            ${amenitiesHTML}
+                            
+                            <p style="font-size:11px; color:#444; margin-bottom:8px; line-height:1.4;">
+                                ${p.description.length > 120 ? p.description.substring(0, 120) + '...' : p.description}
+                            </p>
+                        </div>
+
+                        <div class="card-actions-bar">
+                            <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="openInquiryModal('${p.id}', '${escape(p.title)}')">Contact Owner</button>
+                            <button class="btn-boxy" onclick="sharePropertyWhatsApp('${escape(p.title)}', '${p.price}', '${p.locality}')">WhatsApp</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
             });
-
-            updateBadges();
         }
 
-        function applyFilters() {
-            renderMarketplace();
+        function resetMarketplaceFilters() {
+            if (filterCity) filterCity.setValue('All Cities');
+            if (filterBhk) filterBhk.setValue('All BHKs');
+            if (filterTx) filterTx.setValue('All Properties');
+            if (filterBudget) filterBudget.setValue('Any Budget');
+            renderMarketplaceListings();
         }
 
-        function resetFilters() {
-            document.getElementById('filterKeyword').value = '';
-            typeaheadInstances['filterTxType'].setValue("All Transactions");
-            typeaheadInstances['filterBhk'].setValue("All Configurations");
-            typeaheadInstances['filterBudget'].setValue("Any Budget");
-            renderMarketplace();
-        }
+        /* ---------------- VIEW LISTINGS (RENAMED FROM YOUR PROPERTIES) ---------------- */
+        function renderUserOwnedListings() {
+            const grid = document.getElementById('myPropsGrid');
+            grid.innerHTML = '';
 
-        /* ================= PROPERTY CARD BUILDER ================= */
-        function createPropertyCard(p, isOwnerView = false) {
-            const card = document.createElement('div');
-            card.className = 'property-card';
-
-            const ratePerSqFt = p.carpetArea > 0 ? Math.round(p.price / p.carpetArea) : 0;
-            const isOwner = (p.ownerId === CURRENT_USER_ID);
-
-            // Determine Cover Image
-            let coverImg = "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80";
-            if (p.photos && p.photos.length > 0) {
-                const coverObj = p.photos.find(img => img.isCover) || p.photos[0];
-                coverImg = coverObj.dataUrl;
+            const userProps = propertyStore.filter(p => p.ownerId === CURRENT_USER_ID);
+            if (userProps.length === 0) {
+                grid.innerHTML = `<div class="empty-display-box" style="grid-column:1/-1;">You have no active listings published yet.</div>`;
+                return;
             }
 
-            const photoCount = p.photos ? p.photos.length : 1;
-            const reraTag = p.reraNumber ? `<span class="tag-boxy tag-rera">${p.reraNumber}</span>` : `<span class="tag-boxy tag-rera">RERA Verified</span>`;
-            const ownerBadge = isOwner ? `<span class="tag-boxy tag-owner">Your Formation</span>` : '';
-            const statusBadge = isOwnerView ? `<div style="margin-bottom:8px;"><span class="identity-badge" style="display:inline-block; font-size:11px;">STATUS: ${p.status || 'Live on Marketplace'}</span></div>` : '';
+            userProps.forEach(p => {
+                const cover = p.images.find(img => img.isCover) || p.images[0] || { url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800', tag: 'Unit' };
+                const associatedLeads = leadsStore.filter(l => l.propId === p.id).length;
 
-            let actionsHtml = '';
-            if (!isOwnerView) {
-                actionsHtml = `
-                    <div class="card-actions">
-                        <button class="btn-boxy" onclick="openContactModal('${p.id}')">
-                            Inquire Desk
-                        </button>
-                        <a href="https://wa.me/919820154321?text=Hello%20BOXYARD%2C%20I%20am%20interested%20in%20formation%3A%20${encodeURIComponent(p.title)}%20(${encodeURIComponent(p.bhk)})%20in%20${encodeURIComponent(p.locality)}" target="_blank" class="btn-boxy btn-boxy-whatsapp">
-                            WhatsApp
-                        </a>
+                const card = document.createElement('div');
+                card.className = 'prop-card';
+                card.innerHTML = `
+                    <div class="card-cover-box" style="height:140px;">
+                        <img src="${cover.url}" alt="${p.title}">
+                        <div class="cover-tag-pill">ID: ${p.id}</div>
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <div class="card-price">₹ ${formatIndianCurrencyString(p.price)}</div>
+                            <div class="card-title">${p.title}</div>
+                            <div class="card-loc">${p.locality}, ${p.city}</div>
+                            <div style="font-size:10px; font-weight:700; color:var(--primary); margin-top:4px;">
+                                Total Inquiries: ${associatedLeads} Active
+                            </div>
+                        </div>
+                        <div class="card-actions-bar">
+                            <button class="btn-boxy" style="flex:1;" onclick="switchTab('leads')">View Inquiries</button>
+                            <button class="btn-boxy" style="color:#d32f2f;" onclick="deleteProperty('${p.id}')">Delete</button>
+                        </div>
                     </div>
                 `;
-            } else {
-                actionsHtml = `
-                    <div class="card-actions">
-                        <button class="btn-boxy btn-boxy-outline btn-boxy-sm" onclick="togglePropertyStatus('${p.id}')">
-                            Status
-                        </button>
-                        <button class="btn-boxy btn-boxy-secondary btn-boxy-sm" onclick="deleteProperty('${p.id}')">
-                            Purge
-                        </button>
-                    </div>
-                `;
-            }
-
-            card.innerHTML = `
-                <div class="card-image-box">
-                    <img src="${coverImg}" alt="${p.title}" onerror="this.src='https://placehold.co/600x400/a92c1c/ffffff?text=BOXYARD+FORMATION'">
-                    <div class="badge-bar">
-                        ${reraTag}
-                        ${ownerBadge}
-                    </div>
-                    <div class="card-type-tag">${p.transactionType}</div>
-                    <div class="photo-count-tag">📷 ${photoCount} Photos</div>
-                </div>
-
-                <div class="card-content">
-                    <div>
-                        ${statusBadge}
-                        <div class="card-price-row">
-                            <div class="card-price">${convertNumberToIndianWords(p.price)}</div>
-                            <div class="card-rate">${p.transactionType === 'For Rent' ? '/ month' : `₹ ${ratePerSqFt.toLocaleString('en-IN')}/sq.ft`}</div>
-                        </div>
-
-                        <div class="card-title">${p.title}</div>
-                        <div class="card-loc">
-                            <span>📍 ${p.locality}, ${p.city}</span>
-                        </div>
-
-                        <div class="spec-grid">
-                            <div class="spec-item">
-                                <div class="spec-label">Config</div>
-                                <div class="spec-val">${p.bhk}</div>
-                            </div>
-                            <div class="spec-item">
-                                <div class="spec-label">Carpet Area</div>
-                                <div class="spec-val">${p.carpetArea} sq.ft</div>
-                            </div>
-                            <div class="spec-item">
-                                <div class="spec-label">Facing</div>
-                                <div class="spec-val">${p.facing ? p.facing.replace(' Facing', '') : 'East'}</div>
-                            </div>
-                        </div>
-
-                        <div class="features-chips">
-                            <span class="chip">${p.possession || 'Ready to Move'}</span>
-                            <span class="chip">${p.floor || 'Standard Floor'}</span>
-                            <span class="chip">${p.parking || 'Covered Parking'}</span>
-                        </div>
-
-                        <p style="font-size:12px; color:var(--text-muted); line-height:1.4; margin-bottom:12px;">
-                            ${p.description ? p.description.substring(0, 115) + '...' : ''}
-                        </p>
-                    </div>
-
-                    ${actionsHtml}
-                </div>
-            `;
-            return card;
+                grid.appendChild(card);
+            });
         }
 
-        /* ================= VIEW YOUR PROPERTIES ================= */
-        function renderMyProperties() {
-            const container = document.getElementById('myPropertiesContainer');
+        function deleteProperty(id) {
+            if (!confirm(`Are you sure you want to remove property listing ${id}?`)) return;
+            propertyStore = propertyStore.filter(p => p.id !== id);
+            localStorage.setItem('by_properties', JSON.stringify(propertyStore));
+            renderMarketplaceListings();
+            renderUserOwnedListings();
+        }
+
+        /* ---------------- OPPORTUNITIES CRM & EXCEL (.CSV) DOWNLOAD ---------------- */
+        function renderLeadsPipeline() {
+            const container = document.getElementById('leadsContainer');
             container.innerHTML = '';
 
-            const myProps = propertiesStore.filter(p => p.ownerId === CURRENT_USER_ID);
-
-            if (myProps.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-placeholder" style="grid-column: 1 / -1;">
-                        <h4>No Formations Listed Under Your Account</h4>
-                        <p>You have not uploaded any real estate formations yet.</p>
-                        <button class="btn-boxy" onclick="switchTab('post')" style="margin-top:12px;">+ Post Your Property (Free)</button>
-                    </div>
-                `;
+            if (leadsStore.length === 0) {
+                container.innerHTML = `<div class="empty-display-box">No buyer opportunities or enquiries recorded yet.</div>`;
                 return;
             }
 
-            myProps.forEach(p => {
-                container.appendChild(createPropertyCard(p, true));
+            leadsStore.forEach(lead => {
+                const timeAgo = formatTimeAgo(lead.timestamp);
+                const card = document.createElement('div');
+                card.className = 'lead-card';
+                card.innerHTML = `
+                    <div class="lead-header">
+                        <div>
+                            <span class="lead-name">${lead.buyerName}</span>
+                            <span style="font-size:10px; color:#555; margin-left:6px;">• +91 ${lead.buyerPhone}</span>
+                        </div>
+                        <span class="lead-time">${timeAgo}</span>
+                    </div>
+                    <div style="font-size:11px; font-weight:700; color:#222;">Listing: ${lead.propTitle}</div>
+                    <div style="font-size:11px; color:#444; background:#f9f9f9; padding:6px; border:1px solid #eee;">
+                        "${lead.buyerNote || 'Interested in scheduling a site visit.'}"
+                    </div>
+                    <div style="display:flex; gap:6px; margin-top:4px;">
+                        <button class="btn-boxy btn-boxy-primary" onclick="window.open('https://wa.me/91${lead.buyerPhone}?text=Hi%20${encodeURIComponent(lead.buyerName)},%20thank%20you%20for%20enquiring%20about%20my%20property%20on%20BOXYARD.', '_blank')">Reply via WhatsApp</button>
+                        <button class="btn-boxy" onclick="window.location.href='tel:+91${lead.buyerPhone}'">Call Buyer</button>
+                    </div>
+                `;
+                container.appendChild(card);
             });
-            updateBadges();
         }
 
-        function togglePropertyStatus(propId) {
-            const prop = propertiesStore.find(p => p.id === propId);
-            if (!prop) return;
-
-            const nextStatus = prop.status === "Live on Marketplace" ? "Under Offer" : 
-                               prop.status === "Under Offer" ? "Sold / Leased" : "Live on Marketplace";
-
-            prop.status = nextStatus;
-            savePropertiesToStorage();
-            renderMyProperties();
-            showToast(`Status updated: ${nextStatus}`);
-        }
-
-        function deleteProperty(propId) {
-            propertiesStore = propertiesStore.filter(p => p.id !== propId);
-            savePropertiesToStorage();
-            renderMyProperties();
-            showToast("Property listing purged from your inventory.");
-        }
-
-        /* ================= POST PROPERTY FORM HANDLER ================= */
-        function handlePostSubmit(e) {
-            e.preventDefault();
-
-            if (!validateDescriptionLength()) {
-                showToast("Description must have between 100 and 2000 characters.");
+        function exportOpportunitiesToExcel() {
+            if (!leadsStore || leadsStore.length === 0) {
+                alert("No opportunity data available to download.");
                 return;
             }
 
-            const rawPrice = document.getElementById('propPriceFormatted').value.replace(/[^0-9]/g, '');
-            if (!rawPrice || Number(rawPrice) <= 0) {
-                showToast("Please enter a valid price assessment.");
-                return;
-            }
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Lead ID,Property ID,Property Title,Buyer Name,Buyer Phone,Buyer Message,Timestamp,Date (IST)\r\n";
 
-            // Amenities collection
-            const selectedAmenities = [];
-            if (document.getElementById('am_water').checked) selectedAmenities.push("Municipal 24/7 Water");
-            if (document.getElementById('am_power').checked) selectedAmenities.push("100% DG Power Backup");
-            if (document.getElementById('am_gym').checked) selectedAmenities.push("Modern Gymnasium");
-            if (document.getElementById('am_club').checked) selectedAmenities.push("Clubhouse & Pool");
-            if (document.getElementById('am_security').checked) selectedAmenities.push("3-Tier Gated Security");
-            if (document.getElementById('am_lift').checked) selectedAmenities.push("High-speed Passenger Lift");
-            if (document.getElementById('am_gas').checked) selectedAmenities.push("Piped PNG Gas Line");
-            if (document.getElementById('am_ev').checked) selectedAmenities.push("EV Charging Bay");
+            leadsStore.forEach(l => {
+                const dateStr = new Date(l.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+                const cleanTitle = `"${(l.propTitle || '').replace(/"/g, '""')}"`;
+                const cleanNote = `"${(l.buyerNote || '').replace(/"/g, '""')}"`;
+                const cleanName = `"${(l.buyerName || '').replace(/"/g, '""')}"`;
 
-            // Guarantee at least one photo
-            let finalPhotos = [...currentUploadedPhotos];
-            if (finalPhotos.length === 0) {
-                finalPhotos.push({
-                    id: "p_default",
-                    dataUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
-                    tag: "Exterior",
-                    isCover: true
-                });
-            }
-
-            const newProperty = {
-                id: `BY-PROP-${Math.floor(1000 + Math.random() * 9000)}`,
-                ownerId: CURRENT_USER_ID,
-                title: document.getElementById('propTitle').value.trim(),
-                city: typeaheadInstances['propCity'].getValue(),
-                locality: typeaheadInstances['propLocality'].getValue(),
-                reraNumber: document.getElementById('propRera').value.trim() || "Applied / RERA Compliant",
-                propertyType: typeaheadInstances['propType'].getValue(),
-                bhk: typeaheadInstances['propBhk'].getValue(),
-                transactionType: typeaheadInstances['propTxType'].getValue(),
-                carpetArea: Number(document.getElementById('propCarpetArea').value),
-                superArea: Number(document.getElementById('propSuperArea').value) || Number(document.getElementById('propCarpetArea').value) * 1.35,
-                floor: document.getElementById('propFloor').value.trim() || "Mid-level Floor",
-                price: Number(rawPrice),
-                facing: typeaheadInstances['propFacing'].getValue(),
-                possession: typeaheadInstances['propPossession'].getValue(),
-                parking: typeaheadInstances['propParking'].getValue(),
-                amenities: selectedAmenities,
-                photos: finalPhotos,
-                description: document.getElementById('propDescription').value.trim(),
-                viewsCount: 1,
-                status: "Live on Marketplace",
-                createdDate: new Date().toISOString().split('T')[0]
-            };
-
-            propertiesStore.unshift(newProperty);
-            savePropertiesToStorage();
-
-            // Reset form
-            document.getElementById('postPropertyForm').reset();
-            currentUploadedPhotos = [];
-            renderPhotoPreviews();
-            document.getElementById('priceHelperTag').innerText = "₹ 0";
-            validateDescriptionLength();
-
-            showToast("Formation successfully posted to BOXYARD marketplace!");
-            switchTab('myprops');
-        }
-
-        function loadSampleListingData() {
-            document.getElementById('propTitle').value = "Oberoi Sky City Signature";
-            typeaheadInstances['propCity'].setValue("Mumbai");
-            updateLocalitiesForCity();
-            typeaheadInstances['propLocality'].setValue("Goregaon West");
-            document.getElementById('propRera').value = "P51800003507 (MahaRERA Registered)";
-            typeaheadInstances['propType'].setValue("Apartment");
-            typeaheadInstances['propBhk'].setValue("3 BHK");
-            typeaheadInstances['propTxType'].setValue("For Sale");
-            document.getElementById('propCarpetArea').value = 1085;
-            document.getElementById('propSuperArea').value = 1520;
-            document.getElementById('propFloor').value = "24th of 55 Floors";
-            
-            document.getElementById('propPriceFormatted').value = "3,65,00,000";
-            handlePriceInputChange(document.getElementById('propPriceFormatted'));
-
-            typeaheadInstances['propFacing'].setValue("East Facing");
-            typeaheadInstances['propPossession'].setValue("Ready to Move (OC Received)");
-            typeaheadInstances['propParking'].setValue("2 Covered Basement");
-
-            currentUploadedPhotos = [
-                { id: "demo1", dataUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80", tag: "Living Room", isCover: true },
-                { id: "demo2", dataUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", tag: "Master Bedroom", isCover: false }
-            ];
-            renderPhotoPreviews();
-
-            generateAiWriteup();
-            showToast("Demo listing configuration loaded.");
-        }
-
-        /* ================= OPPORTUNITIES & LEADS CRM ================= */
-        function renderLeads() {
-            const container = document.getElementById('leadsListContainer');
-            container.innerHTML = '';
-
-            const myLeads = leadsStore.filter(l => l.ownerId === CURRENT_USER_ID);
-
-            if (myLeads.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-placeholder">
-                        <h4>No Buyer Inquiries Received Yet</h4>
-                        <p>Customer contact requests and offers will be logged here immediately.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            myLeads.forEach(lead => {
-                const el = document.createElement('div');
-                el.className = 'lead-card';
-
-                const sanitizedPhone = lead.buyerPhone.replace(/[^0-9]/g, '');
-
-                el.innerHTML = `
-                    <div>
-                        <div class="lead-property-ref">FORMATION: ${lead.propertyTitle}</div>
-                        <div style="font-size:17px; font-weight:700; color:var(--text-dark); margin-bottom:2px;">${lead.buyerName}</div>
-                        <div style="font-size:13px; color:var(--text-muted); margin-bottom:6px;">
-                            📞 ${lead.buyerPhone} | ✉️ ${lead.buyerEmail || 'Not Specified'}
-                        </div>
-                        <div style="font-size:13px; font-weight:700; color:var(--brand-primary); margin-bottom:6px;">
-                            Budget / Offer: ₹ ${lead.buyerOffer || 'As Demanded'}
-                        </div>
-                        <div style="font-size:12px; background:#f9f9f9; border:1px dashed var(--border-light); padding:8px;">
-                            "${lead.message || 'Direct callback requested from property desk.'}"
-                        </div>
-                        <div style="font-size:10px; color:var(--text-light); margin-top:4px; font-weight:bold;">
-                            TIMESTAMP: ${lead.timestamp}
-                        </div>
-                    </div>
-
-                    <div>
-                        <label style="font-size:10px; font-weight:bold; text-transform:uppercase;">Lead Pipeline Status</label>
-                        <select class="boxy-input" style="padding:6px; font-size:12px; margin-top:2px;" onchange="updateLeadStatus('${lead.id}', this.value)">
-                            <option value="New Opportunity" ${lead.leadStatus === 'New Opportunity' ? 'selected' : ''}>New Opportunity</option>
-                            <option value="In Negotiation" ${lead.leadStatus === 'In Negotiation' ? 'selected' : ''}>In Negotiation</option>
-                            <option value="Site Visit Scheduled" ${lead.leadStatus === 'Site Visit Scheduled' ? 'selected' : ''}>Site Visit Scheduled</option>
-                            <option value="Deal Closed" ${lead.leadStatus === 'Deal Closed' ? 'selected' : ''}>Deal Closed</option>
-                            <option value="Cold / Dropped" ${lead.leadStatus === 'Cold / Dropped' ? 'selected' : ''}>Cold / Dropped</option>
-                        </select>
-                    </div>
-
-                    <div style="display:flex; flex-direction:column; gap:6px;">
-                        <a href="https://wa.me/${sanitizedPhone}?text=Hello%20${encodeURIComponent(lead.buyerName)}%2C%20thank%20you%20for%20your%20inquiry%20on%20BOXYARD%20regarding%20${encodeURIComponent(lead.propertyTitle)}." target="_blank" class="btn-boxy btn-boxy-whatsapp btn-boxy-sm">
-                            WhatsApp
-                        </a>
-                        <a href="tel:${lead.buyerPhone}" class="btn-boxy btn-boxy-outline btn-boxy-sm">
-                            Call Desk
-                        </a>
-                    </div>
-                `;
-                container.appendChild(el);
+                const row = [
+                    l.leadId,
+                    l.propId,
+                    cleanTitle,
+                    cleanName,
+                    `'${l.buyerPhone}`,
+                    cleanNote,
+                    l.timestamp,
+                    `"${dateStr}"`
+                ].join(",");
+                csvContent += row + "\r\n";
             });
-            updateBadges();
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `BOXYARD_Opportunities_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
-        function updateLeadStatus(leadId, newStatus) {
-            const lead = leadsStore.find(l => l.id === leadId);
-            if (lead) {
-                lead.leadStatus = newStatus;
-                saveLeadsToStorage();
-                showToast(`Lead status updated to: ${newStatus}`);
-            }
+        function updateLeadsBadge() {
+            document.getElementById('leadsBadgeCounter').innerText = leadsStore.length;
         }
 
-        /* ================= INQUIRY MODAL ================= */
-        function openContactModal(propId) {
-            const prop = propertiesStore.find(p => p.id === propId);
-            if (!prop) return;
-
-            document.getElementById('inqPropertyId').value = prop.id;
-            document.getElementById('inqOwnerId').value = prop.ownerId;
-            document.getElementById('modalPropertyTitle').innerText = `Inquire: ${prop.title}`;
-            document.getElementById('modalPropertySubtitle').innerText = `${prop.bhk} • ${prop.locality}, ${prop.city} • Demand: ${convertNumberToIndianWords(prop.price)}`;
-            document.getElementById('opportunityForm').reset();
-
-            document.getElementById('contactModal').classList.add('active-modal');
+        function formatTimeAgo(timestamp) {
+            const sec = Math.floor((Date.now() - timestamp) / 1000);
+            if (sec < 3600) return `${Math.floor(sec / 60)}m ago`;
+            if (sec < 86400) return `${Math.floor(sec / 3600)}h ago`;
+            return `${Math.floor(sec / 86400)}d ago`;
         }
 
-        function closeContactModal() {
-            document.getElementById('contactModal').classList.remove('active-modal');
+        /* ---------------- INQUIRY MODAL ACTIONS ---------------- */
+        function openInquiryModal(propId, titleEscaped) {
+            document.getElementById('modalPropId').value = propId;
+            document.getElementById('modalPropTitle').innerText = unescape(titleEscaped);
+            document.getElementById('leadInquiryModal').style.display = 'flex';
         }
 
-        function submitInquiry(e) {
+        function closeInquiryModal() {
+            document.getElementById('leadInquiryModal').style.display = 'none';
+        }
+
+        function submitBuyerInquiry(e) {
             e.preventDefault();
+            const propId = document.getElementById('modalPropId').value;
+            const buyerName = document.getElementById('modalBuyerName').value.trim();
+            const buyerPhone = document.getElementById('modalBuyerPhone').value.trim();
+            const buyerNote = document.getElementById('modalBuyerNote').value.trim();
 
-            const propId = document.getElementById('inqPropertyId').value;
-            const ownerId = document.getElementById('inqOwnerId').value;
-            const prop = propertiesStore.find(p => p.id === propId);
+            const propObj = propertyStore.find(p => p.id === propId);
 
             const newLead = {
-                id: `LEAD-${Math.floor(100 + Math.random() * 900)}`,
-                propertyId: propId,
-                propertyTitle: prop ? `${prop.title} (${prop.bhk})` : "General Listing",
-                ownerId: ownerId,
-                buyerName: document.getElementById('inqBuyerName').value.trim(),
-                buyerPhone: document.getElementById('inqBuyerPhone').value.trim(),
-                buyerEmail: document.getElementById('inqBuyerEmail').value.trim(),
-                buyerOffer: document.getElementById('inqBuyerOffer').value.trim() || "Full Demand",
-                message: document.getElementById('inqBuyerMessage').value.trim(),
-                leadStatus: "New Opportunity",
-                timestamp: new Date().toLocaleString('en-IN', { hour12: false })
+                leadId: `LD-${Math.floor(100 + Math.random() * 900)}`,
+                propId: propId,
+                propTitle: propObj ? propObj.title : "Marketplace Residence",
+                buyerName: buyerName,
+                buyerPhone: buyerPhone,
+                buyerNote: buyerNote,
+                timestamp: Date.now()
             };
 
             leadsStore.unshift(newLead);
-            saveLeadsToStorage();
-            closeContactModal();
+            localStorage.setItem('by_leads', JSON.stringify(leadsStore));
 
-            showToast("Opportunity lead dispatched to property owner!");
-            updateBadges();
-
-            if (ownerId === CURRENT_USER_ID) {
-                switchTab('leads');
-            }
+            alert(`Enquiry Sent!\nThe listing owner has received your mobile number and request.`);
+            closeInquiryModal();
+            updateLeadsBadge();
+            renderLeadsPipeline();
         }
 
-        /* ================= EMI CALCULATOR ================= */
-        function calculateEmi() {
-            const P = Number(document.getElementById('loanAmountSlider').value);
-            const annualRate = Number(document.getElementById('loanRateSlider').value);
-            const tenureYears = Number(document.getElementById('loanTenureSlider').value);
+        function sharePropertyWhatsApp(titleEsc, price, loc) {
+            const text = `Take a look at this property on BOXYARD:\n*${unescape(titleEsc)}*\nPrice: ₹ ${Number(price).toLocaleString('en-IN')}\nLocation: ${loc}`;
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+        }
 
-            document.getElementById('loanAmountDisplay').innerText = convertNumberToIndianWords(P);
-            document.getElementById('loanRateDisplay').innerText = `${annualRate.toFixed(2)} %`;
-            document.getElementById('loanTenureDisplay').innerText = `${tenureYears} Years`;
+        /* ---------------- EMI CALCULATOR ENGINE ---------------- */
+        function recalculateEMI() {
+            const rawP = document.getElementById('calcPrincipal').value.replace(/[^0-9]/g, '');
+            const P = Number(rawP) || 0;
+            const annualRate = parseFloat(document.getElementById('calcRate').value) || 0;
+            const tenureYears = parseFloat(document.getElementById('calcTenure').value) || 0;
 
-            const r = (annualRate / 12) / 100;
+            if (P <= 0 || annualRate <= 0 || tenureYears <= 0) return;
+
+            const r = annualRate / 12 / 100;
             const n = tenureYears * 12;
 
             const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-            const totalPayment = emi * n;
-            const totalInterest = totalPayment - P;
+            const totalRepayment = emi * n;
+            const totalInterest = totalRepayment - P;
 
-            document.getElementById('emiResult').innerText = `₹ ${Math.round(emi).toLocaleString('en-IN')} / mo`;
-            document.getElementById('resPrincipal').innerText = convertNumberToIndianWords(P);
-            document.getElementById('resTotalInterest').innerText = convertNumberToIndianWords(totalInterest);
-            document.getElementById('resTotalPayment').innerText = convertNumberToIndianWords(totalPayment);
+            document.getElementById('resMonthlyEmi').innerText = `₹ ${Math.round(emi).toLocaleString('en-IN')}`;
+            document.getElementById('resTotalInterest').innerText = `₹ ${Math.round(totalInterest).toLocaleString('en-IN')}`;
+            document.getElementById('resTotalRepayment').innerText = `₹ ${Math.round(totalRepayment).toLocaleString('en-IN')}`;
         }
 
-        /* ================= TOAST UTILITY ================= */
-        function showToast(message) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast-box';
-            toast.innerText = message;
-            container.appendChild(toast);
+        /* ---------------- NAVIGATION CONTROLLER ---------------- */
+        function switchTab(targetTab) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active-section'));
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
 
-            setTimeout(() => {
-                toast.style.transition = 'opacity 0.3s ease';
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            const targetSec = document.getElementById(`sec-${targetTab}`);
+            if (targetSec) targetSec.classList.add('active-section');
+
+            const navBtn = document.getElementById(`tab-${targetTab}`);
+            if (navBtn) navBtn.classList.add('active');
+
+            if (targetTab === 'dashboard') renderMarketplaceListings();
+            if (targetTab === 'myprops') renderUserOwnedListings();
+            if (targetTab === 'leads') {
+                renderLeadsPipeline();
+                updateLeadsBadge();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ---------------- PROFILE CONFIGURATION ---------------- */
+        function saveProfileConfiguration() {
+            const name = document.getElementById('profInputName').value;
+            const phone = document.getElementById('profInputPhone').value;
+            document.getElementById('profileDisplayName').innerText = name;
+            document.getElementById('profilePhoneDisplay').innerText = `+91 ${phone}`;
+            document.getElementById('profileInitialBadge').innerText = name.charAt(0).toUpperCase() || 'U';
+            alert("Terminal Profile Updated.");
+        }
+
+        function clearLocalDatabase() {
+            if (confirm("Reset application data back to factory defaults?")) {
+                localStorage.clear();
+                location.reload();
+            }
         }
     </script>
 </body>
