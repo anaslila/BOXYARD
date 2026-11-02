@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BOXYARD - v1.05</title>
+    <title>BOXYARD - v1.06</title>
 
     <!-- Meta / SEO / iOS PWA Integration -->
     <meta name="application-name" content="BOXYARD">
@@ -29,6 +29,7 @@
             --text-main: #111111;
             --text-muted: #555555;
             --font-family: 'Century Schoolbook', Georgia, serif;
+            --btn-cancel-bg: #ffffff;
         }
 
         * {
@@ -136,6 +137,16 @@
 
         .btn-boxy-primary:hover {
             background: var(--primary-dark);
+        }
+
+        .btn-boxy-cancel {
+            background: var(--btn-cancel-bg);
+            color: #222222;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-boxy-cancel:hover {
+            background: #dedede;
         }
 
         .btn-boxy-excel {
@@ -587,7 +598,7 @@
             display: flex;
             gap: 6px;
             margin-top: 10px;
-            border-top: 1px solid #ececec;
+            border-top: 1px solid #ffffff;
             padding-top: 10px;
         }
 
@@ -912,7 +923,7 @@
 
         .summary-specs-table td {
             padding: 5px 8px;
-            border: 1px solid #ececec;
+            border: 1px solid #ffffff;
         }
 
         .summary-specs-table td.label-col {
@@ -1173,6 +1184,68 @@
             font-size: 11px;
             color: #666666;
         }
+
+        /* ------------------ INTERNAL BOXY DIALOG MODAL (ALERTS & CONFIRMS) ------------------ */
+        #internalDialogOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 4000;
+            padding: 14px;
+        }
+
+        .dialog-card {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            box-shadow: 6px 6px 0px var(--border-color);
+            width: 100%;
+            max-width: 380px;
+            padding: 18px;
+            animation: dialogPop 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes dialogPop {
+            from { transform: scale(0.92); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .dialog-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .dialog-message {
+            font-size: 12px;
+            font-weight: 600;
+            color: #222222;
+            line-height: 1.45;
+            margin-bottom: 16px;
+            white-space: pre-line;
+        }
+
+        .dialog-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .dialog-actions button {
+            flex: 1;
+            padding: 9px;
+            font-size: 11px;
+        }
     </style>
 </head>
 <body>
@@ -1183,6 +1256,15 @@
             <img src="https://i.postimg.cc/tJCdfc2T/BOXYARD.png" alt="BOXYARD">
         </div>
         <div class="splash-subtext"></div>
+    </div>
+
+    <!-- Internal Centered Notification & Confirmation Dialog Modal -->
+    <div id="internalDialogOverlay">
+        <div class="dialog-card">
+            <div class="dialog-title" id="internalDialogTitle">Notice</div>
+            <div class="dialog-message" id="internalDialogMessage">Action prompt details here.</div>
+            <div class="dialog-actions" id="internalDialogActions"></div>
+        </div>
     </div>
 
     <!-- 1-2s Realistic Random Upload Pipeline with Blurred Backdrop -->
@@ -1409,7 +1491,7 @@
                         <label>Property Photographs (Max 8 Images - Optional)</label>
                         <div class="photo-upload-zone" onclick="document.getElementById('photoFileInput').click()">
                             <p style="font-size:11px; font-weight:700; text-transform:uppercase;">Click to Choose Photographs from Device</p>
-                            <p style="font-size:10px; color:#666; margin-top:3px;">Select up to 8 images. If skipped, a standard verified placeholder is applied.</p>
+                            <p style="font-size:10px; color:#666; margin-top:3px;">Select up to 8 images. If skipped, the official placeholder will be displayed.</p>
                         </div>
                         <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none;" onchange="handleDevicePhotoSelection(event)">
                         
@@ -1581,7 +1663,7 @@
 
                 <div style="display:flex; gap:8px; margin-top:16px;">
                     <button class="btn-boxy btn-boxy-primary" style="flex:1;" onclick="saveProfileConfiguration()">Save Profile Settings</button>
-                    <button class="btn-boxy" onclick="clearLocalDatabase()">Reset Database</button>
+                    <button class="btn-boxy" onclick="clearLocalDatabase()">Reset Profile</button>
                 </div>
             </div>
         </section>
@@ -1721,7 +1803,7 @@
                 </div>
                 <div style="display:flex; gap:6px; margin-top:10px;">
                     <button type="submit" class="btn-boxy btn-boxy-primary" style="flex:1;">Submit Inquiry</button>
-                    <button type="button" class="btn-boxy" onclick="closeInquiryModal()">Cancel</button>
+                    <button type="button" class="btn-boxy btn-boxy-cancel" onclick="closeInquiryModal()">Cancel</button>
                 </div>
             </form>
         </div>
@@ -1832,6 +1914,49 @@
         let propertyStore = JSON.parse(localStorage.getItem('by_properties')) || DEFAULT_PROPERTIES;
         let leadsStore = JSON.parse(localStorage.getItem('by_leads')) || DEFAULT_LEADS;
         let uploadedPhotoBuffer = [];
+
+        /* ---------------- INTERNAL CENTERED MODAL DIALOG ENGINE ---------------- */
+        function showInternalAlert(message, title = "Notification", callback = null) {
+            const overlay = document.getElementById('internalDialogOverlay');
+            document.getElementById('internalDialogTitle').innerText = title;
+            document.getElementById('internalDialogMessage').innerText = message;
+            
+            const actions = document.getElementById('internalDialogActions');
+            actions.innerHTML = `
+                <button class="btn-boxy btn-boxy-primary" id="dialogBtnOk">OKAY</button>
+            `;
+
+            document.getElementById('dialogBtnOk').onclick = () => {
+                overlay.style.display = 'none';
+                if (callback) callback();
+            };
+
+            overlay.style.display = 'flex';
+        }
+
+        function showInternalConfirm(message, title = "Confirm Action", onConfirm = null, onCancel = null) {
+            const overlay = document.getElementById('internalDialogOverlay');
+            document.getElementById('internalDialogTitle').innerText = title;
+            document.getElementById('internalDialogMessage').innerText = message;
+
+            const actions = document.getElementById('internalDialogActions');
+            actions.innerHTML = `
+                <button class="btn-boxy btn-boxy-cancel" id="dialogBtnCancel">Cancel</button>
+                <button class="btn-boxy btn-boxy-primary" id="dialogBtnSubmit">Proceed</button>
+            `;
+
+            document.getElementById('dialogBtnCancel').onclick = () => {
+                overlay.style.display = 'none';
+                if (onCancel) onCancel();
+            };
+
+            document.getElementById('dialogBtnSubmit').onclick = () => {
+                overlay.style.display = 'none';
+                if (onConfirm) onConfirm();
+            };
+
+            overlay.style.display = 'flex';
+        }
 
         /* ---------------- 1-SECOND PULSE ANIMATION ON APP LOAD ---------------- */
         window.addEventListener('DOMContentLoaded', () => {
@@ -2032,7 +2157,7 @@
             if (!files.length) return;
 
             if (uploadedPhotoBuffer.length + files.length > 8) {
-                alert("Upload Limit: A maximum of 8 photographs is allowed.");
+                showInternalAlert("A maximum of 8 photographs is allowed per listing.", "Upload Limit Reached");
                 return;
             }
 
@@ -2065,7 +2190,7 @@
                 const isCustomTag = photo.tag === 'Others';
 
                 tile.innerHTML = `
-                    <img src="${photo.url}" alt="Property Asset">
+                    <img src="${photo.url}" alt="Property Asset" onerror="this.src='${FALLBACK_NO_IMAGE_URL}'">
                     ${photo.isCover ? '<div class="cover-badge-selected">★ COVER PIC</div>' : ''}
                     <div class="tile-controls">
                         <select onchange="updatePhotoTag(${index}, this.value)">
@@ -2129,7 +2254,7 @@
             const checkedAmenities = Array.from(document.querySelectorAll('input[name="amenityItem"]:checked')).map(el => el.value);
 
             if (!locality && !city && !society) {
-                alert("Please enter at least the Society Name, Locality or City before running AI.");
+                showInternalAlert("Please enter at least the Society Name, Locality, or City before running AI.", "Insufficient Details");
                 return;
             }
 
@@ -2257,7 +2382,7 @@
                 chk.checked = (p.amenities && p.amenities.includes(chk.value));
             });
 
-            // Pre-fill Photos Buffer (Filter out default placeholder if only one was present)
+            // Pre-fill Photos Buffer (Filter out fallback placeholder if set)
             if (p.images && p.images.length > 0 && p.images[0].url !== FALLBACK_NO_IMAGE_URL) {
                 uploadedPhotoBuffer = JSON.parse(JSON.stringify(p.images));
             } else {
@@ -2282,7 +2407,7 @@
             document.getElementById('charCountLabel').innerText = '0 / 100 Characters (Min 100 required)';
             uploadedPhotoBuffer = [];
             renderPhotoTiles();
-            initSearchableControls(); // Resets dropdowns to clean empty placeholders
+            initSearchableControls();
             switchTab('dashboard');
         }
 
@@ -2292,19 +2417,19 @@
 
             const societyName = document.getElementById('propSociety').value.trim();
             if (!societyName) {
-                alert("Please enter the Name of the Society / Project.");
+                showInternalAlert("Please specify the Name of the Society or Project.", "Field Required");
                 return;
             }
 
             const descText = document.getElementById('propDescription').value.trim();
             if (descText.length < 100) {
-                alert("Please add at least 100 characters in the property description.");
+                showInternalAlert("Please provide at least 100 characters in the property description.", "Description Too Brief");
                 return;
             }
 
             const rawPrice = document.getElementById('propPriceRaw').value.replace(/[^0-9]/g, '');
             if (!rawPrice || Number(rawPrice) <= 0) {
-                alert("Please enter a valid price amount.");
+                showInternalAlert("Please enter a valid property price value.", "Price Invalid");
                 return;
             }
 
@@ -2551,11 +2676,17 @@
         }
 
         function deleteProperty(id) {
-            if (!confirm(`Are you sure you want to remove property listing ${id}?`)) return;
-            propertyStore = propertyStore.filter(p => p.id !== id);
-            localStorage.setItem('by_properties', JSON.stringify(propertyStore));
-            renderMarketplaceListings();
-            renderUserOwnedListings();
+            showInternalConfirm(
+                `Are you sure you want to permanently remove property listing ${id}? This action cannot be undone.`,
+                "Delete Property Listing",
+                () => {
+                    propertyStore = propertyStore.filter(p => p.id !== id);
+                    localStorage.setItem('by_properties', JSON.stringify(propertyStore));
+                    renderMarketplaceListings();
+                    renderUserOwnedListings();
+                    showInternalAlert(`Property ${id} has been permanently removed.`, "Listing Removed");
+                }
+            );
         }
 
         /* ---------------- FULLSCREEN MODAL & SCROLLABLE GALLERY ENGINE ---------------- */
@@ -2686,7 +2817,7 @@
 
         function exportOpportunitiesToExcel() {
             if (!leadsStore || leadsStore.length === 0) {
-                alert("No opportunity data available to download.");
+                showInternalAlert("No opportunity records found to export.", "Export Notice");
                 return;
             }
 
@@ -2719,6 +2850,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            showInternalAlert("Opportunities spreadsheet export has commenced successfully.", "Export Ready");
         }
 
         function updateLeadsBadge() {
@@ -2765,10 +2897,11 @@
             leadsStore.unshift(newLead);
             localStorage.setItem('by_leads', JSON.stringify(leadsStore));
 
-            alert(`Enquiry Sent!\nThe listing owner has received your mobile number and request.`);
             closeInquiryModal();
             updateLeadsBadge();
             renderLeadsPipeline();
+
+            showInternalAlert(`Your enquiry has been delivered directly to the property owner. They will connect with you on WhatsApp / Phone.`, "Enquiry Sent");
         }
 
         function sharePropertyWhatsApp(titleEsc, price, loc) {
@@ -2825,14 +2958,18 @@
             document.getElementById('profileDisplayName').innerText = name;
             document.getElementById('profilePhoneDisplay').innerText = `+91 ${phone}`;
             document.getElementById('profileInitialBadge').innerText = name.charAt(0).toUpperCase() || 'U';
-            alert("Terminal Profile Updated.");
+            showInternalAlert("Your operational profile settings have been stored securely.", "Profile Saved");
         }
 
         function clearLocalDatabase() {
-            if (confirm("Reset application data back to factory defaults?")) {
-                localStorage.clear();
-                location.reload();
-            }
+            showInternalConfirm(
+                "Reset all listings, opportunities, and user profile data back to factory system defaults?",
+                "Reset Application Database",
+                () => {
+                    localStorage.clear();
+                    location.reload();
+                }
+            );
         }
     </script>
 </body>
